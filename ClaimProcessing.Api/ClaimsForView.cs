@@ -10,19 +10,23 @@
         public int SupplierId { get; set; }
         public string? Customer { get; set; }
         public string? SaleInvoiceNo { get; set; }
-        public string? InternalDocNo { get; set; }
+
         public DateTime? SaleDate { get; set; }
         public string? PurchaseInvoiceNo { get; set; }
         public DateTime? PurchaseDate { get; set; }
+        public string? InternalDocNo { get; set; }
+
         public string? ItemName { get; set; }
         public string? ClaimDescription { get; set; }
         public string? Remarks { get; set; }
         public string? ClaimStatus { get; set; }
         public bool RmaAvailable { get; set; } = false;
-        public DateTime? ShippingDate { get; set; }
-        public List<string>? Serials { get; set; }
-        public List<string>? FotoUrls { get; set; }
-        public List<string>? AttachmentUrls { get; set; }
+
+        public int? ShipmentId { get; set; }
+        public List<string>? Serials { get; private set; } = new List<string>();
+        public List<string>? FotoUrls { get; private set; } = new List<string>();
+        public List<string>? AttachmentUrls { get; private set; } = new List<string>();
+
 
 
     }

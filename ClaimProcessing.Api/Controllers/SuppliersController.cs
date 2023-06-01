@@ -10,8 +10,10 @@ namespace ClaimProcessing.Api.Controllers
     {
         private static List<SuppliersForView> suppliersForView = new List<SuppliersForView>
         {
+
             new SuppliersForView{Id=1, Name="Supplier1",Address="Street 1, 11-111 City1, Country1", ContactPerson="Contact1 Person1"},
             new SuppliersForView{Id=2, Name="Supplier2",Address="Street 2, 22-222 City2, Country2", ContactPerson="Contact2 Person2"},
+
 
         };
 

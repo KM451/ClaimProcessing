@@ -12,6 +12,7 @@ namespace ClaimProcessing.Api.Controllers
         
         public static List<ClaimsForView> claimsForView = new List<ClaimsForView>
         {
+
             new ClaimsForView{Id=1, OwnerType="internal", ClaimType="technical", ItemCode="IC001", Qty=2, SupplierId=1},
             new ClaimsForView{Id=2, OwnerType="external", ClaimType="technical", ItemCode="IC002", Qty=1, SupplierId=2},
             new ClaimsForView{Id=3, OwnerType="internal", ClaimType="logistic", ItemCode="IC003", Qty=20, SupplierId=1},
@@ -93,6 +94,7 @@ namespace ClaimProcessing.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         public ActionResult GetShipment2(int id)
         {
            
@@ -101,6 +103,7 @@ namespace ClaimProcessing.Api.Controllers
                 return NotFound();
             }
             return Ok(claimsForView.FirstOrDefault(i => i.Id == id));
+
         }
 
         /// <summary>
@@ -145,7 +148,6 @@ namespace ClaimProcessing.Api.Controllers
         /// Add or modify the serial number of claimed item.
         /// </summary>
         /// <param name="id">Claim Id number</param>
-        /// <param name="serialNo">he object with a value of serial number of claimed item.</param>
         /// <returns></returns>
         [HttpPut("{id}/serials")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -182,6 +184,7 @@ namespace ClaimProcessing.Api.Controllers
         {
             return NoContent();
         }
+
     }
 }
 

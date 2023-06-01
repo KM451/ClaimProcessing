@@ -87,7 +87,6 @@ namespace ClaimProcessing.Api.Controllers
 
         /// <summary>
         /// Get the detail data of the claim with given it ID number
-
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

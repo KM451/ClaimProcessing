@@ -94,7 +94,6 @@ namespace ClaimProcessing.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
         public ActionResult GetShipment2(int id)
         {
            
@@ -148,12 +147,12 @@ namespace ClaimProcessing.Api.Controllers
         /// Add or modify the serial number of claimed item.
         /// </summary>
         /// <param name="id">Claim Id number</param>
-        /// <param name="serialNo">Value of serial number of claimed item.</param>
+        /// <param name="serialNo">The object with a value of a serial number of claimed item.</param>
         /// <returns></returns>
         [HttpPut("{id}/serials")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult PutSerialNo(int id, string serialNo)
+        public ActionResult PutSerialNo(int id, SerialsForView serialNo)
         {
             return NoContent();
         }
@@ -162,12 +161,12 @@ namespace ClaimProcessing.Api.Controllers
         /// Add or modify the path to the photo associated with claim.
         /// </summary>
         /// <param name="id">Claim Id number</param>
-        /// <param name="fotoUrl">The path to the photo associated with claim.</param>
+        /// <param name="fotoUrl">The object with a path to the photo associated with claim.</param>
         /// <returns></returns>
         [HttpPut("{id}/fotoUrl")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult PutFotoUrl(int id, string fotoUrl)
+        public ActionResult PutFotoUrl(int id, FotoUrlsForView fotoUrl)
         {
             return NoContent();
         }
@@ -176,12 +175,12 @@ namespace ClaimProcessing.Api.Controllers
         /// Add or modify the path to the file associated with claim.
         /// </summary>
         /// <param name="id">Claim Id number</param>
-        /// <param name="attachmentUrl">The path to the file associated with claim.</param>
+        /// <param name="attachmentUrl">The object with a path to the file associated with claim.</param>
         /// <returns></returns>
         [HttpPut("{id}/attachmentUrl")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult AttachmentUrl(int id, string attachmentUrl)
+        public ActionResult AttachmentUrl(int id, AttachmentUrlsForView attachmentUrl)
         {
             return NoContent();
         }

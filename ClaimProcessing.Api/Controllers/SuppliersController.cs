@@ -213,7 +213,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <summary>
         /// Modify data of existing supplier
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">The supplier Id number</param>
         /// <returns></returns>
         [HttpPatch("{id}/")]
         [ProducesResponseType(StatusCodes.Status200OK)]

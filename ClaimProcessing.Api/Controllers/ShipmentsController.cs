@@ -8,6 +8,7 @@ namespace ClaimProcessing.Api.Controllers
     [EnableCors("MyAllowSpecificOrgins")]
     public class ShipmentsController : ControllerBase
     {
+
         public static List<ShipmentForView> shipmentsForView = new List<ShipmentForView>
         {
             new ShipmentForView{Id=1, ShipmentDate= new DateTime(2023,08,01), SupplierId=1, TotalWeight=0, PackagingDetails=new List<PackagingForView>()},
@@ -15,6 +16,7 @@ namespace ClaimProcessing.Api.Controllers
             new ShipmentForView{Id=3, ShipmentDate= new DateTime(2023,10,01), SupplierId=1, TotalWeight=0, PackagingDetails=new List<PackagingForView>()}
 
         };
+
 
         /// <summary>
         /// Get the list of executed and planned shipments of items (claims) returned to suppliers
@@ -25,6 +27,7 @@ namespace ClaimProcessing.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult GetShipments()
         {
+
              return Ok(shipmentsForView);
         }
 

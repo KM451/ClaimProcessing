@@ -2,7 +2,7 @@
 
 namespace ClaimProcessing.Domain.Entities
 {
-    public class PurchaseData : AuditableEntity
+    public class PurchaseDetail : AuditableEntity
     {
         public string PurchaseInvoiceNo { get; set; }
         public DateTime PurchaseDate { get; set; }

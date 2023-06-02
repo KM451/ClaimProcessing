@@ -1,7 +1,12 @@
 
+using ClaimProcessing.Infrastructure;
+using ClaimProcessing.Persistance;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddInfrastructure();
+builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddControllers();
 
 builder.Services.AddCors(options =>

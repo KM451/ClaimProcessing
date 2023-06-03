@@ -1,14 +1,20 @@
-﻿using ClaimProcessing.Domain.Common;
+﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Domain.Common;
 using ClaimProcessing.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace ClaimProcessing.Persistance
 {
     public class ClaimProcessingDbContext : DbContext
     {
+        private readonly IDateTime _dateTime;
+        public ClaimProcessingDbContext(DbContextOptions<ClaimProcessingDbContext> options, IDateTime dateTime) : base(options)
+        {
+            _dateTime = dateTime;
+        }
         public ClaimProcessingDbContext(DbContextOptions<ClaimProcessingDbContext> options) : base(options)
         {
-            
         }
 
         public DbSet<Claim> Claims { get; set; }
@@ -22,10 +28,8 @@ namespace ClaimProcessing.Persistance
         public DbSet<SerialNumber> SerialNumbers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Supplier>().OwnsOne(s => s.Address);
-            modelBuilder.Entity<Supplier>().OwnsOne(s => s.ContactPerson);
-            modelBuilder.Entity<Packaging>().OwnsOne(p => p.Dimensions);
+        {        
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken()) 
@@ -36,17 +40,17 @@ namespace ClaimProcessing.Persistance
                 {
                     case EntityState.Added:
                         entry.Entity.CreatedBy = string.Empty; 
-                        entry.Entity.Created = DateTime.Now;
+                        entry.Entity.Created = _dateTime.Now;
                         entry.Entity.StatusId = 1;
                         break;
                     case EntityState.Modified:
                         entry.Entity.ModifiedBy = string.Empty;
-                        entry.Entity.Modified = DateTime.Now;
+                        entry.Entity.Modified = _dateTime.Now;
                         break;
                     case EntityState.Deleted:
                         entry.Entity.ModifiedBy = string.Empty;
-                        entry.Entity.Modified = DateTime.Now;
-                        entry.Entity.Inactivated = DateTime.Now;
+                        entry.Entity.Modified = _dateTime.Now;
+                        entry.Entity.Inactivated = _dateTime.Now;
                         entry.Entity.InactivatedBy = string.Empty;
                         entry.Entity.StatusId = 0;
                         entry.State = EntityState.Modified;

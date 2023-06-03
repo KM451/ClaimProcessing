@@ -11,8 +11,6 @@ namespace ClaimProcessing.Persistance
 
         public TContext CreateDbContext(string[] args)
         {
-            //var basePath = Directory.GetCurrentDirectory() + string.Format("{0}..{0}ClaimProcessing", Path.DirectorySeparatorChar);
-            
             return Create(Directory.GetCurrentDirectory(), Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
         }
 

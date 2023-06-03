@@ -26,6 +26,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\ClaimProcessing.Application\ClaimProcessing.Application.csproj" />
     <ProjectReference Include="..\ClaimProcessing.Domain\ClaimProcessing.Domain.csproj" />
   </ItemGroup>
 

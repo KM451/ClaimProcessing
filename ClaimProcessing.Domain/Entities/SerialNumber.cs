@@ -6,6 +6,6 @@ namespace ClaimProcessing.Domain.Entities
     {
         public string Value { get; set; }
         public int ClaimId { get; set; }
-        public ICollection<Claim> Claims { get; set;}
+        public Claim Claim { get; set;}
     }
 }

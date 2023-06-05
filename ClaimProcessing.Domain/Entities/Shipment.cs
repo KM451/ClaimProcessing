@@ -5,7 +5,8 @@ namespace ClaimProcessing.Domain.Entities
     public class Shipment : AuditableEntity
     {
         public DateTime ShipmentDate { get; set; }
-        public string? PackingDetails { get; set; }
+        public string? Speditor { get; set; }
+        public string? ShippingDocumentNo { get; set; }
         public decimal? TotalWeight { get; set; }
         public int SupplierId { get; set; }
         public Supplier Supplier { get; set; }

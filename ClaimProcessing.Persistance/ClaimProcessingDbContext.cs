@@ -6,7 +6,7 @@ using System.Reflection;
 
 namespace ClaimProcessing.Persistance
 {
-    public class ClaimProcessingDbContext : DbContext
+    public class ClaimProcessingDbContext : DbContext, IClaimProcessingDbContext
     {
         private readonly IDateTime _dateTime;
         public ClaimProcessingDbContext(DbContextOptions<ClaimProcessingDbContext> options, IDateTime dateTime) : base(options)

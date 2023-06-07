@@ -10,7 +10,8 @@ namespace ClaimProcessing.Persistance.Configurations
         {
             builder.HasKey(p => p.Id);
             builder.Property(p => p.ShipmentDate).IsRequired();
-            builder.Property(p => p.PackingDetails).HasMaxLength(400);
+            builder.Property(p => p.Speditor).HasMaxLength(40);
+            builder.Property(p => p.ShippingDocumentNo).HasMaxLength(50);
             builder.Property(p => p.TotalWeight).HasPrecision(8, 2);
             builder.Property(p => p.SupplierId).IsRequired();
             builder.Property(p => p.CreatedBy).HasMaxLength(40).IsRequired();

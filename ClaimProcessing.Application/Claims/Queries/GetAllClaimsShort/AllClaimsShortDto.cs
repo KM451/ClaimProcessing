@@ -1,6 +1,6 @@
-﻿namespace ClaimProcessing.Application.Claims.Queries.GetClaims
+﻿namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
 {
-    public class ClaimsDto
+    public class AllClaimsShortDto
     {
         public int ClaimId { get; set; }
         public DateTime ClaimCreationDate { get; set; }

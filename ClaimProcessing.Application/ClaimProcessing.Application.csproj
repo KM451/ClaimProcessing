@@ -7,12 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Shipments\Queries\GetShipments\**" />
-    <EmbeddedResource Remove="Shipments\Queries\GetShipments\**" />
-    <None Remove="Shipments\Queries\GetShipments\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MediatR" Version="12.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
@@ -21,6 +15,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ClaimProcessing.Domain\ClaimProcessing.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Suppliers\Queries\GetSuppliers\" />
   </ItemGroup>
 
 </Project>

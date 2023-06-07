@@ -17,8 +17,4 @@
     <ProjectReference Include="..\ClaimProcessing.Domain\ClaimProcessing.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Suppliers\Queries\GetSuppliers\" />
-  </ItemGroup>
-
 </Project>

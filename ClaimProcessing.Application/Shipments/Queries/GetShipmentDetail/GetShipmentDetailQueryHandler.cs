@@ -13,15 +13,17 @@ namespace ClaimProcessing.Application.Shipments.Queries.GetShipmentDetail
         }
         public async Task<ShipmentDetailVm> Handle(GetShipmentDetailQuery request, CancellationToken cancellationToken)
         {
-            var shipment = _context.Shipments
-                .Where(p => p.StatusId != 0 && p.Id == request.ShipmentId)
+            var shipment = await _context.Shipments
+                .Where(s => s.StatusId != 0 && s.Id == request.ShipmentId)
                 .FirstOrDefaultAsync(cancellationToken);
 
             var shipmentVm = new ShipmentDetailVm
             {
-                //ShipmentDate = shipment.ShipmentDate,
-                //SupplierName = shipment.
-
+                ShipmentDate = shipment.ShipmentDate,
+                SupplierID = shipment.SupplierId,
+                Speditor = shipment?.Speditor ?? "",
+                ShippingDocumentNo = shipment?.ShippingDocumentNo ?? "",
+                TotalWeight = shipment?.TotalWeight ?? 0,
             };
 
             return shipmentVm;

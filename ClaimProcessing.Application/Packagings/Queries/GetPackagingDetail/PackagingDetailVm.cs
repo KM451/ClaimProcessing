@@ -1,0 +1,18 @@
+﻿using ClaimProcessing.Domain.ValueObjects;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClaimProcessing.Application.Packagings.Queries.GetPackagingDetail
+{
+    public class PackagingDetailVm
+    {
+        public string Type { get; set; }
+        public string Dimensions{ get; set; }
+        public decimal Weight { get; set; }
+        public string Notes { get; set; }
+        public int ShipmentId { get; set; }
+    }
+}

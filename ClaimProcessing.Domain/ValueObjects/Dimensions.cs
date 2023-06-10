@@ -27,7 +27,7 @@ namespace ClaimProcessing.Domain.ValueObjects
         /// <summary>
         /// Create the Dimensions object basis given string value
         /// </summary>
-        /// <param name="hwd">A string containing values of three dimensions.</param>
+        /// <param name="hwd">A string containing values of three dimensions, separated by 'x'.</param>
         /// <returns>Dimensions object</returns>
         /// <exception cref="DimensionsException">Represents errors that occur during evaluation of given 'hwd' string. </exception>
         public static Dimensions For(string hwd)

@@ -17,8 +17,4 @@
     <ProjectReference Include="..\ClaimProcessing.Domain\ClaimProcessing.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Shipments\Queries\GetShipments\" />
-  </ItemGroup>
-
 </Project>

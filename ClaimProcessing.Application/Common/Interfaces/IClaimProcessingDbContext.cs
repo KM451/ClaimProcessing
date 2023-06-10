@@ -6,7 +6,7 @@ namespace ClaimProcessing.Application.Common.Interfaces
     public interface IClaimProcessingDbContext
     {
         DbSet<Claim> Claims { get; set; }
-        DbSet<Supplier> Supliers { get; set; }
+        DbSet<Supplier> Suppliers { get; set; }
         DbSet<Shipment> Shipments { get; set; }
         DbSet<Packaging> Packagings { get; set; }
         DbSet<SaleDetail> SaleDetails { get; set; }

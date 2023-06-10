@@ -18,7 +18,7 @@ namespace ClaimProcessing.Persistance
         }
 
         public DbSet<Claim> Claims { get; set; }
-        public DbSet<Supplier> Supliers { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<Packaging> Packagings { get; set; }
         public DbSet<SaleDetail> SaleDetails { get; set; }

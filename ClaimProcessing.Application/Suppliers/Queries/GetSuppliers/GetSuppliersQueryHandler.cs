@@ -1,22 +1,19 @@
-﻿using ClaimProcessing.Application.Common.Interfaces;
-using ClaimProcessing.Application.Shipments.Queries.GetShipments;
+﻿using AutoMapper;
+using ClaimProcessing.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClaimProcessing.Application.Suppliers.Queries.GetSuppliers
 {
     public class GetSuppliersQueryHandler : IRequestHandler<GetSuppliersQuery, SuppliersVm>
     {
         private readonly IClaimProcessingDbContext _context;
+        private IMapper _mapper;
 
-        public GetSuppliersQueryHandler(IClaimProcessingDbContext claimProcessingDbContext)
+        public GetSuppliersQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
         {
             _context = claimProcessingDbContext;
+            _mapper = mapper;
         }
         public async Task<SuppliersVm> Handle(GetSuppliersQuery request, CancellationToken cancellationToken)
         {
@@ -24,15 +21,8 @@ namespace ClaimProcessing.Application.Suppliers.Queries.GetSuppliers
                 .Where(p => p.StatusId != 0)
                 .ToListAsync(cancellationToken);
 
-            var suppliersVm = new SuppliersVm
-            {
-                Suppliers = suppliers.Select(s => new SuppliersDto
-                {
-                    SupplierId = s.Id,
-                    Name = s.Name,
-                    City = s.Address.City,
-                }).ToList()
-            };
+            var suppliersVm = _mapper.Map<SuppliersVm>(suppliers);
+
             return suppliersVm;
         }
     }

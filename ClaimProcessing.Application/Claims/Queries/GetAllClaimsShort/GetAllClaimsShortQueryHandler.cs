@@ -1,4 +1,5 @@
-﻿using ClaimProcessing.Application.Common.Interfaces;
+﻿using AutoMapper;
+using ClaimProcessing.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,10 +8,11 @@ namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
     public class GetAllClaimsShortQueryHandler : IRequestHandler<GetAllClaimsShortQuery, AllClaimsShortVm>
     {
         private readonly IClaimProcessingDbContext _context;
-
-        public GetAllClaimsShortQueryHandler(IClaimProcessingDbContext claimProcessingDbContext)
+        private IMapper _mapper;
+        public GetAllClaimsShortQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
         {
             _context = claimProcessingDbContext;
+            _mapper = mapper;
         }
 
         public async Task<AllClaimsShortVm> Handle(GetAllClaimsShortQuery request, CancellationToken cancellationToken)
@@ -20,17 +22,7 @@ namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
                 .Include(c => c.Supplier)
                 .ToListAsync(cancellationToken);
 
-            var claimsVm = new AllClaimsShortVm
-            {
-                Claims = claims.Select(c => new AllClaimsShortDto
-                {
-                    ClaimId = c.Id,
-                    ClaimCreationDate = c.Created,
-                    SupplierName = c.Supplier.Name,
-                    ItemCode = c.ItemCode,
-                    ClaimStatus = c.ClaimStatus
-                }).ToList()
-            };
+            var claimsVm = _mapper.Map<AllClaimsShortVm>(claims);
 
             return claimsVm;
 

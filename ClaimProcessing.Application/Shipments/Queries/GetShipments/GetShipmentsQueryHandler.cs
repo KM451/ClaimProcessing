@@ -1,4 +1,5 @@
-﻿using ClaimProcessing.Application.Common.Interfaces;
+﻿using AutoMapper;
+using ClaimProcessing.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,10 +8,12 @@ namespace ClaimProcessing.Application.Shipments.Queries.GetShipments
     public class GetShipmentsQueryHandler : IRequestHandler<GetShipmentsQuery, ShipmentsVm>
     {
         private readonly IClaimProcessingDbContext _context;
+        private IMapper _mapper;
 
-        public GetShipmentsQueryHandler(IClaimProcessingDbContext claimProcessingDbContext)
+        public GetShipmentsQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
         {
             _context = claimProcessingDbContext;
+            _mapper = mapper;
         }
         public async Task<ShipmentsVm> Handle(GetShipmentsQuery request, CancellationToken cancellationToken)
         {
@@ -19,15 +22,8 @@ namespace ClaimProcessing.Application.Shipments.Queries.GetShipments
                 .Include(c => c.Supplier)
                 .ToListAsync(cancellationToken);
 
-            var shipmentsVm = new ShipmentsVm
-            {
-                Shipments = shipments.Select(s => new ShipmentsDto
-                {
-                    ShipmentId = s.Id,
-                    ShipmentDate = s.ShipmentDate,
-                    SupplierName = s.Supplier.Name
-                }).ToList()
-            };
+            var shipmentsVm = _mapper.Map<ShipmentsVm>(shipments);
+
             return shipmentsVm;
         }
     }

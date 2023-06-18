@@ -1,4 +1,7 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using ClaimProcessing.Application.Common.Mappings;
+using ClaimProcessing.Domain.Entities;
+using MediatR;
 
 namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
 {
@@ -20,5 +23,8 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
         public string? PurchaseInvoiceNo { get; set; }
         public DateTime? PurchaseDate { get; set; }
         public string? InternalDocNo { get; set; }
+        public bool RmaAvailable { get; set; }
+        public int? ShipmentId { get; set; }
+
     }
 }

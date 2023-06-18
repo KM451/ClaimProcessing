@@ -14,11 +14,8 @@ namespace ClaimProcessing.Persistance.Configurations
             builder.Property(p => p.ClaimId).IsRequired();
             builder.Property(p => p.CreatedBy).HasMaxLength(40).IsRequired();
             builder.Property(p => p.Created).IsRequired();
-            builder.Property(p => p.ModifiedBy).HasMaxLength(40).IsRequired();
-            builder.Property(p => p.Modified);
-            builder.Property(p => p.StatusId).IsRequired();
-            builder.Property(p => p.InactivatedBy).HasMaxLength(40).IsRequired();
-            builder.Property(p => p.Inactivated);
+            builder.Property(p => p.ModifiedBy).HasMaxLength(40);
+            builder.Property(p => p.InactivatedBy).HasMaxLength(40);
         }
     }
 }

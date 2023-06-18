@@ -1,4 +1,5 @@
-﻿using ClaimProcessing.Application.Common.Interfaces;
+﻿using AutoMapper;
+using ClaimProcessing.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,9 +8,11 @@ namespace ClaimProcessing.Application.SerialNumbers.Queries.GetSerialNumbersClai
     public class GetSerialNumbersClaimQueryHandler : IRequestHandler<GetSerialNumbersClaimQuery, SerialNumbersClaimVm>
     {
         private readonly IClaimProcessingDbContext _context;
-        public GetSerialNumbersClaimQueryHandler(IClaimProcessingDbContext claimProcessingDbContext)
+        private IMapper _mapper;
+        public GetSerialNumbersClaimQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
         {
             _context = claimProcessingDbContext;
+            _mapper = mapper;
         }
         public async Task<SerialNumbersClaimVm> Handle(GetSerialNumbersClaimQuery request, CancellationToken cancellationToken)
         {
@@ -17,14 +20,7 @@ namespace ClaimProcessing.Application.SerialNumbers.Queries.GetSerialNumbersClai
                 .Where(a => a.StatusId != 0 && a.ClaimId == request.ClaimId)
                 .ToListAsync(cancellationToken);
 
-            var serialNumbersVm = new SerialNumbersClaimVm
-            {
-                SerialNumbers = seriaNumbers.Select(s => new SerialNumbersClaimDto
-                {
-                    SerialNumberId = s.Id,
-                    Value = s.Value
-                }).ToList()
-            };
+            var serialNumbersVm = _mapper.Map<SerialNumbersClaimVm>(seriaNumbers);
 
             return serialNumbersVm;
         }

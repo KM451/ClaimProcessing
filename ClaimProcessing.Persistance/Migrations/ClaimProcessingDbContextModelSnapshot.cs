@@ -136,8 +136,8 @@ namespace ClaimProcessing.Persistance.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<decimal>("Qty")
-                        .HasPrecision(8, 2)
-                        .HasColumnType("decimal(8,2)");
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(max)");
@@ -537,7 +537,7 @@ namespace ClaimProcessing.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Supliers");
+                    b.ToTable("Suppliers");
                 });
 
             modelBuilder.Entity("ClaimProcessing.Domain.Entities.AttachmentUrl", b =>
@@ -691,7 +691,7 @@ namespace ClaimProcessing.Persistance.Migrations
 
                             b1.HasKey("SupplierId");
 
-                            b1.ToTable("Supliers");
+                            b1.ToTable("Suppliers");
 
                             b1.WithOwner()
                                 .HasForeignKey("SupplierId");
@@ -714,7 +714,7 @@ namespace ClaimProcessing.Persistance.Migrations
 
                             b1.HasKey("SupplierId");
 
-                            b1.ToTable("Supliers");
+                            b1.ToTable("Suppliers");
 
                             b1.WithOwner()
                                 .HasForeignKey("SupplierId");

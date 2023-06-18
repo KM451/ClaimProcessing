@@ -1,20 +1,19 @@
-﻿using ClaimProcessing.Application.Common.Interfaces;
+﻿using AutoMapper;
+using ClaimProcessing.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClaimProcessing.Application.Suppliers.Queries.GetSupplierDetail
 {
     public class GetSupplierDetailQueryHandler : IRequestHandler<GetSupplierDetailQuery, SupplierDetailVm>
     {
         private readonly IClaimProcessingDbContext _context;
-        public GetSupplierDetailQueryHandler(IClaimProcessingDbContext claimProcessingDbContext)
+        private IMapper _mapper;
+
+        public GetSupplierDetailQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
         {
             _context = claimProcessingDbContext;
+            _mapper = mapper;
         }
         public async Task<SupplierDetailVm> Handle(GetSupplierDetailQuery request, CancellationToken cancellationToken)
         {
@@ -22,12 +21,7 @@ namespace ClaimProcessing.Application.Suppliers.Queries.GetSupplierDetail
                 .Where(p => p.StatusId != 0 && p.Id == request.SupplierId)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            var suppliertVm = new SupplierDetailVm
-            {
-                Name = supplier.Name,
-                Address = supplier.Address.ToString(),
-                ContactPerson = supplier.ContactPerson.ToString(),
-            };
+            var suppliertVm = _mapper.Map<SupplierDetailVm>(supplier);
 
             return suppliertVm;
         }

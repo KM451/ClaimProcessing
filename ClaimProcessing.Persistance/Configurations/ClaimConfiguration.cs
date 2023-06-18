@@ -12,7 +12,7 @@ namespace ClaimProcessing.Persistance.Configurations
             builder.Property(p => p.OwnerType).HasMaxLength(40).IsRequired();
             builder.Property(p => p.ClaimType).HasMaxLength(40).IsRequired();
             builder.Property(p => p.ItemCode).HasMaxLength(40).IsRequired();
-            builder.Property(p => p.Qty).HasPrecision(8,2).IsRequired();
+            builder.Property(p => p.Qty).HasPrecision(10,2).IsRequired();
             builder.Property(p => p.CustomerName).HasMaxLength(100);
             builder.Property(p => p.ItemName).HasMaxLength(100);
             builder.Property(p => p.ClaimDescription);

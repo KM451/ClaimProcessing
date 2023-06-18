@@ -28,6 +28,7 @@ namespace ClaimProcessing.Application.Claims.Queries.GetClaimDetail
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Claim, ClaimDetailVm>()
+                .ForMember(s => s.ClaimId, map => map.MapFrom(src => src.Id))
                 .ForMember(s => s.SupplierName, map => map.MapFrom(src => src.Supplier.Name))
                 .ForMember(s => s.SaleInvoiceNo, map => map.MapFrom(src => src.SaleDetail.SaleInvoiceNo))
                 .ForMember(s => s.SaleDate, map => map.MapFrom(src => src.SaleDetail.SaleDate))

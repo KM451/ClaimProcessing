@@ -2,8 +2,28 @@
 using ClaimProcessing.Application;
 using ClaimProcessing.Infrastructure;
 using ClaimProcessing.Persistance;
+using Serilog;
+
+var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+
+Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+try
+{
+    Log.Information("Application is starting up");
+    builder.Host.UseSerilog();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
+
 
 // Add services to the container.
 builder.Services.AddApplication();
@@ -11,13 +31,12 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddPersistance(builder.Configuration);
 builder.Services.AddControllers();
 
-builder.Services.AddCors(options =>
-options.AddPolicy(name: "MyAllowSpecificOrgins",
-builder =>
-{
-    //builder.AllowAnyOrigin();
-    builder.WithOrigins("https://localhost:7015");
-}));
+builder.Services.AddCors(options => options.AddPolicy(name: "MyAllowSpecificOrgins",
+    builder =>
+    {
+        //builder.AllowAnyOrigin();
+        builder.WithOrigins("https://localhost:7015");
+    }));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -49,6 +68,8 @@ builder.Services.AddSwaggerGen(c =>
 
 var app = builder.Build();
 
+app.UseSerilogRequestLogging();
+
 //Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -59,6 +80,7 @@ if (app.Environment.IsDevelopment())
 
 //app.UseHealthChecks("/hc");
 app.UseHttpsRedirection();
+
 app.UseRouting();
 
 app.UseCors();

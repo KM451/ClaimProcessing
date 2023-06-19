@@ -20,7 +20,7 @@ namespace ClaimProcessing.Application.Common.Behaviours
                 var failures = _validators.Select(v => v.Validate(context)).SelectMany(result => result.Errors).Where(f => f != null).ToList();
                 if (failures.Count != 0)
                 {
-                    throw new Exception();
+                    throw new ValidationException(failures);
                 }
             }
             return await next();

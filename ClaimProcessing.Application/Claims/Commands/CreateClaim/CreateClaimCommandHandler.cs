@@ -28,6 +28,7 @@ namespace ClaimProcessing.Application.Claims.Commands.CreateClaim
                 SupplierId = request.SupplierId,
             };
             _context.Claims.Add(claim);
+            await _context.SaveChangesAsync(cancellationToken);
 
             if (request.PurchaseInvoiceNo != null) 
             {
@@ -39,6 +40,7 @@ namespace ClaimProcessing.Application.Claims.Commands.CreateClaim
                     ClaimId = claim.Id,
                 };
                 _context.PurchaseDetails.Add(purchaseDetail);
+                await _context.SaveChangesAsync(cancellationToken);
             }
             if (request.SaleInvoiceNo != null)
             {
@@ -49,9 +51,9 @@ namespace ClaimProcessing.Application.Claims.Commands.CreateClaim
                     ClaimId = claim.Id,
                 };
                 _context.SaleDetails.Add(saleDetail);
+                await _context.SaveChangesAsync(cancellationToken);
             }
-            await _context.SaveChangesAsync(cancellationToken);
-
+            
             return claim.Id;
         }
     }

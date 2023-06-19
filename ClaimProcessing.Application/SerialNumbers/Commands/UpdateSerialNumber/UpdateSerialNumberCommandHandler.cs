@@ -1,5 +1,5 @@
 ﻿using ClaimProcessing.Application.Common.Interfaces;
-using ClaimProcessing.Domain.Exceptions;
+using ClaimProcessing.Application.Common.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

@@ -4,6 +4,7 @@ using ClaimProcessing.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClaimProcessing.Persistance.Migrations
 {
     [DbContext(typeof(ClaimProcessingDbContext))]
-    partial class ClaimProcessingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230619065827_cnf10")]
+    partial class cnf10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,17 +44,19 @@ namespace ClaimProcessing.Persistance.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<DateTime?>("Inactivated")
+                    b.Property<DateTime>("Inactivated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InactivatedBy")
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
+                        .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
@@ -96,19 +101,18 @@ namespace ClaimProcessing.Persistance.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CustomerName")
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime?>("Inactivated")
+                    b.Property<DateTime>("Inactivated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InactivatedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ItemCode")
                         .IsRequired()
@@ -119,12 +123,12 @@ namespace ClaimProcessing.Persistance.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OwnerType")
                         .IsRequired()
@@ -177,22 +181,21 @@ namespace ClaimProcessing.Persistance.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Inactivated")
+                    b.Property<DateTime>("Inactivated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InactivatedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Path")
                         .IsRequired()
@@ -222,22 +225,21 @@ namespace ClaimProcessing.Persistance.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Inactivated")
+                    b.Property<DateTime>("Inactivated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InactivatedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Notes")
                         .IsRequired()
@@ -281,26 +283,25 @@ namespace ClaimProcessing.Persistance.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Inactivated")
+                    b.Property<DateTime>("Inactivated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InactivatedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("InternalDocNo")
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("PurchaseDate")
                         .HasColumnType("datetime2");
@@ -337,22 +338,21 @@ namespace ClaimProcessing.Persistance.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Inactivated")
+                    b.Property<DateTime>("Inactivated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InactivatedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("SaleDate")
                         .HasColumnType("datetime2");
@@ -389,22 +389,21 @@ namespace ClaimProcessing.Persistance.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Inactivated")
+                    b.Property<DateTime>("Inactivated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InactivatedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
@@ -434,22 +433,21 @@ namespace ClaimProcessing.Persistance.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Inactivated")
+                    b.Property<DateTime>("Inactivated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InactivatedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ShipmentDate")
                         .HasColumnType("datetime2");
@@ -492,22 +490,21 @@ namespace ClaimProcessing.Persistance.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Inactivated")
+                    b.Property<DateTime>("Inactivated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("InactivatedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("Modified")
+                    b.Property<DateTime>("Modified")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ModifiedBy")
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()

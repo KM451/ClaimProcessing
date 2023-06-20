@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
+using ClaimProcessing.Application.Claims.Commands.CreateClaim;
 using ClaimProcessing.Application.Common.Mappings;
 using ClaimProcessing.Domain.Entities;
 using MediatR;
 
 namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
 {
-    public class UpdateClaimCommand : IRequest
+    public class UpdateClaimCommand : IRequest, IMapFrom<UpdateClaimCommand>                               
     {
         public int ClaimId { get; set; }
+        public string ClaimNumber { get; set; }
         public string OwnerType { get; set; }
         public string ClaimType { get; set; }
         public string ItemCode { get; set; }
@@ -25,6 +27,13 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
         public string? InternalDocNo { get; set; }
         public bool RmaAvailable { get; set; }
         public int? ShipmentId { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<UpdateClaimCommand, Claim>();
+            profile.CreateMap<UpdateClaimCommand, PurchaseDetail>();
+            profile.CreateMap<UpdateClaimCommand, SaleDetail>();
+        }
 
     }
 }

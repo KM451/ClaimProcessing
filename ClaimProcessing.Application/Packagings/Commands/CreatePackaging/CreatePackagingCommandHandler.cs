@@ -1,6 +1,6 @@
-﻿using ClaimProcessing.Application.Common.Interfaces;
+﻿using AutoMapper;
+using ClaimProcessing.Application.Common.Interfaces;
 using ClaimProcessing.Domain.Entities;
-using ClaimProcessing.Domain.ValueObjects;
 using MediatR;
 
 namespace ClaimProcessing.Application.Packagings.Commands.CreatePackaging
@@ -9,20 +9,16 @@ namespace ClaimProcessing.Application.Packagings.Commands.CreatePackaging
     {
 
         private readonly IClaimProcessingDbContext _context;
-        public CreatePackagingCommandHandler(IClaimProcessingDbContext claimProcessingDbContext)
+        private IMapper _mapper;
+        public CreatePackagingCommandHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
         {
             _context = claimProcessingDbContext;
+            _mapper = mapper;
         }
         public async Task<int> Handle(CreatePackagingCommand request, CancellationToken cancellationToken)
         {
-            Packaging packaging = new()
-            {
-                Type = request.Type,
-                Dimensions = new Dimensions(request.Height, request.Width, request.Depth),
-                Weight = request.Weight,
-                Notes = request.Notes,
-                ShipmentId = request.ShipmentId,
-            };
+            var packaging = _mapper.Map<Packaging>(request);
+            
             _context.Packagings.Add(packaging);
 
             await _context.SaveChangesAsync(cancellationToken);

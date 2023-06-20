@@ -4,6 +4,7 @@ namespace ClaimProcessing.Domain.Entities
 {
     public class Claim : AuditableEntity
     {
+        public string ClaimNumber { get; set; }
         public string OwnerType { get; set; }
         public string ClaimType { get; set; }
         public string ItemCode { get; set; }

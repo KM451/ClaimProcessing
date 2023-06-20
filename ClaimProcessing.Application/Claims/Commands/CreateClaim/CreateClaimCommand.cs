@@ -1,9 +1,13 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using ClaimProcessing.Application.Common.Mappings;
+using ClaimProcessing.Domain.Entities;
+using MediatR;
 
 namespace ClaimProcessing.Application.Claims.Commands.CreateClaim
 {
-    public class CreateClaimCommand : IRequest<int>
+    public class CreateClaimCommand : IRequest<int>, IMapFrom<CreateClaimCommand>                
     {
+        public string ClaimNumber { get; set; }
         public string OwnerType { get; set; }
         public string ClaimType { get; set; }
         public string ItemCode { get; set; }
@@ -19,6 +23,13 @@ namespace ClaimProcessing.Application.Claims.Commands.CreateClaim
         public string? PurchaseInvoiceNo { get; set; }
         public DateTime? PurchaseDate { get; set; }
         public string? InternalDocNo { get; set; }
+
+        public void Mapping(Profile profile)
+        {
+            profile.CreateMap<CreateClaimCommand, Claim>();
+            profile.CreateMap<CreateClaimCommand, PurchaseDetail>();
+            profile.CreateMap<CreateClaimCommand, SaleDetail>();
+        }
 
     }
 }

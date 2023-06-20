@@ -14,7 +14,7 @@ namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
             profile.CreateMap<Claim, AllClaimsShortVm>()
                 .ForMember(a => a.Claims, map => map.MapFrom(src => new AllClaimsShortDto
                 {
-                    ClaimId = src.Id,
+                    ClaimNumber = src.ClaimNumber,
                     ClaimCreationDate = src.Created,
                     SupplierName = src.Supplier.Name,
                     ItemCode = src.ItemCode,

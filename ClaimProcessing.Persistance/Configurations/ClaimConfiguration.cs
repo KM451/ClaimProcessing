@@ -9,6 +9,7 @@ namespace ClaimProcessing.Persistance.Configurations
         public void Configure(EntityTypeBuilder<Claim> builder)
         {
             builder.HasKey(p => p.Id);
+            builder.Property(p => p.ClaimNumber).HasMaxLength(40).IsRequired();
             builder.Property(p => p.OwnerType).HasMaxLength(40).IsRequired();
             builder.Property(p => p.ClaimType).HasMaxLength(40).IsRequired();
             builder.Property(p => p.ItemCode).HasMaxLength(40).IsRequired();

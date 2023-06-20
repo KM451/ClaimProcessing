@@ -5,9 +5,9 @@ using MediatR;
 
 namespace ClaimProcessing.Application.Claims.Commands.CreateClaim
 {
-    public class CreateClaimCommand : IRequest<int>, IMapFrom<CreateClaimCommand>, 
-                                        IMapFrom<PurchaseDetail>, IMapFrom<SaleDetail>
+    public class CreateClaimCommand : IRequest<int>, IMapFrom<CreateClaimCommand>                
     {
+        public string ClaimNumber { get; set; }
         public string OwnerType { get; set; }
         public string ClaimType { get; set; }
         public string ItemCode { get; set; }

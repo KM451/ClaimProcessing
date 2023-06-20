@@ -18,7 +18,7 @@ namespace ClaimProcessing.Persistance.Configurations
             builder.Property(p => p.ItemName).HasMaxLength(100);
             builder.Property(p => p.ClaimDescription);
             builder.Property(p => p.Remarks);
-            builder.Property(p => p.ClaimStatus).HasMaxLength(40).IsRequired();
+            builder.Property(p => p.ClaimStatus).IsRequired();
             builder.Property(p => p.RmaAvailable).HasDefaultValue(false).IsRequired();
             builder.Property(p => p.CreatedBy).HasMaxLength(40);
             builder.Property(p => p.Created).IsRequired();

@@ -9,8 +9,8 @@ namespace ClaimProcessing.Persistance.Configurations
         public void Configure(EntityTypeBuilder<SaleDetail> builder)
         {
             builder.HasKey(p => p.Id);
-            builder.Property(p => p.SaleInvoiceNo).HasMaxLength(40).IsRequired();
-            builder.Property(p => p.SaleDate).IsRequired();
+            builder.Property(p => p.SaleInvoiceNo).HasDefaultValue("").HasMaxLength(40).IsRequired();
+            builder.Property(p => p.SaleDate).HasDefaultValue(DateTime.MinValue).IsRequired();
             builder.Property(p => p.ClaimId).IsRequired();
             builder.Property(p => p.CreatedBy).HasMaxLength(40).IsRequired();
             builder.Property(p => p.Created).IsRequired();

@@ -10,7 +10,7 @@
         public string SupplierName { get; set; }
         public string? CustomerName { get; set; }
         public string? ItemName { get; set; }
-        public string? ClaimStatus { get; set; }
+        public int ClaimStatus { get; set; }
         public bool RmaAvailable { get; set; } = false;
         public DateTime? ShipmentDate { get; set; }
         

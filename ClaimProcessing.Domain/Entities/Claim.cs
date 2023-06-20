@@ -13,8 +13,8 @@ namespace ClaimProcessing.Domain.Entities
         public string? ItemName { get; set; }
         public string? ClaimDescription { get; set; }
         public string? Remarks { get; set; }
-        public string? ClaimStatus { get; set; }
-        public bool RmaAvailable { get; set; } = false;
+        public int ClaimStatus { get; set; }
+        public bool RmaAvailable { get; set; } 
         public int? ShipmentId { get; set; }
         public Shipment Shipment { get; set; }
         public int SupplierId { get; set; }

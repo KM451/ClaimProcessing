@@ -21,23 +21,6 @@ namespace ClaimProcessing.Application.Claims.Commands.CreateClaim
             _context.Claims.Add(claim);
             await _context.SaveChangesAsync(cancellationToken);
 
-            if (request.PurchaseInvoiceNo != null) 
-            {
-                var purchaseDetail = _mapper.Map<PurchaseDetail>(request);
-                purchaseDetail.ClaimId = claim.Id;
-               
-                _context.PurchaseDetails.Add(purchaseDetail);
-                await _context.SaveChangesAsync(cancellationToken);
-            }
-            if (request.SaleInvoiceNo != null)
-            {
-                var saleDetail = _mapper.Map<SaleDetail>(request);
-                saleDetail.ClaimId = claim.Id;
-                
-                _context.SaleDetails.Add(saleDetail);
-                await _context.SaveChangesAsync(cancellationToken);
-            }
-            
             return claim.Id;
         }
     }

@@ -4,6 +4,7 @@ using ClaimProcessing.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClaimProcessing.Persistance.Migrations
 {
     [DbContext(typeof(ClaimProcessingDbContext))]
-    partial class ClaimProcessingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230621125503_status")]
+    partial class status
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,7 +90,9 @@ namespace ClaimProcessing.Persistance.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("ClaimStatus")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0);
 
                     b.Property<string>("ClaimType")
                         .IsRequired()
@@ -295,10 +300,8 @@ namespace ClaimProcessing.Persistance.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<string>("InternalDocNo")
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasDefaultValue("");
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<DateTime?>("Modified")
                         .HasColumnType("datetime2");
@@ -308,16 +311,12 @@ namespace ClaimProcessing.Persistance.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<DateTime>("PurchaseDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PurchaseInvoiceNo")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasDefaultValue("");
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
@@ -364,16 +363,12 @@ namespace ClaimProcessing.Persistance.Migrations
                         .HasColumnType("nvarchar(40)");
 
                     b.Property<DateTime>("SaleDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SaleInvoiceNo")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
                         .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)")
-                        .HasDefaultValue("");
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");

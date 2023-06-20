@@ -8,12 +8,13 @@ var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").B
 
 Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(configuration).CreateLogger();
 
+Log.Information("Application is starting up");
+
 var builder = WebApplication.CreateBuilder(args);
 
 try
 {
-    Log.Information("Application is starting up");
-    builder.Host.UseSerilog();
+    builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 }
 catch (Exception ex)
 {

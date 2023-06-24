@@ -2,15 +2,19 @@
 using ClaimProcessing.Application.Common.Exceptions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using ClaimProcessing.Domain.Entities;
 
 namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
 {
     public class UpdateClaimCommandHandler : IRequestHandler<UpdateClaimCommand>
     {
         private readonly IClaimProcessingDbContext _context;
-        public UpdateClaimCommandHandler(IClaimProcessingDbContext claimProcessingDbContext)
+        private IMapper _mapper;
+        public UpdateClaimCommandHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
         {
             _context = claimProcessingDbContext;
+            _mapper = mapper;
         }
         public async Task Handle(UpdateClaimCommand request, CancellationToken cancellationToken)
         {
@@ -22,23 +26,10 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
             }
             else
             {
-                claim.OwnerType = request.OwnerType;
-                claim.ClaimType = request.ClaimType;
-                claim.ItemCode = request.ItemCode;
-                claim.Qty = request.Qty;
-                claim.CustomerName = request.CustomerName;
-                claim.ItemName = request.ItemName;
-                claim.ClaimDescription = request.ClaimDescription;
-                claim.Remarks = request.Remarks;
-                claim.ClaimStatus = request.ClaimStatus;
-                claim.SupplierId = request.SupplierId;
-                claim.SaleDetail.SaleInvoiceNo = request?.SaleInvoiceNo ?? "";
-                claim.SaleDetail.SaleDate = request?.SaleDate ?? DateTime.MinValue;
-                claim.PurchaseDetail.PurchaseInvoiceNo = request?.PurchaseInvoiceNo ?? "";
-                claim.PurchaseDetail.PurchaseDate = request?.PurchaseDate ?? DateTime.MinValue;
-                claim.PurchaseDetail.InternalDocNo = request?.InternalDocNo ?? "";
+                _mapper.Map(request, claim);
+                _mapper.Map(request, claim.SaleDetail);
+                _mapper.Map(request, claim.PurchaseDetail);
 
-                //_context.Claims.Update(claim);
                 await _context.SaveChangesAsync(cancellationToken);
             }
 

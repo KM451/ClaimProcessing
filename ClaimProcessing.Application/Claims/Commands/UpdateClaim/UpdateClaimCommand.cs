@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ClaimProcessing.Application.Claims.Commands.CreateClaim;
 using ClaimProcessing.Application.Common.Mappings;
 using ClaimProcessing.Domain.Entities;
 using MediatR;
@@ -25,12 +24,16 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
         public string? PurchaseInvoiceNo { get; set; }
         public DateTime? PurchaseDate { get; set; }
         public string? InternalDocNo { get; set; }
-        public bool RmaAvailable { get; set; }
+        public bool RmaAvailable { get; set; } = false;
         public int? ShipmentId { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UpdateClaimCommand, Claim>();
+            profile.CreateMap<UpdateClaimCommand, Claim>()
+                .ForMember(c => c.Id, map => map.MapFrom(src => src.ClaimId))
+                .ForMember(c => c.SaleDetail, map => map.Ignore())
+                .ForMember(c => c.PurchaseDetail, map => map.Ignore());
+
             profile.CreateMap<UpdateClaimCommand, PurchaseDetail>();
             profile.CreateMap<UpdateClaimCommand, SaleDetail>();
         }

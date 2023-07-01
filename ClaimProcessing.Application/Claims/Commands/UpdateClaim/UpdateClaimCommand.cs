@@ -18,7 +18,7 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
         public string? ItemName { get; set; }
         public string? ClaimDescription { get; set; }
         public string? Remarks { get; set; }
-        public string? ClaimStatus { get; set; }
+        public int ClaimStatus { get; set; }
         public int SupplierId { get; set; }
         public string? SaleInvoiceNo { get; set; }
         public DateTime? SaleDate { get; set; }

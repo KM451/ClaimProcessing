@@ -16,7 +16,7 @@ namespace ClaimProcessing.Application.Claims.Commands.CreateClaim
         public string? ItemName { get; set; }
         public string? ClaimDescription { get; set; }
         public string? Remarks { get; set; }
-        public string? ClaimStatus { get; set; }
+        public int ClaimStatus { get; set; }
         public int SupplierId { get; set; }
         public string? SaleInvoiceNo { get; set; }
         public DateTime? SaleDate { get; set; }
@@ -26,9 +26,19 @@ namespace ClaimProcessing.Application.Claims.Commands.CreateClaim
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateClaimCommand, Claim>();
-            profile.CreateMap<CreateClaimCommand, PurchaseDetail>();
-            profile.CreateMap<CreateClaimCommand, SaleDetail>();
+            profile.CreateMap<CreateClaimCommand, Claim>()
+                .ForMember(c => c.SaleDetail, map => map.MapFrom(src => new SaleDetail
+                {
+                    SaleInvoiceNo = src.SaleInvoiceNo,
+                    SaleDate = src.SaleDate ?? DateTime.MinValue,
+                }))
+                .ForMember(c => c.PurchaseDetail, map => map.MapFrom(src => new PurchaseDetail
+                {
+                    PurchaseInvoiceNo = src.PurchaseInvoiceNo,
+                    PurchaseDate = src.PurchaseDate ?? DateTime.MinValue,
+                    InternalDocNo = src.InternalDocNo
+                }));
+
         }
 
     }

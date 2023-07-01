@@ -14,7 +14,7 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
         }
         public async Task Handle(UpdateClaimCommand request, CancellationToken cancellationToken)
         {
-            var claim = await _context.Claims.Where(c => c.Id == request.ClaimId).FirstOrDefaultAsync(cancellationToken);
+            var claim = await _context.Claims.Include(x => x.SaleDetail).Include(x => x.PurchaseDetail).Where(c => c.Id == request.ClaimId).FirstOrDefaultAsync(cancellationToken);
 
             if (claim == null)
             {
@@ -38,7 +38,7 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
                 claim.PurchaseDetail.PurchaseDate = request?.PurchaseDate ?? DateTime.MinValue;
                 claim.PurchaseDetail.InternalDocNo = request?.InternalDocNo ?? "";
 
-                _context.Claims.Update(claim);
+                //_context.Claims.Update(claim);
                 await _context.SaveChangesAsync(cancellationToken);
             }
 

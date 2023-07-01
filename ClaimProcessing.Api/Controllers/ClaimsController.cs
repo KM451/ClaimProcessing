@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.Claims.Commands.CreateClaim;
+using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
 using ClaimProcessing.Application.Claims.Queries.GetClaimDetail;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,13 @@ namespace ClaimProcessing.Api.Controllers
         {
             var result = await Mediator.Send(command);
             return Ok(result);
+        }
+
+        [HttpPatch]
+        public async Task<IActionResult> UpdateClaim(UpdateClaimCommand command)
+        {
+            await Mediator.Send(command);
+            return Ok();
         }
 
     }

@@ -22,7 +22,10 @@ namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
                 .Include(c => c.Supplier)
                 .ToListAsync(cancellationToken);
 
-            var claimsVm = _mapper.Map<AllClaimsShortVm>(claims);
+            var claimsVm = new AllClaimsShortVm
+            {
+                Claims = claims.Select(src => _mapper.Map<AllClaimsShortDto>(src)).ToList()
+            };
 
             return claimsVm;
 

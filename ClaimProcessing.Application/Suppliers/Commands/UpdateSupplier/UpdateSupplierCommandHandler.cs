@@ -1,6 +1,6 @@
-﻿using ClaimProcessing.Application.Common.Interfaces;
+﻿using AutoMapper;
 using ClaimProcessing.Application.Common.Exceptions;
-using ClaimProcessing.Domain.ValueObjects;
+using ClaimProcessing.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,9 +9,11 @@ namespace ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier
     public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierCommand>
     {
         private readonly IClaimProcessingDbContext _context;
-        public UpdateSupplierCommandHandler(IClaimProcessingDbContext claimProcessingDbContext)
+        private IMapper _mapper;
+        public UpdateSupplierCommandHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
         {
             _context = claimProcessingDbContext;
+            _mapper = mapper;
         }
         public async Task Handle(UpdateSupplierCommand request, CancellationToken cancellationToken)
         {
@@ -22,11 +24,8 @@ namespace ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier
             }
             else
             {
-                supplier.Name = request.Name;
-                supplier.Address = new Address(request.Street, request.City, request.Country, request.ZipCode);
-                supplier.ContactPerson = FullName.For(request.ContactPerson);
+                _mapper.Map(request, supplier);
 
-                _context.Suppliers.Update(supplier);
                 await _context.SaveChangesAsync(cancellationToken);
             }
         }

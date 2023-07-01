@@ -1,9 +1,8 @@
-﻿using ClaimProcessing.Application.Common.Interfaces;
+﻿using AutoMapper;
 using ClaimProcessing.Application.Common.Exceptions;
+using ClaimProcessing.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using AutoMapper;
-using ClaimProcessing.Domain.Entities;
 
 namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
 {

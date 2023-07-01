@@ -24,7 +24,7 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
         public string? PurchaseInvoiceNo { get; set; }
         public DateTime? PurchaseDate { get; set; }
         public string? InternalDocNo { get; set; }
-        public bool RmaAvailable { get; set; } = false;
+        public bool RmaAvailable { get; set; }
         public int? ShipmentId { get; set; }
 
         public void Mapping(Profile profile)

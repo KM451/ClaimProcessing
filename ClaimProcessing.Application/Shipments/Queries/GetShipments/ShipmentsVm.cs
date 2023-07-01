@@ -4,19 +4,8 @@ using ClaimProcessing.Domain.Entities;
 
 namespace ClaimProcessing.Application.Shipments.Queries.GetShipments
 {
-    public class ShipmentsVm : IMapFrom<Shipment>
+    public class ShipmentsVm
     {
         public ICollection<ShipmentsDto> Shipments { get; set; }
-
-        public void Mapping(Profile profile)
-        {
-            profile.CreateMap<Shipment, ShipmentsVm>()
-                .ForMember(s => s.Shipments, map => map.MapFrom(src => new ShipmentsDto
-                {
-                    ShipmentId = src.Id,
-                    ShipmentDate = src.ShipmentDate,
-                    SupplierName = src.Supplier.Name
-                }));
-        }
     }
 }

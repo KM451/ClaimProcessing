@@ -21,7 +21,10 @@ namespace ClaimProcessing.Application.Suppliers.Queries.GetSuppliers
                 .Where(p => p.StatusId != 0)
                 .ToListAsync(cancellationToken);
 
-            var suppliersVm = _mapper.Map<SuppliersVm>(suppliers);
+            var suppliersVm = new SuppliersVm
+            {
+                Suppliers = suppliers.Select(src => _mapper.Map<SuppliersDto>(src)).ToList()
+            };
 
             return suppliersVm;
         }

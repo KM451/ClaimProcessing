@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Exceptions;
 using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Packagings.Commands.UpdatePackaging
 {
-    public class UpdatePackagingCommandHandler : IRequestHandler<UpdatePackagingCommand>
+    public class UpdatePackagingCommandHandler : IRequestHandler<UpdatePackagingCommand, int>
     {
         private readonly IClaimProcessingDbContext _context;
         private IMapper _mapper;
@@ -17,20 +17,24 @@ namespace ClaimProcessing.Application.Packagings.Commands.UpdatePackaging
             _mapper = mapper;
         }
 
-        public async Task Handle(UpdatePackagingCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(UpdatePackagingCommand request, CancellationToken cancellationToken)
         {
             var packaging = await _context.Packagings.Where(p => p.Id == request.PackagingId).FirstOrDefaultAsync(cancellationToken);
 
             if (packaging == null)
             {
-                throw new NullException(request.PackagingId);
+                request.PackagingId = 0;
+                packaging = _mapper.Map<Packaging>(request);
+                _context.Packagings.Add(packaging);
             }
             else
             {
                 _mapper.Map(request, packaging);
-               
-                await _context.SaveChangesAsync(cancellationToken);
             }
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return packaging.Id;
         }
     }
 }

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
 {
-    public class UpdateClaimCommand : IRequest, IMapFrom<UpdateClaimCommand>                               
+    public class UpdateClaimCommand : IRequest<int>, IMapFrom<UpdateClaimCommand>
     {
         public int ClaimId { get; set; }
         public string ClaimNumber { get; set; }
@@ -30,12 +30,9 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
         public void Mapping(Profile profile)
         {
             profile.CreateMap<UpdateClaimCommand, Claim>()
-                .ForMember(c => c.Id, map => map.MapFrom(src => src.ClaimId))
-                .ForMember(c => c.SaleDetail, map => map.Ignore())
-                .ForMember(c => c.PurchaseDetail, map => map.Ignore());
-
-            profile.CreateMap<UpdateClaimCommand, PurchaseDetail>();
+                .ForMember(c => c.Id, map => map.MapFrom(src => src.ClaimId));
             profile.CreateMap<UpdateClaimCommand, SaleDetail>();
+            profile.CreateMap<UpdateClaimCommand, PurchaseDetail>();
         }
 
     }

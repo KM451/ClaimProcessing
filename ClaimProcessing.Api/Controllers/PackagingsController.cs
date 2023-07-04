@@ -1,4 +1,6 @@
-﻿using ClaimProcessing.Application.Packagings.Commands.CreatePackaging;
+﻿using ClaimProcessing.Application.FotoUrls.Commands.DeleteFotoUrl;
+using ClaimProcessing.Application.Packagings.Commands.CreatePackaging;
+using ClaimProcessing.Application.Packagings.Commands.DeletePackaging;
 using ClaimProcessing.Application.Packagings.Commands.UpdatePackaging;
 using ClaimProcessing.Application.Packagings.Queries.GetPackaging;
 using Microsoft.AspNetCore.Mvc;
@@ -22,12 +24,22 @@ namespace ClaimProcessing.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdatePackaging(UpdatePackagingCommand command, int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePackaging(UpdatePackagingVm vm, int id)
         {
+            var command = new UpdatePackagingCommand();
+            command = (UpdatePackagingCommand)vm;
             command.PackagingId = id;
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePackaging(int id)
+        {
+            var command = new DeletePackagingCommand { PackagingId = id };
             await Mediator.Send(command);
-            return Ok();
+            return NoContent();
         }
     }
     

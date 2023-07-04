@@ -1,4 +1,6 @@
-﻿using ClaimProcessing.Application.FotoUrls.Commands.CreateFotoUrl;
+﻿using ClaimProcessing.Application.Claims.Commands.DeleteClaim;
+using ClaimProcessing.Application.FotoUrls.Commands.CreateFotoUrl;
+using ClaimProcessing.Application.FotoUrls.Commands.DeleteFotoUrl;
 using ClaimProcessing.Application.FotoUrls.Queries.GetFotoUrl;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +21,14 @@ namespace ClaimProcessing.Api.Controllers
         {
             var result = await Mediator.Send(command);
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteFotoUrl(int id)
+        {
+            var command = new DeleteFotoUrlCommand { FotoUrlId = id };
+            await Mediator.Send(command);
+            return NoContent();
         }
     }
 }

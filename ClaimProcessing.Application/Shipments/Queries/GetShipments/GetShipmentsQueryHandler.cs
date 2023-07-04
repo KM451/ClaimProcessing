@@ -22,7 +22,10 @@ namespace ClaimProcessing.Application.Shipments.Queries.GetShipments
                 .Include(c => c.Supplier)
                 .ToListAsync(cancellationToken);
 
-            var shipmentsVm = _mapper.Map<ShipmentsVm>(shipments);
+            var shipmentsVm = new ShipmentsVm
+            {
+                Shipments = shipments.Select(src => _mapper.Map<ShipmentsDto>(src)).ToList()
+            };
 
             return shipmentsVm;
         }

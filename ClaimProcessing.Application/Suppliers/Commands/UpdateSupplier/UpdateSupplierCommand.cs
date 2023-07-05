@@ -6,7 +6,7 @@ using MediatR;
 
 namespace ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier
 {
-    public class UpdateSupplierCommand : IRequest, IMapFrom<UpdateSupplierCommand>
+    public class UpdateSupplierCommand : IRequest<int>, IMapFrom<UpdateSupplierCommand>
     {
         public int SupplierId { get; set; }
         public string Name { get; set; }

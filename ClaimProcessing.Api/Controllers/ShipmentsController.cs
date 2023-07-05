@@ -1,10 +1,5 @@
-﻿using ClaimProcessing.Application.Claims.Commands.CreateClaim;
-using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
-using ClaimProcessing.Application.Claims.Commands.UpdateShipmentId;
-using ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort;
-using ClaimProcessing.Application.Claims.Queries.GetClaimAttachmentsUrls;
-using ClaimProcessing.Application.Claims.Queries.GetClaimDetail;
-using ClaimProcessing.Application.Shipments.Commands.CreateShipment;
+﻿using ClaimProcessing.Application.Shipments.Commands.CreateShipment;
+using ClaimProcessing.Application.Shipments.Commands.DeleteShipment;
 using ClaimProcessing.Application.Shipments.Commands.UpdateShipment;
 using ClaimProcessing.Application.Shipments.Queries.GetShipmentClaims;
 using ClaimProcessing.Application.Shipments.Queries.GetShipmentDetail;
@@ -52,12 +47,23 @@ namespace ClaimProcessing.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateShipment(UpdateShipmentCommand command, int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateShipment(UpdateShipmentVm vm, int id)
         {
+            var command = new UpdateShipmentCommand();
+            command = (UpdateShipmentCommand)vm;
             command.ShipmentId = id;
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteShipment(int id)
+        {
+            var command = new DeleteShipmentCommand { ShipmentId = id };
+
             await Mediator.Send(command);
-            return Ok();
+            return NoContent();
         }
     }
 }

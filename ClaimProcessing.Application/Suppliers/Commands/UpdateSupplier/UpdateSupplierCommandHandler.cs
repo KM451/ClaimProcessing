@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Exceptions;
 using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier
 {
-    public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierCommand>
+    public class UpdateSupplierCommandHandler : IRequestHandler<UpdateSupplierCommand, int>
     {
         private readonly IClaimProcessingDbContext _context;
         private IMapper _mapper;
@@ -15,19 +15,22 @@ namespace ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier
             _context = claimProcessingDbContext;
             _mapper = mapper;
         }
-        public async Task Handle(UpdateSupplierCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(UpdateSupplierCommand request, CancellationToken cancellationToken)
         {
             var supplier = await _context.Suppliers.Where(s => s.Id == request.SupplierId).FirstOrDefaultAsync(cancellationToken);
             if (supplier == null)
             {
-                throw new NullException(request.SupplierId);
+                request.SupplierId = 0;
+                supplier = _mapper.Map<Supplier>(request);
+                _context.Suppliers.Add(supplier);
             }
             else
             {
                 _mapper.Map(request, supplier);
-
-                await _context.SaveChangesAsync(cancellationToken);
             }
+
+            await _context.SaveChangesAsync(cancellationToken);
+            return supplier.Id;
         }
     }
 }

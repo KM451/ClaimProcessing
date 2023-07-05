@@ -17,8 +17,9 @@ namespace ClaimProcessing.Application.Suppliers.Queries.GetSupplierClaims
         public async Task<SupplierClaimsVm> Handle(GetSupplierClaimsQuery request, CancellationToken cancellationToken)
         {
             var supplierClaims = await _context.Claims
-                .Where(p => p.StatusId != 0 && p.SupplierId == request.SupplierId)
                 .Include(p => p.Shipment)
+                .Include(p => p.Supplier)
+                .Where(p => p.StatusId != 0 && p.SupplierId == request.SupplierId)
                 .ToListAsync(cancellationToken);
 
             var supplierClaimsVm = new SupplierClaimsVm

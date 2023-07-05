@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ClaimProcessing.Application.Shipments.Commands.UpdateShipment
 {
-    public class UpdateShipmentCommand : IRequest, IMapFrom<UpdateShipmentCommand>
+    public class UpdateShipmentCommand : IRequest<int>, IMapFrom<UpdateShipmentCommand>
     {
         public int ShipmentId { get; set; }
         public DateTime ShipmentDate { get; set; }

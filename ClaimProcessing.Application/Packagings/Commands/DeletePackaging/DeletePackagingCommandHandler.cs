@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Domain.ValueObjects;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,10 @@ namespace ClaimProcessing.Application.Packagings.Commands.DeletePackaging
         public async Task Handle(DeletePackagingCommand request, CancellationToken cancellationToken)
         {
             var packaging = await _context.Packagings.Where(p => p.Id == request.PackagingId).FirstOrDefaultAsync(cancellationToken);
+            var dimensions = new Dimensions(packaging.Dimensions.Height, packaging.Dimensions.Width, packaging.Dimensions.Depth);
+            
             _context.Packagings.Remove(packaging);
+            packaging.Dimensions = dimensions;
 
             await _context.SaveChangesAsync(cancellationToken);
         }

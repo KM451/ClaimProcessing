@@ -6,7 +6,7 @@ using MediatR;
 
 namespace ClaimProcessing.Application.Packagings.Commands.UpdatePackaging
 {
-    public class UpdatePackagingCommand : IRequest, IMapFrom<UpdatePackagingCommand>
+    public class UpdatePackagingCommand : IRequest<int>, IMapFrom<UpdatePackagingCommand>
     {
         public int PackagingId { get; set; }
         public string Type { get; set; }
@@ -15,6 +15,7 @@ namespace ClaimProcessing.Application.Packagings.Commands.UpdatePackaging
         public double Depth { get; set; }
         public decimal Weight { get; set; }
         public string Notes { get; set; }
+        public int ShipmentId { get; set; }
 
         public void Mapping(Profile profile)
         {

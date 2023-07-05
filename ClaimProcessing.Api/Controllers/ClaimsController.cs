@@ -1,4 +1,6 @@
-﻿using ClaimProcessing.Application.Claims.Commands.CreateClaim;
+﻿using ClaimProcessing.Application.AttachmentUrls.Commands.DeleteAttachmentUrl;
+using ClaimProcessing.Application.Claims.Commands.CreateClaim;
+using ClaimProcessing.Application.Claims.Commands.DeleteClaim;
 using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
 using ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus;
 using ClaimProcessing.Application.Claims.Commands.UpdateRmaAvailability;
@@ -69,13 +71,23 @@ namespace ClaimProcessing.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateClaim(UpdateClaimCommand command, int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateClaim(UpdateClaimVm vm, int id)
         {
+            var command = new UpdateClaimCommand();
+            command = (UpdateClaimCommand)vm;
             command.ClaimId = id;
-            await Mediator.Send(command);
-            return Ok();
+            var result = await Mediator.Send(command);
+            return Ok(result);
         }
+
+        //HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateClaim(UpdateClaimCommand command, int id)
+        //{
+        //    command.ClaimId = id;
+        //    var result = await Mediator.Send(command);
+        //    return Ok(result);
+        //}
 
         [HttpPatch("{id}/ClaimStatus")]
         public async Task<IActionResult> UpdateClaimStatus(int id, int claimStatus)
@@ -99,6 +111,14 @@ namespace ClaimProcessing.Api.Controllers
             var command = new UpdateShipmentIdCommand { ClaimId = id, ShipmentId = shipmentId };
             await Mediator.Send(command);
             return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteClaim(int id)
+        {
+            var command = new DeleteClaimCommand { ClaimId = id };
+            await Mediator.Send(command);
+            return NoContent();
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.AttachmentUrls.Commands.CreateAttachmentUrl;
+using ClaimProcessing.Application.AttachmentUrls.Commands.DeleteAttachmentUrl;
 using ClaimProcessing.Application.AttachmentUrls.Queries.GetAttachmentUrl;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,6 +20,15 @@ namespace ClaimProcessing.Api.Controllers
         {
             var result = await Mediator.Send(command);
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAttachmentUrl(int id)
+        {
+            var command = new DeleteAttachmentUrlCommand { AttachmentUrlId = id };
+
+            await Mediator.Send(command);
+            return NoContent();
         }
     }
 }

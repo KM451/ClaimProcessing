@@ -21,8 +21,8 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
 
             if (claim == null)
             {
-                request.ClaimId = 0;
                 claim = _mapper.Map<Claim>(request);
+                claim.Id = 0;
                 claim.SaleDetail = _mapper.Map<SaleDetail>(request);
                 claim.PurchaseDetail = _mapper.Map<PurchaseDetail>(request);
                 _context.Claims.Add(claim);

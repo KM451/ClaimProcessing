@@ -1,5 +1,4 @@
-﻿using ClaimProcessing.Application.AttachmentUrls.Commands.DeleteAttachmentUrl;
-using ClaimProcessing.Application.Claims.Commands.CreateClaim;
+﻿using ClaimProcessing.Application.Claims.Commands.CreateClaim;
 using ClaimProcessing.Application.Claims.Commands.DeleteClaim;
 using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
 using ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus;
@@ -72,22 +71,12 @@ namespace ClaimProcessing.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateClaim(UpdateClaimVm vm, int id)
+        public async Task<IActionResult> UpdateClaim(UpdateClaimCommand command, int id)
         {
-            var command = new UpdateClaimCommand();
-            command = (UpdateClaimCommand)vm;
-            command.ClaimId = id;
+            command.SetId(id);
             var result = await Mediator.Send(command);
             return Ok(result);
         }
-
-        //HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateClaim(UpdateClaimCommand command, int id)
-        //{
-        //    command.ClaimId = id;
-        //    var result = await Mediator.Send(command);
-        //    return Ok(result);
-        //}
 
         [HttpPatch("{id}/ClaimStatus")]
         public async Task<IActionResult> UpdateClaimStatus(int id, int claimStatus)

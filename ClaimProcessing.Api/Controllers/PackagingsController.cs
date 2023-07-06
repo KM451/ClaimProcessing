@@ -25,11 +25,9 @@ namespace ClaimProcessing.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePackaging(UpdatePackagingVm vm, int id)
+        public async Task<IActionResult> UpdatePackaging(UpdatePackagingCommand command, int id)
         {
-            var command = new UpdatePackagingCommand();
-            command = (UpdatePackagingCommand)vm;
-            command.PackagingId = id;
+            command.SetId(id);
             var result = await Mediator.Send(command);
             return Ok(result);
         }

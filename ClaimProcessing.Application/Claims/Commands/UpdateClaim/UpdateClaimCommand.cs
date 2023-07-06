@@ -7,7 +7,7 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
 {
     public class UpdateClaimCommand : IRequest<int>, IMapFrom<UpdateClaimCommand>
     {
-        public int ClaimId { get; set; }
+        public int ClaimId { get; private set; }
         public string ClaimNumber { get; set; }
         public string OwnerType { get; set; }
         public string ClaimType { get; set; }
@@ -26,6 +26,11 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
         public string? InternalDocNo { get; set; }
         public bool RmaAvailable { get; set; }
         public int? ShipmentId { get; set; }
+
+        public void SetId(int id)
+        {
+            ClaimId = id;
+        }
 
         public void Mapping(Profile profile)
         {

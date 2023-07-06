@@ -22,8 +22,8 @@ namespace ClaimProcessing.Application.Shipments.Commands.UpdateShipment
            
             if (shipment == null)
             {
-                request.ShipmentId = 0;
                 shipment = _mapper.Map<Shipment>(request);
+                shipment.Id = 0;
                 _context.Shipments.Add(shipment);
             }
             else

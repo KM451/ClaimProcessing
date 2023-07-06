@@ -8,7 +8,8 @@ namespace ClaimProcessing.Application.Packagings.Commands.UpdatePackaging
 {
     public class UpdatePackagingCommand : IRequest<int>, IMapFrom<UpdatePackagingCommand>
     {
-        public int PackagingId { get; set; }
+        
+        public int PackagingId { get; private set; }
         public string Type { get; set; }
         public double Height { get; set; }
         public double Width { get; set; }
@@ -17,6 +18,10 @@ namespace ClaimProcessing.Application.Packagings.Commands.UpdatePackaging
         public string Notes { get; set; }
         public int ShipmentId { get; set; }
 
+        public void SetId(int id)
+        {
+            PackagingId = id;
+        }
         public void Mapping(Profile profile)
         {
             profile.CreateMap<UpdatePackagingCommand, Packaging>()

@@ -23,8 +23,8 @@ namespace ClaimProcessing.Application.Packagings.Commands.UpdatePackaging
 
             if (packaging == null)
             {
-                request.PackagingId = 0;
                 packaging = _mapper.Map<Packaging>(request);
+                packaging.Id = 0;
                 _context.Packagings.Add(packaging);
             }
             else

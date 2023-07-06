@@ -1,6 +1,5 @@
-﻿using ClaimProcessing.Application.Claims.Commands.CreateClaim;
-using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
-using ClaimProcessing.Application.Suppliers.Commands.CreateSupplier;
+﻿using ClaimProcessing.Application.Suppliers.Commands.CreateSupplier;
+using ClaimProcessing.Application.Suppliers.Commands.DeleteSupplier;
 using ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier;
 using ClaimProcessing.Application.Suppliers.Queries.GetSupplierClaims;
 using ClaimProcessing.Application.Suppliers.Queries.GetSupplierDetail;
@@ -48,12 +47,23 @@ namespace ClaimProcessing.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPatch("{id}")]
-        public async Task<IActionResult> UpdateSupplier(UpdateSupplierCommand command, int id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateSupplier(UpdateSupplierVm vm, int id)
         {
+            var command = new UpdateSupplierCommand();
+            command = (UpdateSupplierCommand)vm;
             command.SupplierId = id;
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSupplier(int id)
+        {
+            var command = new DeleteSupplierCommand { SupplierId = id };
+
             await Mediator.Send(command);
-            return Ok();
+            return NoContent();
         }
     }
 }

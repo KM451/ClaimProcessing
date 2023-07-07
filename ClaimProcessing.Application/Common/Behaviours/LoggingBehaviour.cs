@@ -10,7 +10,7 @@ namespace ClaimProcessing.Application.Common.Behaviours
         {
             _logger = logger;        
         }
-        public async  Task Process(TRequest request, CancellationToken cancellationToken)
+        public async Task Process(TRequest request, CancellationToken cancellationToken)
         {
             var requestName = typeof(TRequest).Name;
 

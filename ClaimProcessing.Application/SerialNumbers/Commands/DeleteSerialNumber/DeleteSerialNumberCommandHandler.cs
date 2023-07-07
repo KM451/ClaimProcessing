@@ -1,4 +1,5 @@
-﻿using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Exceptions;
+using ClaimProcessing.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,9 +16,15 @@ namespace ClaimProcessing.Application.SerialNumbers.Commands.DeleteSerialNumber
         public async Task Handle(DeleteSerialNumberCommand request, CancellationToken cancellationToken)
         {
             var serialNumber = await _context.SerialNumbers.Where(s => s.Id == request.SerialNumberId).FirstOrDefaultAsync(cancellationToken);
-            _context.SerialNumbers.Remove(serialNumber);
 
+            if (serialNumber == null)
+            {
+                throw new NullException(request.SerialNumberId);
+            }
+
+            _context.SerialNumbers.Remove(serialNumber);
             await _context.SaveChangesAsync(cancellationToken);
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Exceptions;
+using ClaimProcessing.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,9 +16,14 @@ namespace ClaimProcessing.Application.Shipments.Commands.DeleteShipment
         {
             var shipment = await _context.Shipments.Where(s => s.Id == request.ShipmentId).FirstOrDefaultAsync(cancellationToken);
 
-            _context.Shipments.Remove(shipment);
+            if (shipment == null)
+            {
+                throw new NullException(request.ShipmentId);
+            }
 
+            _context.Shipments.Remove(shipment);
             await _context.SaveChangesAsync(cancellationToken);
+
         }
     }
 }

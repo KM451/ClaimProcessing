@@ -18,7 +18,7 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus
 
         public async Task Handle(UpdateClaimStatusCommand request, CancellationToken cancellationToken)
         {
-            var claim = await _context.Claims.Where(c => c.Id == request.ClaimId).FirstOrDefaultAsync(cancellationToken);
+            var claim = await _context.Claims.Where(c => c.StatusId != 0 && c.Id == request.ClaimId).FirstOrDefaultAsync(cancellationToken);
 
             if (claim == null)
             {
@@ -27,7 +27,6 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus
             else
             {
                 claim = _mapper.Map(request, claim);
-
                 await _context.SaveChangesAsync(cancellationToken);
             }
         }

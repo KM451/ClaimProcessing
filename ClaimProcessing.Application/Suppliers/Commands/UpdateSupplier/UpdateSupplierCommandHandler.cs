@@ -20,8 +20,8 @@ namespace ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier
             var supplier = await _context.Suppliers.Where(s => s.Id == request.SupplierId).FirstOrDefaultAsync(cancellationToken);
             if (supplier == null)
             {
-                request.SupplierId = 0;
                 supplier = _mapper.Map<Supplier>(request);
+                supplier.Id = 0;
                 _context.Suppliers.Add(supplier);
             }
             else

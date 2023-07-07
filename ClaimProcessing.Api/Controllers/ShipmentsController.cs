@@ -48,11 +48,9 @@ namespace ClaimProcessing.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateShipment(UpdateShipmentVm vm, int id)
+        public async Task<IActionResult> UpdateShipment(UpdateShipmentCommand command, int id)
         {
-            var command = new UpdateShipmentCommand();
-            command = (UpdateShipmentCommand)vm;
-            command.ShipmentId = id;
+            command.SetId(id);
             var result = await Mediator.Send(command);
             return Ok(result);
         }

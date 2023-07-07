@@ -38,9 +38,9 @@ namespace ClaimProcessing.Domain.ValueObjects
                 fullnameObj.FirstName = nameSet[0].Trim();
                 fullnameObj.LastName = nameSet[1].Trim();
             }
-            catch (Exception ex)
+            catch
             { 
-                throw new FullNameException(fullname, ex);
+                throw new FullNameException(fullname);
             }
             return fullnameObj;
         }

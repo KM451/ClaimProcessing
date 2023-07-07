@@ -17,7 +17,7 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
         }
         public async Task<int> Handle(UpdateClaimCommand request, CancellationToken cancellationToken)
         {
-            var claim = await _context.Claims.Include(x => x.SaleDetail).Include(x => x.PurchaseDetail).Where(c => c.Id == request.ClaimId).FirstOrDefaultAsync(cancellationToken);
+            var claim = await _context.Claims.Include(x => x.SaleDetail).Include(x => x.PurchaseDetail).Where(c => c.StatusId != 0 && c.Id == request.ClaimId).FirstOrDefaultAsync(cancellationToken);
 
             if (claim == null)
             {

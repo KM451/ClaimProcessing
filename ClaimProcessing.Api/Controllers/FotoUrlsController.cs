@@ -9,6 +9,11 @@ namespace ClaimProcessing.Api.Controllers
     [Route("api/v1/foto-urls")]
     public class FotoUrlsController : BaseController
     {
+        /// <summary>
+        /// Get the FotoUrl path specified by it Id number
+        /// </summary>
+        /// <param name="id">Id of FotoUrl</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<FotoUrlVm>> GetFotoUrl(int id)
         {
@@ -16,6 +21,11 @@ namespace ClaimProcessing.Api.Controllers
             return vm;
         }
 
+        /// <summary>
+        /// Add the FotoUrl path to the Claim
+        /// </summary>
+        /// <param name="command">Data of the new FotoUrl object</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateFotoUrl(CreateFotoUrlCommand command)
         {
@@ -23,6 +33,11 @@ namespace ClaimProcessing.Api.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Delete the FotoUrl path specified by Id number
+        /// </summary>
+        /// <param name="id">FotoUrl Id number</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFotoUrl(int id)
         {

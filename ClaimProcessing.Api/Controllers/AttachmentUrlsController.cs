@@ -8,6 +8,11 @@ namespace ClaimProcessing.Api.Controllers
     [Route("api/v1/attachment-urls")]
     public class AttachmentUrlsController : BaseController
     {
+        /// <summary>
+        /// Get the AttachmentUrl path specified by Id number
+        /// </summary>
+        /// <param name="id">Id of AttachmentUrl</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<AttachmentUrlVm>> GetAttachmentUrl(int id)
         {
@@ -15,6 +20,11 @@ namespace ClaimProcessing.Api.Controllers
             return vm;
         }
 
+        /// <summary>
+        /// Add the AttachmentUrl path to the Claim
+        /// </summary>
+        /// <param name="command">Data of the new AttachmentUrl object</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateAttachmentUrl(CreateAttachmentUrlCommand command)
         {
@@ -22,6 +32,11 @@ namespace ClaimProcessing.Api.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Delete the AttachmentUrl path specified by Id number
+        /// </summary>
+        /// <param name="id">Id number of AttachmentUrl </param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAttachmentUrl(int id)
         {

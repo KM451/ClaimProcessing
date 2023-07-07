@@ -12,6 +12,10 @@ namespace ClaimProcessing.Api.Controllers
     [Route("api/v1/shipments")]
     public class ShipmentsController : BaseController
     {
+        /// <summary>
+        /// Get the list of Shipmets
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<ShipmentsVm>> GetShipments()
         {
@@ -19,6 +23,11 @@ namespace ClaimProcessing.Api.Controllers
             return vm;
         }
 
+        /// <summary>
+        /// Get the detail data of the Shipment specified by Id number
+        /// </summary>
+        /// <param name="id">The Shipment Id number</param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<ShipmentDetailVm>> GetShipmentDetail(int id)
         {
@@ -26,6 +35,11 @@ namespace ClaimProcessing.Api.Controllers
             return vm;
         }
 
+        /// <summary>
+        /// Get the list of Claims assigned to the Shipment specified by Id number
+        /// </summary>
+        /// <param name="id">Id number of the Shipment</param>
+        /// <returns></returns>
         [HttpGet("{id}/Claims")]
         public async Task<ActionResult<ShipmentClaimsVm>> GetShipmentClaims(int id)
         {
@@ -33,6 +47,11 @@ namespace ClaimProcessing.Api.Controllers
             return vm;
         }
 
+        /// <summary>
+        /// Get the list of Packagings included in the Shipment specified by Id number
+        /// </summary>
+        /// <param name="id">Id number of the Shipment</param>
+        /// <returns></returns>
         [HttpGet("{id}/Packagings")]
         public async Task<ActionResult<ShipmentPackagingsVm>> GetShipmentPackagings(int id)
         {
@@ -40,6 +59,11 @@ namespace ClaimProcessing.Api.Controllers
             return vm;
         }
 
+        /// <summary>
+        /// Create the new Shipment
+        /// </summary>
+        /// <param name="command">The new Shipment data</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateShipment(CreateShipmentCommand command)
         {
@@ -47,6 +71,12 @@ namespace ClaimProcessing.Api.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Update the Shipment data specified by Id number or create the new if given Id not exists.
+        /// </summary>
+        /// <param name="command">The Shipment data</param>
+        /// <param name="id">The Shipment Id number</param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateShipment(UpdateShipmentCommand command, int id)
         {
@@ -55,6 +85,11 @@ namespace ClaimProcessing.Api.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Delete the Shipment specified by Id number
+        /// </summary>
+        /// <param name="id">Id number of the Shipment</param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteShipment(int id)
         {

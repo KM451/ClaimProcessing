@@ -5,5 +5,6 @@ namespace ClaimProcessing.Application.Suppliers.Queries.GetSupplierClaims
     public class GetSupplierClaimsQuery : IRequest<SupplierClaimsVm>
     {
         public int SupplierId { get; set; }
+        public string? Filter { get; set; }
     }
 }

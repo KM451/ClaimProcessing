@@ -9,17 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{B4CB2768-08F7-449F-AF40-32CDFBF1C2A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClaimProcessing.Application", "ClaimProcessing.Application\ClaimProcessing.Application.csproj", "{CEBB8DFA-D4C9-44C3-B2ED-D30D6DFF6864}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClaimProcessing.Application", "ClaimProcessing.Application\ClaimProcessing.Application.csproj", "{CEBB8DFA-D4C9-44C3-B2ED-D30D6DFF6864}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClaimProcessing.Common", "ClaimProcessing.Common\ClaimProcessing.Common.csproj", "{2586D624-04BD-45FC-BAF1-4E2063343BA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClaimProcessing.Common", "ClaimProcessing.Common\ClaimProcessing.Common.csproj", "{2586D624-04BD-45FC-BAF1-4E2063343BA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClaimProcessing.Domain", "ClaimProcessing.Domain\ClaimProcessing.Domain.csproj", "{BD60DA49-B594-4167-8D11-0CBD2C89FDC9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClaimProcessing.Domain", "ClaimProcessing.Domain\ClaimProcessing.Domain.csproj", "{BD60DA49-B594-4167-8D11-0CBD2C89FDC9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClaimProcessing.Infrastructure", "ClaimProcessing.Infrastructure\ClaimProcessing.Infrastructure.csproj", "{99AD8043-8921-4258-A831-921602D3297A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClaimProcessing.Infrastructure", "ClaimProcessing.Infrastructure\ClaimProcessing.Infrastructure.csproj", "{99AD8043-8921-4258-A831-921602D3297A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClaimProcessing.Persistance", "ClaimProcessing.Persistance\ClaimProcessing.Persistance.csproj", "{8CAA4AB5-40F9-4286-98B8-2E6392F4738A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClaimProcessing.Persistance", "ClaimProcessing.Persistance\ClaimProcessing.Persistance.csproj", "{8CAA4AB5-40F9-4286-98B8-2E6392F4738A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClaimProcessing.Api", "ClaimProcessing.Api\ClaimProcessing.Api.csproj", "{93AAFE58-F70F-478C-A3D9-FFC75D2053B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClaimProcessing.Api", "ClaimProcessing.Api\ClaimProcessing.Api.csproj", "{93AAFE58-F70F-478C-A3D9-FFC75D2053B8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

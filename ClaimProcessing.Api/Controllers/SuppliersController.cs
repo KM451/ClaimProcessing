@@ -5,11 +5,13 @@ using ClaimProcessing.Application.Suppliers.Queries.GetSupplierClaims;
 using ClaimProcessing.Application.Suppliers.Queries.GetSupplierDetail;
 using ClaimProcessing.Application.Suppliers.Queries.GetSuppliers;
 using ClaimProcessing.Application.Suppliers.Queries.GetSupplierShipments;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClaimProcessing.Api.Controllers
 {
     [Route("api/v1/suppliers")]
+    
     public class SuppliersController : BaseController
     {
         /// <summary>

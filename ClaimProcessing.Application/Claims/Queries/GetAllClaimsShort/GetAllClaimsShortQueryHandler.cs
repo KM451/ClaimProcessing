@@ -38,8 +38,16 @@ namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
 
                 for (int i = 0; i < phrases.Length; i++)
                 {
+                    if (phrases[i].Trim().Split(" ").Length != 3)
+                    {
+                        throw new InvalidFilterException(phrases[i]);
+                    }
                     var field = phrases[i].Trim().Split(" ")[0].ToString();
                     var key = phrases[i].Trim().Split(" ")[1].ToString();
+                    if (!((key == "eq") || (key == "neq")))
+                    {
+                        throw new InvalidFilterKeyException(key);
+                    }
                     var value = phrases[i].Trim().Split(" ")[2].ToString();
 
 

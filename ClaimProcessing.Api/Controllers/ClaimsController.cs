@@ -9,13 +9,14 @@ using ClaimProcessing.Application.Claims.Queries.GetClaimAttachmentsUrls;
 using ClaimProcessing.Application.Claims.Queries.GetClaimDetail;
 using ClaimProcessing.Application.Claims.Queries.GetClaimFotosUrls;
 using ClaimProcessing.Application.Claims.Queries.GetClaimSerialNumbers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClaimProcessing.Api.Controllers
 {
 
     [Route("api/v1/claims")]
-
+    
     public class ClaimsController : BaseController
     {
         /// <summary>

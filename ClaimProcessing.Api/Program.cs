@@ -17,6 +17,8 @@ Log.Logger = new LoggerConfiguration()
 
 Log.Information("Starting up");
 
+
+
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -30,19 +32,17 @@ try
        .Enrich.WithThreadId() 
        .ReadFrom.Configuration(ctx.Configuration));
 
-
     builder.Services.AddApplication();
     builder.Services.AddInfrastructure(builder.Configuration);
     builder.Services.AddPersistance(builder.Configuration);
     builder.Services.AddControllers();
+    builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+    builder.Services.AddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
 
     builder.Services.AddCors(options =>
     {
         options.AddPolicy("MyAllowSpecificOrgins", policy => policy.WithOrigins("https://localhost:5001"));
     });
-
-    builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-    builder.Services.AddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
 
     builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
     {

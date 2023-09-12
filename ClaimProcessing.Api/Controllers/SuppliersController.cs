@@ -72,9 +72,9 @@ namespace ClaimProcessing.Api.Controllers
         }
 
         /// <summary>
-        /// Create the new Shipment
+        /// Create the new Supplier
         /// </summary>
-        /// <param name="command">The new Shipment data</param>
+        /// <param name="command">The new Supplier data</param>
         /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> CreateSupplier(CreateSupplierCommand command)
@@ -84,10 +84,10 @@ namespace ClaimProcessing.Api.Controllers
         }
 
         /// <summary>
-        /// Update the Shipment data specified by Id number or create the new if given Id not exists.
+        /// Update the Supplier data specified by Id number or create the new if given Id not exists.
         /// </summary>
-        /// <param name="command">The Shipment data</param>
-        /// <param name="id">The Shipment Id number</param>
+        /// <param name="command">The Supplier data</param>
+        /// <param name="id">The Supplier Id number</param>
         /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSupplier(UpdateSupplierCommand command, int id)
@@ -98,9 +98,9 @@ namespace ClaimProcessing.Api.Controllers
         }
 
         /// <summary>
-        /// Delete the Shipment specified by Id number
+        /// Delete the Supplier specified by Id number
         /// </summary>
-        /// <param name="id">The Shipment Id number</param>
+        /// <param name="id">The Supplier Id number</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSupplier(int id)

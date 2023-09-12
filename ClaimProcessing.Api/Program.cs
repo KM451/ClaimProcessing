@@ -122,6 +122,7 @@ try
         {
             c.SwaggerEndpoint("/swagger/v1/swagger.json", "ClaimProcessing");
             c.OAuthClientId("swagger");
+            c.OAuthClientSecret("secret");
             c.OAuth2RedirectUrl("https://localhost:7063/swagger/oauth2-redirect.html");
             c.OAuthScopes("api1");
             c.OAuthUsePkce();

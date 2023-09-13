@@ -2,7 +2,9 @@
 using ClaimProcessing.Application.FotoUrls.Commands.CreateFotoUrl;
 using ClaimProcessing.Application.FotoUrls.Commands.DeleteFotoUrl;
 using ClaimProcessing.Application.FotoUrls.Queries.GetFotoUrl;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace ClaimProcessing.Api.Controllers
 {
@@ -15,6 +17,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">Id of FotoUrl</param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Staff1,Staff2")]
         public async Task<ActionResult<FotoUrlVm>> GetFotoUrl(int id)
         {
             var vm = await Mediator.Send(new GetFotoUrlQuery() { FotoUrlId = id });
@@ -27,6 +30,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="command">Data of the new FotoUrl object</param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Admin,Staff1")]
         public async Task<IActionResult> CreateFotoUrl(CreateFotoUrlCommand command)
         {
             var result = await Mediator.Send(command);
@@ -39,6 +43,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">FotoUrl Id number</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Staff1")]
         public async Task<IActionResult> DeleteFotoUrl(int id)
         {
             var command = new DeleteFotoUrlCommand { FotoUrlId = id };

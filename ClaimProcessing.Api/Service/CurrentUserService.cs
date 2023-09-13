@@ -9,6 +9,8 @@ namespace ClaimProcessing.Api.Service
         public string Email { get; set; }
         public string Name { get; set; }
         public bool IsAuthenticated { get; set; }
+        public string UserId { get; set; }
+
         public CurrentUserService(IHttpContextAccessor httpContextAccessor)
         {
             var email = httpContextAccessor.HttpContext?.User?.FindFirstValue(JwtClaimTypes.Email);
@@ -17,6 +19,9 @@ namespace ClaimProcessing.Api.Service
 
             var name = httpContextAccessor.HttpContext?.User?.FindFirstValue(JwtClaimTypes.Name);
             Name = name;
+
+            var userId = httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+            UserId = userId;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace ClaimProcessing.Domain.Entities
         public string ItemCode { get; set; }
         public decimal Qty { get; set; }
         public string? CustomerName { get; set; }
+        public string? CustomerId { get; set; }
         public string? ItemName { get; set; }
         public string? ClaimDescription { get; set; }
         public string? Remarks { get; set; }

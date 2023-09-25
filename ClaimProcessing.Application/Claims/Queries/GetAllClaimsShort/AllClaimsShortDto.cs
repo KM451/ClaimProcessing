@@ -17,7 +17,8 @@ namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
         {
             profile.CreateMap<Claim, AllClaimsShortDto>()
                 .ForMember(s => s.ClaimId, map => map.MapFrom(src => src.Id))
-                .ForMember(s => s.SupplierName, map => map.MapFrom(src => src.Supplier.Name));
+                .ForMember(s => s.SupplierName, map => map.MapFrom(src => src.Supplier.Name))
+                .ForMember(s => s.ClaimCreationDate, map => map.MapFrom(src => src.Created));
         }
     }
 }

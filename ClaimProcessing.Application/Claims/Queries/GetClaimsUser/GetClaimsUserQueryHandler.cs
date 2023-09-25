@@ -4,23 +4,25 @@ using ClaimProcessing.Application.Common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
+namespace ClaimProcessing.Application.Claims.Queries.GetClaimsUser
 {
-    public class GetAllClaimsShortQueryHandler : IRequestHandler<GetAllClaimsShortQuery, AllClaimsShortVm>
+    public class GetClaimsUserQueryHandler : IRequestHandler<GetClaimsUserQuery, ClaimsUserVm>
     {
         private readonly IClaimProcessingDbContext _context;
         private IMapper _mapper;
+        private readonly ICurrentUserService _userService;
 
-        public GetAllClaimsShortQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper, ICurrentUserService userService)
+        public GetClaimsUserQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper, ICurrentUserService userService)
         {
             _context = claimProcessingDbContext;
             _mapper = mapper;
+            _userService = userService;
         }
-
-        public async Task<AllClaimsShortVm> Handle(GetAllClaimsShortQuery request, CancellationToken cancellationToken)
+        public async Task<ClaimsUserVm> Handle(GetClaimsUserQuery request, CancellationToken cancellationToken)
         {
             var claims = await _context.Claims
                 .Where(p => p.StatusId != 0)
+                .Where(p => p.CustomerId == _userService.UserId)
                 .Include(c => c.Supplier)
                 .ToListAsync(cancellationToken);
 
@@ -31,7 +33,7 @@ namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
 
             if (request.Filter == null)
             {
-                claims = request.Sort == "desc" ? claims.OrderByDescending(i => i.Id).ToList() : claims;
+                claims = request.Sort == "desc" ? claims.OrderByDescending(i => i.Created).ToList() : claims;
             }
             else
             {
@@ -54,39 +56,26 @@ namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
 
                     switch (field)
                     {
-                        case "OwnerType":
-                            claims = key == "eq" ? claims.Where(i => i.OwnerType == value).ToList() : claims.Where(i => i.OwnerType != value).ToList();
-                            break;
-                        case "ClaimType":
-                            claims = key == "eq" ? claims.Where(i => i.ClaimType == value).ToList() : claims.Where(i => i.ClaimType != value).ToList();
+                        case "ClaimNumber":
+                            claims = key == "eq" ? claims.Where(i => i.ClaimNumber == value).ToList() : claims.Where(i => i.ClaimNumber != value).ToList();
                             break;
                         case "ItemCode":
                             claims = key == "eq" ? claims.Where(i => i.ItemCode == value).ToList() : claims.Where(i => i.ItemCode != value).ToList();
                             break;
-                        case "Customer":
-                            claims = key == "eq" ? claims.Where(i => i.CustomerName == value).ToList() : claims.Where(i => i.CustomerName != value).ToList();
-                            break;
                         case "ClaimStatus":
                             claims = key == "eq" ? claims.Where(i => i.ClaimStatus.ToString() == value).ToList() : claims.Where(i => i.ClaimStatus.ToString() != value).ToList();
-                            break;
-                        case "RmaAvailable":
-                            claims = key == "eq" ? claims.Where(i => i.RmaAvailable == (value == "true" ? true : false)).ToList() : claims.Where(i => i.RmaAvailable != (value == "true" ? true : false)).ToList();
-                            break;
-                        case "SupplierId":
-                            claims = key == "eq" ? claims.Where(i => i.SupplierId.ToString() == value).ToList() : claims.Where(i => i.SupplierId.ToString() != value).ToList();
                             break;
                         default: throw new InvalidFilterFieldException(field);
                     }
                 }
             }
 
-            var claimsVm = new AllClaimsShortVm
+            var claimsVm = new ClaimsUserVm
             {
-                Claims = claims.Select(src => _mapper.Map<AllClaimsShortDto>(src)).ToList()
+                Claims = claims.Select(src => _mapper.Map<ClaimsUserDto>(src)).ToList()
             };
 
             return claimsVm;
-
         }
     }
 }

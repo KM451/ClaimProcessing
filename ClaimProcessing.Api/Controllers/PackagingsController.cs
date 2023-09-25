@@ -2,7 +2,9 @@
 using ClaimProcessing.Application.Packagings.Commands.DeletePackaging;
 using ClaimProcessing.Application.Packagings.Commands.UpdatePackaging;
 using ClaimProcessing.Application.Packagings.Queries.GetPackaging;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace ClaimProcessing.Api.Controllers
 {
@@ -15,6 +17,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">Id of Packaging</param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Staff1,Staff2")]
         public async Task<ActionResult<PackagingVm>> GetPackaging(int id)
         {
             var vm = await Mediator.Send(new GetPackagingQuery() { PackagingId = id });
@@ -27,6 +30,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="command">Data of the new Packaging</param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Admin,Staff2")]
         public async Task<IActionResult> CreatePackaging(CreatePackagingCommand command)
         {
             var result = await Mediator.Send(command);
@@ -40,6 +44,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">The Packaging id number</param>
         /// <returns></returns>
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin,Staff2")]
         public async Task<IActionResult> UpdatePackaging(UpdatePackagingCommand command, int id)
         {
             command.SetId(id);
@@ -53,6 +58,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">The Packaging Id number</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Staff2")]
         public async Task<IActionResult> DeletePackaging(int id)
         {
             var command = new DeletePackagingCommand { PackagingId = id };

@@ -1,11 +1,13 @@
 ﻿using ClaimProcessing.Application.AttachmentUrls.Commands.CreateAttachmentUrl;
 using ClaimProcessing.Application.AttachmentUrls.Commands.DeleteAttachmentUrl;
 using ClaimProcessing.Application.AttachmentUrls.Queries.GetAttachmentUrl;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClaimProcessing.Api.Controllers
 {
     [Route("api/v1/attachment-urls")]
+    
     public class AttachmentUrlsController : BaseController
     {
         /// <summary>
@@ -14,6 +16,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">Id of AttachmentUrl</param>
         /// <returns></returns>
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin,Staff1,Staff2")]
         public async Task<ActionResult<AttachmentUrlVm>> GetAttachmentUrl(int id)
         {
             var vm = await Mediator.Send(new GetAttachmentUrlQuery() { AttachmentUrlId = id });
@@ -26,6 +29,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="command">Data of the new AttachmentUrl object</param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Admin,Staff1")]
         public async Task<IActionResult> CreateAttachmentUrl(CreateAttachmentUrlCommand command)
         {
             var result = await Mediator.Send(command);
@@ -38,6 +42,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">Id number of AttachmentUrl </param>
         /// <returns></returns>
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin,Staff1")]
         public async Task<IActionResult> DeleteAttachmentUrl(int id)
         {
             var command = new DeleteAttachmentUrlCommand { AttachmentUrlId = id };

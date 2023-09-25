@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Suppliers.Queries.GetSupplierClaims
 {
-    public class GetSupplierCliamsQueryHandler : IRequestHandler<GetSupplierClaimsQuery, SupplierClaimsVm>
+    public class GetSupplierClaimsQueryHandler : IRequestHandler<GetSupplierClaimsQuery, SupplierClaimsVm>
     {
         private readonly IClaimProcessingDbContext _context;
         private IMapper _mapper;
-        public GetSupplierCliamsQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
+        public GetSupplierClaimsQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
         {
             _context = claimProcessingDbContext;
             _mapper = mapper;

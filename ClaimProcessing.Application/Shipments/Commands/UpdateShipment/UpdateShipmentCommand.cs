@@ -20,7 +20,7 @@ namespace ClaimProcessing.Application.Shipments.Commands.UpdateShipment
         }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UpdateShipmentCommand, Shipment>()
+            profile.CreateMap<UpdateShipmentCommand, Shipment>(MemberList.Source)
                 .ForMember(s => s.Id, map => map.MapFrom(src => src.ShipmentId));
         }
     }

@@ -12,7 +12,8 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateShipmentId
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UpdateShipmentIdCommand, Claim>();
+            profile.CreateMap<UpdateShipmentIdCommand, Claim>(MemberList.Source)
+                .ForSourceMember(s => s.ClaimId, opts => opts.DoNotValidate());
         }
     }
 }

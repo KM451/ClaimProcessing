@@ -17,9 +17,9 @@ namespace ClaimProcessing.Application.Suppliers.Commands.CreateSupplier
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateSupplierCommand, Supplier>()
+            profile.CreateMap<CreateSupplierCommand, Supplier>(MemberList.None)
                 .ForMember(s => s.Address, map => map.MapFrom(src => new Address(src.Street, src.City, src.Country, src.ZipCode)))
-                .ForMember(s => s.ContactPerson, map => map.MapFrom(src => FullName.For(src.ContactPerson))); 
+                .ForMember(s => s.ContactPerson, map => map.MapFrom(src => FullName.For(src.ContactPerson)));       
         }
     }
 }

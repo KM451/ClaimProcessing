@@ -9,13 +9,11 @@ namespace ClaimProcessing.Application.Suppliers.Queries.GetSupplierDetail
     {
         private readonly IClaimProcessingDbContext _context;
         private IMapper _mapper;
-        private readonly ICurrentUserService _userService;
 
-        public GetSupplierDetailQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper, ICurrentUserService userService)
+        public GetSupplierDetailQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
         {
             _context = claimProcessingDbContext;
             _mapper = mapper;
-            _userService = userService;
         }
         public async Task<SupplierDetailVm> Handle(GetSupplierDetailQuery request, CancellationToken cancellationToken)
         {

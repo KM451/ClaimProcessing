@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus
 {
-    public class UpdateClaimStatusCommand : IRequest, IMapFrom<UpdateClaimStatusCommand>
+    public class UpdateClaimStatusCommand : IMapFrom<UpdateClaimStatusCommand>, IRequest
     {
         public int ClaimId { get; set; }
         public int ClaimStatus { get; set; }
@@ -13,7 +13,8 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UpdateClaimStatusCommand, Claim>();
+            profile.CreateMap<UpdateClaimStatusCommand, Claim>(MemberList.Source)
+                .ForSourceMember(s => s.ClaimId, opts => opts.DoNotValidate());
         }
 
     }

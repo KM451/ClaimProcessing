@@ -12,7 +12,8 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateRmaAvailability
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UpdateRmaAvailabilityCommand, Claim>();
+            profile.CreateMap<UpdateRmaAvailabilityCommand, Claim>(MemberList.Source)
+                .ForSourceMember(s => s.ClaimId, opts => opts.DoNotValidate());
         }
     }
 }

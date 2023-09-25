@@ -18,13 +18,16 @@ namespace ClaimProcessing.Application.Packagings.Commands.CreatePackaging
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreatePackagingCommand, Packaging>()
+            profile.CreateMap<CreatePackagingCommand, Packaging>(MemberList.Source)
                 .ForMember(c => c.Dimensions, map => map.MapFrom(src => new Dimensions
                 {
                     Depth = src.Depth,
                     Width = src.Width,
                     Height = src.Height
-                }));
+                }))
+                .ForSourceMember(c => c.Depth, m => m.DoNotValidate())
+                .ForSourceMember(c => c.Width, m => m.DoNotValidate())
+                .ForSourceMember(c => c.Height, m => m.DoNotValidate());
         }
     }
 }

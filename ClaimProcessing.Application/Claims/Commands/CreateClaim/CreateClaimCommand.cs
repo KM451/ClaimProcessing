@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.Internal;
 using ClaimProcessing.Application.Common.Mappings;
 using ClaimProcessing.Domain.Entities;
 using MediatR;
@@ -26,7 +27,7 @@ namespace ClaimProcessing.Application.Claims.Commands.CreateClaim
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateClaimCommand, Claim>()
+            profile.CreateMap<CreateClaimCommand, Claim>(MemberList.Source)
                 .ForMember(c => c.SaleDetail, map => map.MapFrom(src => new SaleDetail
                 {
                     SaleInvoiceNo = src.SaleInvoiceNo,
@@ -37,9 +38,12 @@ namespace ClaimProcessing.Application.Claims.Commands.CreateClaim
                     PurchaseInvoiceNo = src.PurchaseInvoiceNo,
                     PurchaseDate = src.PurchaseDate ?? DateTime.MinValue,
                     InternalDocNo = src.InternalDocNo
-                }));
-
+                }))
+                .ForSourceMember(c => c.SaleInvoiceNo, m => m.DoNotValidate())
+                .ForSourceMember(c => c.SaleDate, m => m.DoNotValidate())
+                .ForSourceMember(c => c.PurchaseInvoiceNo, m => m.DoNotValidate())
+                .ForSourceMember(c => c.PurchaseDate, m => m.DoNotValidate())
+                .ForSourceMember(c => c.InternalDocNo, m => m.DoNotValidate());
         }
-
     }
 }

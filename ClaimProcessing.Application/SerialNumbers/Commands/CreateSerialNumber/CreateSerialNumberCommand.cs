@@ -12,7 +12,8 @@ namespace ClaimProcessing.Application.SerialNumbers.Commands.CreateSerialNumber
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateSerialNumberCommand, SerialNumber>();
+            profile.CreateMap<CreateSerialNumberCommand, SerialNumber>(MemberList.Source)
+                .ForSourceMember(c => c.ClaimId, m => m.DoNotValidate());
         }
     }
 }

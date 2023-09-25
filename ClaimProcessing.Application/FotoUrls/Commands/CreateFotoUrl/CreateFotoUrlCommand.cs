@@ -12,7 +12,8 @@ namespace ClaimProcessing.Application.FotoUrls.Commands.CreateFotoUrl
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateFotoUrlCommand, FotoUrl>();
+            profile.CreateMap<CreateFotoUrlCommand, FotoUrl>(MemberList.Source)
+                .ForSourceMember(c => c.ClaimId, m => m.DoNotValidate());
         }
     }
 }

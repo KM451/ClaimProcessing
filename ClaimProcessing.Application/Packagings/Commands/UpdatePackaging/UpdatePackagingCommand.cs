@@ -24,16 +24,17 @@ namespace ClaimProcessing.Application.Packagings.Commands.UpdatePackaging
         }
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UpdatePackagingCommand, Packaging>()
+            profile.CreateMap<UpdatePackagingCommand, Packaging>(MemberList.Source)
                 .ForMember(p => p.Id, map => map.MapFrom(src => src.PackagingId))
                 .ForMember(p => p.Dimensions, map => map.MapFrom(src => new Dimensions
                 {
                     Height = src.Height,
                     Width = src.Width,
                     Depth = src.Depth
-                }));
+                }))
+                .ForSourceMember(c => c.Depth, m => m.DoNotValidate())
+                .ForSourceMember(c => c.Width, m => m.DoNotValidate())
+                .ForSourceMember(c => c.Height, m => m.DoNotValidate());
         }
-
-
     }
 }

@@ -6,6 +6,7 @@ using MediatR;
 
 namespace ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier
 {
+    
     public class UpdateSupplierCommand : IRequest<int>, IMapFrom<UpdateSupplierCommand>
     {
         public int SupplierId { get; private set; }
@@ -21,9 +22,10 @@ namespace ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier
             SupplierId = id;
         }
 
+        
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UpdateSupplierCommand, Supplier>()
+            profile.CreateMap<UpdateSupplierCommand, Supplier>(MemberList.None)
                 .ForMember(s => s.Address, map => map.MapFrom(src => new Address(src.Street, src.City, src.Country, src.ZipCode)))
                 .ForMember(s => s.ContactPerson, map => map.MapFrom(src => FullName.For(src.ContactPerson)));
         }

@@ -15,7 +15,7 @@ namespace ClaimProcessing.Application.Shipments.Commands.CreateShipment
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateShipmentCommand, Shipment>();
+            profile.CreateMap<CreateShipmentCommand, Shipment>(MemberList.Source);
         }
     }
 }

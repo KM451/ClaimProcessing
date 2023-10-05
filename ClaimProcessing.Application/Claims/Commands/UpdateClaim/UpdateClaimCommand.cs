@@ -34,10 +34,13 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<UpdateClaimCommand, Claim>()
+            profile.CreateMap<UpdateClaimCommand, Claim>(MemberList.None)
                 .ForMember(c => c.Id, map => map.MapFrom(src => src.ClaimId));
-            profile.CreateMap<UpdateClaimCommand, SaleDetail>();
-            profile.CreateMap<UpdateClaimCommand, PurchaseDetail>();
+
+            profile.CreateMap<UpdateClaimCommand, SaleDetail>(MemberList.None);
+
+            profile.CreateMap<UpdateClaimCommand, PurchaseDetail>(MemberList.None);
+
         }
 
     }

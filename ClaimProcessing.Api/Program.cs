@@ -1,4 +1,5 @@
 
+using AutoMapper;
 using ClaimProcessing.Api;
 using ClaimProcessing.Api.Service;
 using ClaimProcessing.Application;
@@ -145,7 +146,7 @@ try
 
     app.Run();
 
-
+    
 }
 catch (Exception ex)
 {

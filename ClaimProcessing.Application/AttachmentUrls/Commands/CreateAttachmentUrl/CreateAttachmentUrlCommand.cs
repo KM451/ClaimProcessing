@@ -12,7 +12,8 @@ namespace ClaimProcessing.Application.AttachmentUrls.Commands.CreateAttachmentUr
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<CreateAttachmentUrlCommand, AttachmentUrl>();
+            profile.CreateMap<CreateAttachmentUrlCommand, AttachmentUrl>(MemberList.Source)
+                .ForSourceMember(c => c.ClaimId, m => m.DoNotValidate());
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Application.UnitTest.Claim.Command.UpdateClaim
         public UpdateClaimCommandHandlerTest()
             : base()
         {
-            _handler = new UpdateClaimCommandHandler(_context, _mapper);
+            _handler = new UpdateClaimCommandHandler(_context, Mapper);
         }
 
         [Fact]

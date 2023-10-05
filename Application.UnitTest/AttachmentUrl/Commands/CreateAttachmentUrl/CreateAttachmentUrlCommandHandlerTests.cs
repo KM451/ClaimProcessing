@@ -12,7 +12,7 @@ namespace Application.UnitTest.AttachmentUrl.Commands.CreateAttachmentUrl
         public CreateAttachmentUrlCommandHandlerTests()
             : base()
         {
-            _handler = new CreateAttachmentUrlCommandHandler(_context, _mapper);       
+            _handler = new CreateAttachmentUrlCommandHandler(_context, Mapper);       
         }
 
         [Fact]

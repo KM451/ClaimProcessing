@@ -12,7 +12,7 @@ namespace Application.UnitTest.Shipment.Command.UpdateShipment
         public UpdateShipmentCommandHandlerTest()
             : base()
         {
-            _handler = new UpdateShipmentCommandHandler(_context, _mapper);
+            _handler = new UpdateShipmentCommandHandler(_context, Mapper);
         }
 
         [Fact]

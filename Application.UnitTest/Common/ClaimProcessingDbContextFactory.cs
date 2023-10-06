@@ -60,6 +60,27 @@ namespace Application.UnitTest.Common
 
             context.Claims.Add(claim);
 
+            claim = new ClaimProcessing.Domain.Entities.Claim()
+            {
+                Id = 2,
+                ClaimNumber = "C11/23",
+                OwnerType = "Type o1",
+                ClaimType = "Type c1",
+                ItemCode = "12A34C",
+                Qty = 1,
+                CustomerName = "CustomerB",
+                CustomerId = "00000000-aaaa-1111-0000-000000000001",
+                ItemName = "itemB",
+                ClaimDescription = "description",
+                Remarks = "remarks",
+                ClaimStatus = 2,
+                RmaAvailable = false,
+                ShipmentId = 3,
+                SupplierId = supplier.Id
+            };
+
+            context.Claims.Add(claim);
+
             var fotoUrl = new ClaimProcessing.Domain.Entities.FotoUrl()
             {
                 Id = 1,

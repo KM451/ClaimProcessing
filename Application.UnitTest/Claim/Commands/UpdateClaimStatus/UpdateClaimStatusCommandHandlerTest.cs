@@ -18,7 +18,7 @@ namespace Application.UnitTest.Claim.Command.UpdateClaimStatus
         public UpdateClaimStatusCommandHandlerTest()
             :base()
         {
-            _handler = new UpdateClaimStatusCommandHandler(_context, _mapper);
+            _handler = new UpdateClaimStatusCommandHandler(_context, Mapper);
         }
 
         [Fact]

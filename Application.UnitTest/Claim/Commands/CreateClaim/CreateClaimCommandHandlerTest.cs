@@ -18,7 +18,7 @@ namespace Application.UnitTest.Claim.Command.CreateClaim
         public CreateClaimCommandHandlerTest()
             : base()
         {
-            _handler = new CreateClaimCommandHandler(_context, _mapper);
+            _handler = new CreateClaimCommandHandler(_context, Mapper);
         }
 
         [Fact]

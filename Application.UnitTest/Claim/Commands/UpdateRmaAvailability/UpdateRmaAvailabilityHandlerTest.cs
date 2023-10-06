@@ -12,7 +12,7 @@ namespace Application.UnitTest.Claim.Command.UpdateRmaAvailability
         public UpdateRmaAvailabilityHandlerTest()
             :base()
         {
-            _handler = new UpdateRmaAvailabilityCommandHandler(_context, _mapper);
+            _handler = new UpdateRmaAvailabilityCommandHandler(_context, Mapper);
         }
 
 

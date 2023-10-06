@@ -13,7 +13,7 @@ namespace Application.UnitTest.Packaging.Command.UpdatePackaging
         public UpdatePackagingCommandHandlerTest()
             : base()
         {
-            _handler = new UpdatePackagingCommandHandler(_context, _mapper);
+            _handler = new UpdatePackagingCommandHandler(_context, Mapper);
         }
 
         [Fact]

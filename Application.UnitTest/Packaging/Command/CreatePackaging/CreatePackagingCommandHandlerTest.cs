@@ -13,7 +13,7 @@ namespace Application.UnitTest.Packaging.Command.CreatePackaging
         public CreatePackagingCommandHandlerTest()
             :base()
         {
-            _handler = new CreatePackagingCommandHandler(_context, _mapper);
+            _handler = new CreatePackagingCommandHandler(_context, Mapper);
         }
 
         [Fact]

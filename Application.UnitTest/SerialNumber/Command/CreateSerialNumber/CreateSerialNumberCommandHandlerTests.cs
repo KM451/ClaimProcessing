@@ -12,7 +12,7 @@ namespace Application.UnitTest.SerialNumber.Command.CreateSerialNumber
         public CreateSerialNumberCommandHandlerTests()
             : base()
         {
-            _handler = new CreateSerialNumberCommandHandler(_context, _mapper);
+            _handler = new CreateSerialNumberCommandHandler(_context, Mapper);
         }
 
         [Fact]

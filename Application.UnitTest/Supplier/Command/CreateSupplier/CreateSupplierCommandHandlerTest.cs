@@ -12,7 +12,7 @@ namespace Application.UnitTest.Supplier.Command.CreateSupplier
         public CreateSupplierCommandHandlerTest()
             : base()
         {
-            _handler = new CreateSupplierCommandHandler(_context, _mapper);
+            _handler = new CreateSupplierCommandHandler(_context, Mapper);
         }
 
         [Fact]

@@ -9,7 +9,7 @@ namespace Application.UnitTest.Common
     {
         protected readonly ClaimProcessingDbContext _context;
         protected readonly Mock<ClaimProcessingDbContext> _contextMock;
-        public readonly IMapper _mapper;
+        public readonly IMapper Mapper;
         public CommandTestBase()
         {
             _contextMock = ClaimProcessingDbContextFactory.Create();
@@ -20,7 +20,7 @@ namespace Application.UnitTest.Common
                 cfg.AddProfile<MappingProfile>();
             });
 
-            _mapper = configurationProvider.CreateMapper();
+            Mapper = configurationProvider.CreateMapper();
         }
         public void Dispose()
         {

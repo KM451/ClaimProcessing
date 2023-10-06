@@ -11,7 +11,7 @@ namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
         private readonly IClaimProcessingDbContext _context;
         private IMapper _mapper;
 
-        public GetAllClaimsShortQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper, ICurrentUserService userService)
+        public GetAllClaimsShortQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
         {
             _context = claimProcessingDbContext;
             _mapper = mapper;

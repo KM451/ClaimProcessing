@@ -19,7 +19,6 @@ namespace Application.UnitTest.Claim.Queries.GetClaimSerialNumbers
         }
 
         [Fact]
-
         public async Task GetSerialNumbersByClaimId()
         {
             var handler = new GetClaimSerialNumbersQueryHandler(_context, _mapper);

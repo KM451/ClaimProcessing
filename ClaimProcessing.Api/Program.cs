@@ -1,27 +1,33 @@
-
-using AutoMapper;
 using ClaimProcessing.Api;
 using ClaimProcessing.Api.Service;
 using ClaimProcessing.Application;
 using ClaimProcessing.Application.Common.Interfaces;
 using ClaimProcessing.Infrastructure;
+using ClaimProcessing.Infrastructure.Identity;
 using ClaimProcessing.Persistance;
+using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Test;
+using IdentityModel;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-
+using System.Reflection;
+using System.Security.Claims;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
-    .CreateBootstrapLogger();
+    .CreateLogger();
 
-Log.Information("Starting up");
+
 
 
 
 try
 {
+    Log.Information("Starting up");
     var builder = WebApplication.CreateBuilder(args);
 
     builder.Host.UseSerilog((ctx, lc) => lc
@@ -33,41 +39,100 @@ try
        .Enrich.WithThreadId() 
        .ReadFrom.Configuration(ctx.Configuration));
 
-    builder.Services.AddApplication();
-    builder.Services.AddInfrastructure(builder.Configuration);
-    builder.Services.AddPersistance(builder.Configuration);
-    builder.Services.AddControllers();
-    builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-    builder.Services.AddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
+    var services = builder.Services;
+    var configuration = builder.Configuration;
+    var environment = builder.Environment;
 
-    builder.Services.AddCors(options =>
+    configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                         .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+                         .AddJsonFile($"appsettings.Local.json", optional: true, reloadOnChange: true);
+
+    if (environment.IsDevelopment())
+    {
+        var appAssembly = Assembly.Load(new AssemblyName(environment.ApplicationName));
+        configuration.AddUserSecrets(appAssembly, optional: true);
+    }
+
+    configuration.AddEnvironmentVariables();
+
+    if (args != null)
+    {
+        configuration.AddCommandLine(args);
+    }
+
+    services.AddApplication();
+    services.AddInfrastructure(builder.Configuration);
+    services.AddPersistance(builder.Configuration);
+    services.AddControllers();
+    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+    services.TryAddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
+
+    services.AddCors(options =>
     {
         options.AddPolicy("MyAllowSpecificOrgins", policy => policy.WithOrigins("https://localhost:5001"));
     });
 
-    builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
+    if (environment.IsEnvironment("Test"))
     {
-        options.Authority = "https://localhost:5001";
-        options.TokenValidationParameters = new TokenValidationParameters()
-        {
-            ValidateAudience = false
-        };
 
-    });
-
-    builder.Services.AddAuthorization(options =>
+        services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("ClaimDatabase")));
+        services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+        services.AddIdentityServer()
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
+                {
+                    options.ApiResources.Add(new ApiResource("api1"));
+                    options.ApiScopes.Add(new ApiScope("api1"));
+                    options.Clients.Add(new Client
+                    {
+                        ClientId = "client",
+                        AllowedGrantTypes = { GrantType.ResourceOwnerPassword },
+                        ClientSecrets = { new Secret("secret".Sha256()) },
+                        AllowedScopes = { "openid", "api1" }
+                    });
+                }).AddTestUsers(new List<TestUser>
+                {
+                        new TestUser
+                        {
+                            SubjectId = "4B434A88-212D-4A4D-A17C-F35102D73CBB",
+                            Username = "alice",
+                            Password = "Pass123$",
+                            Claims = new List<Claim>
+                            {
+                                new Claim(JwtClaimTypes.Email, "alice@user.com"),
+                                new Claim(ClaimTypes.Name, "alice")
+                            }
+                        }
+                });
+        services.AddAuthentication("Bearer").AddIdentityServerJwt();
+    }
+    else
     {
-        options.AddPolicy("ApiScope", policy =>
+        services.AddAuthentication("Bearer")
+        .AddJwtBearer("Bearer", options =>
         {
-            policy.RequireAuthenticatedUser();
-            policy.RequireClaim("scope", "api1");
+            options.Authority = "https://localhost:5001";
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false
+            };
         });
-    });
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("ApiScope", policy =>
+            {
+                policy.RequireAuthenticatedUser();
+                policy.RequireClaim("scope", "api1");
+            });
+        });
+    }
+
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
-    builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen(c =>
+    services.AddEndpointsApiExplorer();
+    services.AddSwaggerGen(c =>
     {
         c.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
         {
@@ -133,6 +198,10 @@ try
     app.UseHttpsRedirection();
 
     app.UseAuthentication();
+    if (environment.IsEnvironment("Test"))
+    {
+        app.UseIdentityServer();
+    }
 
     app.UseSerilogRequestLogging();
 
@@ -157,4 +226,7 @@ finally
     Log.CloseAndFlush();
 }
 
+public partial class Program
+{
+}
 

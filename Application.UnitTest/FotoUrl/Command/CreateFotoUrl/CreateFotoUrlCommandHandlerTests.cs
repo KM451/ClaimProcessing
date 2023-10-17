@@ -12,7 +12,7 @@ namespace Application.UnitTest.FotoUrl.Command.CreateFotoUrl
         public CreateFotoUrlCommandHandlerTests()
             : base()
         {
-            _handler = new CreateFotoUrlCommandHandler(_context, Mapper);
+            _handler = new CreateFotoUrlCommandHandler(_context, _mapper);
         }
 
         [Fact]

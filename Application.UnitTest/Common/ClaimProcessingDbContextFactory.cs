@@ -111,7 +111,7 @@ namespace Application.UnitTest.Common
             var shipment = new ClaimProcessing.Domain.Entities.Shipment()
             {
                 Id = 1,
-                ShipmentDate = DateTime.Now,
+                ShipmentDate = dateTime,
                 Speditor = "DHL",
                 ShippingDocumentNo = "A1234XYZ",
                 TotalWeight = 20,
@@ -129,12 +129,13 @@ namespace Application.UnitTest.Common
                 Notes = "notes",
                 ShipmentId = shipment.Id,
             };
+            context.Packagings.Add(packaging);
 
             var purchaseDetail = new ClaimProcessing.Domain.Entities.PurchaseDetail()
             {
                 Id = 1,
                 PurchaseInvoiceNo = "PI999/23",
-                PurchaseDate = DateTime.Now,
+                PurchaseDate = dateTime,
                 InternalDocNo = "ID999",
                 ClaimId = claim.Id
             };
@@ -144,13 +145,13 @@ namespace Application.UnitTest.Common
             {
                 Id = 1,
                 SaleInvoiceNo = "SI888/23",
-                SaleDate = DateTime.Now,
+                SaleDate = dateTime,
                 ClaimId = claim.Id
             };
 
             context.SaleDetails.Add(saleDetail);
 
-            context.Packagings.Add(packaging);
+            
 
 
             context.SaveChangesAsync();

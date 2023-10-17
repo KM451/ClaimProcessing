@@ -31,4 +31,11 @@
     <ProjectReference Include="..\ClaimProcessing.Persistance\ClaimProcessing.Persistance.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Claim\Queries\GetClaimDetail\" />
+    <Folder Include="Claim\Queries\GetClaimFotosUrls\" />
+    <Folder Include="Claim\Queries\GetClaimSerialNumbers\" />
+    <Folder Include="Claim\Queries\GetClaimsUser\" />
+  </ItemGroup>
+
 </Project>

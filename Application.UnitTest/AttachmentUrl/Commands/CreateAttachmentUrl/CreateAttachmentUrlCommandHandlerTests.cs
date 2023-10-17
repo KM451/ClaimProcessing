@@ -8,7 +8,6 @@ namespace Application.UnitTest.AttachmentUrl.Commands.CreateAttachmentUrl
     public class CreateAttachmentUrlCommandHandlerTests : CommandTestBase
     {
         private readonly CreateAttachmentUrlCommandHandler _handler;
-        
         public CreateAttachmentUrlCommandHandlerTests()
             : base()
         {

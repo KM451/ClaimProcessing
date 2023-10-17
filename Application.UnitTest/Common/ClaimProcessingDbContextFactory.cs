@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Domain.Entities;
 using ClaimProcessing.Domain.ValueObjects;
 using ClaimProcessing.Persistance;
 using Microsoft.EntityFrameworkCore;

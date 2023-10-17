@@ -13,7 +13,7 @@ namespace Application.UnitTest.Supplier.Command.UpdateSupplier
         public UpdateSupplierCommandHandlerTest()
             : base()
         {
-            _handler = new UpdateSupplierCommandHandler(_context, Mapper);
+            _handler = new UpdateSupplierCommandHandler(_context, _mapper);
         }
 
         [Fact]

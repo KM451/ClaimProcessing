@@ -26,7 +26,7 @@ namespace Application.UnitTest.Claim.Queries.GetClaimAttachmentUrls
 
         [Fact]
 
-        public async Task GetAllClaimAttachmentUrls()
+        public async Task GetAttachmentUrlsByClaimId()
         {
             var handler = new GetClaimAttachmentUrlsQueryHandler(_context, _mapper);
             var result = await handler.Handle(new GetClaimAttachmentUrlsQuery { ClaimId = 1}, CancellationToken.None);

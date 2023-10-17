@@ -137,9 +137,6 @@ namespace WebApi.IntegrationTests.Common
 
             context.SaleDetails.Add(saleDetail);
 
-
-
-
             context.SaveChangesAsync();
         }
 

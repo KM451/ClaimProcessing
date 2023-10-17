@@ -1,8 +1,14 @@
 ﻿using Application.UnitTest.Common;
 using AutoMapper;
+using ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort;
 using ClaimProcessing.Application.Claims.Queries.GetClaimAttachmentsUrls;
 using ClaimProcessing.Persistance;
 using Shouldly;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Application.UnitTest.Claim.Queries.GetClaimAttachmentUrls
 {

@@ -24,6 +24,7 @@ namespace WebApi.IntegrationTests.Common
                     {
                         options.UseInMemoryDatabase("InMemoryDatabase");
                         options.UseInternalServiceProvider(serviceProvider);
+ 
                     });
 
                     services.AddScoped<IClaimProcessingDbContext>(provider => provider.GetService<ClaimProcessingDbContext>());
@@ -32,6 +33,7 @@ namespace WebApi.IntegrationTests.Common
 
                     using var scope = sp.CreateScope();
                     var scopedServices = scope.ServiceProvider;
+                    var user = scopedServices.GetService<ICurrentUserService>();
                     var context = scopedServices.GetRequiredService<ClaimProcessingDbContext>();
                     var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TProgram>>>();
 

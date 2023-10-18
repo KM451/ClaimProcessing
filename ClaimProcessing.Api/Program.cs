@@ -14,51 +14,31 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using System.Reflection;
 using System.Security.Claims;
+
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
-
-
-
-
 
 try
 {
     Log.Information("Starting up");
     var builder = WebApplication.CreateBuilder(args);
 
-    builder.Host.UseSerilog((ctx, lc) => lc
-       .WriteTo.Console(outputTemplate: "{Timestamp} {Message}{NewLine:1}{Exception:1}")
-       .WriteTo.File("C:\\Temp\\Logs\\log.txt", outputTemplate: "{Timestamp} {Message}{NewLine:1}{Exception:1}")
-       .Enrich.FromLogContext()
-       .Enrich.WithMachineName()
-       .Enrich.WithProcessId()
-       .Enrich.WithThreadId() 
-       .ReadFrom.Configuration(ctx.Configuration));
+    builder.Host
+        .UseSerilog((ctx, lc) => lc
+           .WriteTo.Console(outputTemplate: "{Timestamp} {Message}{NewLine:1}{Exception:1}")
+           .WriteTo.File("C:\\Temp\\Logs\\log.txt", outputTemplate: "{Timestamp} {Message}{NewLine:1}{Exception:1}")
+           .Enrich.FromLogContext()
+           .Enrich.WithMachineName()
+           .Enrich.WithProcessId()
+           .Enrich.WithThreadId()
+           .ReadFrom.Configuration(ctx.Configuration));
 
     var services = builder.Services;
     var configuration = builder.Configuration;
     var environment = builder.Environment;
-
-    configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                         .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-                         .AddJsonFile($"appsettings.Local.json", optional: true, reloadOnChange: true);
-
-    if (environment.IsDevelopment())
-    {
-        var appAssembly = Assembly.Load(new AssemblyName(environment.ApplicationName));
-        configuration.AddUserSecrets(appAssembly, optional: true);
-    }
-
-    configuration.AddEnvironmentVariables();
-
-    if (args != null)
-    {
-        configuration.AddCommandLine(args);
-    }
 
     services.AddApplication();
     services.AddInfrastructure(builder.Configuration);
@@ -77,6 +57,7 @@ try
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("ClaimDatabase")));
+
         services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<ApplicationDbContext>();
         services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
@@ -86,11 +67,12 @@ try
                     options.Clients.Add(new Client
                     {
                         ClientId = "client",
-                        AllowedGrantTypes = { GrantType.ResourceOwnerPassword },
+                        AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                         ClientSecrets = { new Secret("secret".Sha256()) },
-                        AllowedScopes = { "openid", "api1" }
+                        AllowedScopes = { "api1" }
                     });
-                }).AddTestUsers(new List<TestUser>
+                })
+                .AddTestUsers(new List<TestUser>
                 {
                         new TestUser
                         {
@@ -103,8 +85,10 @@ try
                                 new Claim(ClaimTypes.Name, "alice")
                             }
                         }
-                });
+                }).AddDeveloperSigningCredential();
+
         services.AddAuthentication("Bearer").AddIdentityServerJwt();
+        
     }
     else
     {
@@ -128,7 +112,6 @@ try
         });
     }
 
-
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
     services.AddEndpointsApiExplorer();
@@ -144,9 +127,9 @@ try
                     AuthorizationUrl = new Uri("https://localhost:5001/connect/authorize"),
                     TokenUrl = new Uri("https://localhost:5001/connect/token"),
                     Scopes = new Dictionary<string, string>
-                {
-                    {"api1", "Full access" },
-                }
+                    {
+                        {"api1", "Full access" },
+                    }
                 }
             }
         });
@@ -174,10 +157,7 @@ try
     }
     );
 
-    
     var app = builder.Build();
-
-
 
     //Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
@@ -215,7 +195,7 @@ try
 
     app.Run();
 
-    
+
 }
 catch (Exception ex)
 {
@@ -226,7 +206,5 @@ finally
     Log.CloseAndFlush();
 }
 
-public partial class Program
-{
-}
+public partial class Program { }
 

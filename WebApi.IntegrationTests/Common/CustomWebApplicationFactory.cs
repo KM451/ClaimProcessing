@@ -14,25 +14,29 @@ namespace WebApi.IntegrationTests.Common
         {
             try
             {
+                builder.UseConfiguration();
                 builder.ConfigureServices(services =>
                 {
                     var serviceProvider = new ServiceCollection()
                     .AddEntityFrameworkInMemoryDatabase()
                     .BuildServiceProvider();
 
+                    services.AddScoped<IClaimProcessingDbContext>(provider => provider.GetService<ClaimProcessingDbContext>());
+                    services.AddScoped<ICurrentUserService, DummyCurrentUserService>();
                     services.AddDbContext<ClaimProcessingDbContext>(options =>
                     {
                         options.UseInMemoryDatabase("InMemoryDatabase");
                         options.UseInternalServiceProvider(serviceProvider);
                     });
 
-                    services.AddScoped<IClaimProcessingDbContext>(provider => provider.GetService<ClaimProcessingDbContext>());
-                    services.AddScoped<ICurrentUserService, DummyCurrentUserService>();
+                    
                     var sp = services.BuildServiceProvider();
 
                     using var scope = sp.CreateScope();
                     var scopedServices = scope.ServiceProvider;
-                    var context = scopedServices.GetRequiredService<ClaimProcessingDbContext>();
+                    
+                    var user = scopedServices.GetService<ICurrentUserService>();
+                    var context = scopedServices.GetService<ClaimProcessingDbContext>();
                     var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TProgram>>>();
 
                     context.Database.EnsureCreated();
@@ -50,6 +54,7 @@ namespace WebApi.IntegrationTests.Common
 
                 builder.UseSerilog();
                 builder.UseEnvironment("Test");
+
             }
             catch (Exception ex)
             {

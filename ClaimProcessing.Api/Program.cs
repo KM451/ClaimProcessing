@@ -41,8 +41,8 @@ try
     var environment = builder.Environment;
 
     services.AddApplication();
-    services.AddInfrastructure(builder.Configuration);
-    services.AddPersistance(builder.Configuration);
+    services.AddInfrastructure(configuration);
+    services.AddPersistance(configuration);
     services.AddControllers();
     services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
     services.TryAddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));

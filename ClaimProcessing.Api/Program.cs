@@ -14,8 +14,8 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using System.Reflection;
 using System.Security.Claims;
+
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -57,6 +57,7 @@ try
 
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(configuration.GetConnectionString("ClaimDatabase")));
+
         services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<ApplicationDbContext>();
         services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
@@ -66,11 +67,12 @@ try
                     options.Clients.Add(new Client
                     {
                         ClientId = "client",
-                        AllowedGrantTypes = { GrantType.ResourceOwnerPassword },
+                        AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                         ClientSecrets = { new Secret("secret".Sha256()) },
-                        AllowedScopes = { "openid", "api1" }
+                        AllowedScopes = { "api1" }
                     });
-                }).AddTestUsers(new List<TestUser>
+                })
+                .AddTestUsers(new List<TestUser>
                 {
                         new TestUser
                         {
@@ -83,8 +85,10 @@ try
                                 new Claim(ClaimTypes.Name, "alice")
                             }
                         }
-                });
+                }).AddDeveloperSigningCredential();
+
         services.AddAuthentication("Bearer").AddIdentityServerJwt();
+        
     }
     else
     {
@@ -191,7 +195,7 @@ try
 
     app.Run();
 
-    
+
 }
 catch (Exception ex)
 {
@@ -202,5 +206,5 @@ finally
     Log.CloseAndFlush();
 }
 
-public partial class Program{}
+public partial class Program { }
 

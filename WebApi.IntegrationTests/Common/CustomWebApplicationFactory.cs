@@ -1,4 +1,4 @@
-﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Application.Common.Interfaces;
 using ClaimProcessing.Persistance;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -25,13 +25,11 @@ namespace WebApi.IntegrationTests.Common
                     {
                         options.UseInMemoryDatabase("InMemoryDatabase");
                         options.UseInternalServiceProvider(serviceProvider);
- 
                     });
 
                     services.AddScoped<IClaimProcessingDbContext>(provider => provider.GetService<ClaimProcessingDbContext>());
                     services.AddScoped<ICurrentUserService, DummyCurrentUserService>();
                     services.AddScoped<IDateTime, DummyDateTimeService>();
-
 
                     var sp = services.BuildServiceProvider();
 
@@ -58,6 +56,7 @@ namespace WebApi.IntegrationTests.Common
 
                 builder.UseSerilog();
                 builder.UseEnvironment("Test");
+
             }
             catch (Exception ex)
             {

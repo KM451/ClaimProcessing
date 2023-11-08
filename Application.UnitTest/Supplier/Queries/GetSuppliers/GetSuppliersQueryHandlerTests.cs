@@ -19,7 +19,6 @@ namespace Application.UnitTest.Supplier.Queries.GetSuppliers
         }
 
         [Fact]
-
         public async Task GetAllSuppliers()
         {
             var handler = new GetSuppliersQueryHandler(_context, _mapper);

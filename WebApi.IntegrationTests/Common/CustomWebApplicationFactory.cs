@@ -1,4 +1,4 @@
-﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Application.Common.Interfaces;
 using ClaimProcessing.Persistance;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -21,22 +21,24 @@ namespace WebApi.IntegrationTests.Common
                     .AddEntityFrameworkInMemoryDatabase()
                     .BuildServiceProvider();
 
-                    services.AddScoped<IClaimProcessingDbContext>(provider => provider.GetService<ClaimProcessingDbContext>());
-                    services.AddScoped<ICurrentUserService, DummyCurrentUserService>();
                     services.AddDbContext<ClaimProcessingDbContext>(options =>
                     {
                         options.UseInMemoryDatabase("InMemoryDatabase");
                         options.UseInternalServiceProvider(serviceProvider);
                     });
 
-                    
+                    services.AddScoped<IClaimProcessingDbContext>(provider => provider.GetService<ClaimProcessingDbContext>());
+                    services.AddScoped<ICurrentUserService, DummyCurrentUserService>();
+                    services.AddScoped<IDateTime, DummyDateTimeService>();
+
                     var sp = services.BuildServiceProvider();
 
                     using var scope = sp.CreateScope();
                     var scopedServices = scope.ServiceProvider;
-                    
+
                     var user = scopedServices.GetService<ICurrentUserService>();
-                    var context = scopedServices.GetService<ClaimProcessingDbContext>();
+                    var dateTime = scopedServices.GetService<IDateTime>();
+                    var context = scopedServices.GetRequiredService<ClaimProcessingDbContext>();
                     var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TProgram>>>();
 
                     context.Database.EnsureCreated();

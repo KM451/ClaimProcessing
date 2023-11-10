@@ -14,7 +14,6 @@ namespace WebApi.IntegrationTests.Common
         {
             try
             {
-                builder.UseConfiguration();
                 builder.ConfigureServices(services =>
                 {
                     var serviceProvider = new ServiceCollection()

@@ -26,7 +26,7 @@ namespace WebApi.IntegrationTests.Common
                         options.UseInternalServiceProvider(serviceProvider);
                     });
 
-                    services.AddScoped<IClaimProcessingDbContext>(provider => provider.GetService<ClaimProcessingDbContext>());
+                    services.AddScoped<IClaimProcessingDbContext>(provider => provider.GetRequiredService<ClaimProcessingDbContext>());
                     services.AddScoped<ICurrentUserService, DummyCurrentUserService>();
                     services.AddScoped<IDateTime, DummyDateTimeService>();
 

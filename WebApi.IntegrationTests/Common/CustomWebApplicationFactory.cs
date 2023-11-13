@@ -2,8 +2,6 @@ using ClaimProcessing.Application.Common.Interfaces;
 using ClaimProcessing.Persistance;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Serilog;
 using WebApi.IntegrationTests.Common.DummyServices;
 
 namespace WebApi.IntegrationTests.Common
@@ -16,17 +14,6 @@ namespace WebApi.IntegrationTests.Common
             {
                 builder.ConfigureServices(services =>
                 {
-                    var serviceProvider = new ServiceCollection()
-                    .AddEntityFrameworkInMemoryDatabase()
-                    .BuildServiceProvider();
-
-                    services.AddDbContext<ClaimProcessingDbContext>(options =>
-                    {
-                        options.UseInMemoryDatabase("InMemoryDatabase");
-                        options.UseInternalServiceProvider(serviceProvider);
-                    });
-
-                    services.AddScoped<IClaimProcessingDbContext>(provider => provider.GetRequiredService<ClaimProcessingDbContext>());
                     services.AddScoped<ICurrentUserService, DummyCurrentUserService>();
                     services.AddScoped<IDateTime, DummyDateTimeService>();
 
@@ -40,7 +27,7 @@ namespace WebApi.IntegrationTests.Common
                     var context = scopedServices.GetRequiredService<ClaimProcessingDbContext>();
                     var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TProgram>>>();
 
-                    context.Database.EnsureCreated();
+                    var DbOk = context.Database.EnsureCreated();
 
                     try
                     {
@@ -52,22 +39,18 @@ namespace WebApi.IntegrationTests.Common
                                             $"database with test messages. Error: {ex.Message}");
                     }
                 });
-
-                builder.UseSerilog();
                 builder.UseEnvironment("Test");
 
             }
             catch (Exception ex)
             {
                 throw;
-            }
-            
+            }   
         }
 
         public async Task<HttpClient> GetAuthenticatedClientAsync()
         {
             var client = CreateClient();
-
             var token = await GetAccessTokenAsync(client, "alice", "Pass123$");
             client.SetBearerToken(token);
             return client;

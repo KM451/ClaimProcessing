@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using System.Reflection;
 using System.Security.Claims;
 
 
@@ -41,23 +42,12 @@ try
     var configuration = builder.Configuration;
     var environment = builder.Environment;
 
-    services.AddApplication();
-    services.AddInfrastructure(configuration);
-    services.AddPersistance(configuration);
-    services.AddControllers();
-    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-    services.TryAddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
-
-    services.AddCors(options =>
-    {
-        options.AddPolicy("MyAllowSpecificOrgins", policy => policy.WithOrigins("https://localhost:5001"));
-    });
+    
 
     if (environment.IsEnvironment("Test"))
     {
-
         services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("ClaimDatabase")));
+            options.UseInMemoryDatabase("InMemoryDatabase"));
 
         services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<ApplicationDbContext>();
         services.AddIdentityServer()
@@ -112,6 +102,26 @@ try
             });
         });
     }
+
+    services.AddApplication();
+    services.AddInfrastructure(configuration);
+    if (environment.IsEnvironment("Test"))
+    {
+        services.AddPersistanceInMemory(configuration);
+    }
+    else
+    {
+        services.AddPersistance(configuration);
+    }
+
+    services.AddControllers();
+    services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+    services.TryAddScoped(typeof(ICurrentUserService), typeof(CurrentUserService));
+
+    services.AddCors(options =>
+    {
+        options.AddPolicy("MyAllowSpecificOrgins", policy => policy.WithOrigins("https://localhost:5001"));
+    });
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
@@ -178,24 +188,28 @@ try
 
     app.UseHttpsRedirection();
 
-    app.UseAuthentication();
-    if (environment.IsEnvironment("Test"))
-    {
-        app.UseIdentityServer();
-    }
-
     app.UseSerilogRequestLogging();
 
     app.UseRouting();
 
-    app.UseCors();
+    app.UseAuthentication();
 
     app.UseAuthorization();
 
-    app.MapControllers().RequireAuthorization("ApiScope");
+    if (environment.IsEnvironment("Test"))
+    {
+        app.UseIdentityServer();
+        app.MapControllers();
+    }
+    else
+    {
+        app.MapControllers().RequireAuthorization("ApiScope");
+    }
+    
+
+    app.UseCors();
 
     app.Run();
-
 
 }
 catch (Exception ex)

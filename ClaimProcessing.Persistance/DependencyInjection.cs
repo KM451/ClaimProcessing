@@ -13,5 +13,12 @@ namespace ClaimProcessing.Persistance
             services.AddScoped<IClaimProcessingDbContext, ClaimProcessingDbContext>();
             return services;
         }
+
+        public static IServiceCollection AddPersistanceInMemory(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddDbContext<ClaimProcessingDbContext>(options => options.UseInMemoryDatabase("InMemoryDatabase"));
+            services.AddScoped<IClaimProcessingDbContext, ClaimProcessingDbContext>();
+            return services;
+        }
     }
 }

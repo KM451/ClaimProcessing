@@ -17,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Reflection;
 using System.Security.Claims;
+using System.Text;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -60,7 +61,7 @@ try
                         ClientId = "client",
                         AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                         ClientSecrets = { new Secret("secret".Sha256()) },
-                        AllowedScopes = { "api1" }
+                        AllowedScopes = { "openid", "profile", "ClaimProcessing.ApiAPI", "api1" }
                     });
                 })
                 .AddTestUsers(new List<TestUser>
@@ -76,10 +77,25 @@ try
                                 new Claim(ClaimTypes.Name, "alice")
                             }
                         }
-                }).AddDeveloperSigningCredential();
+                });
+        //services.AddAuthentication("Bearer").AddIdentityServerJwt();
 
-        services.AddAuthentication("Bearer").AddIdentityServerJwt();
-        
+        services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
+        {
+            //options.Audience = "http://localhost";
+            options.RequireHttpsMetadata = false;
+            options.IncludeErrorDetails = true;
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateAudience = false,
+                ValidateTokenReplay = false,
+                ValidateIssuer = false,
+                ValidateSignatureLast = false,
+                ValidateIssuerSigningKey = false,
+
+            };
+        });
+
     }
     else
     {

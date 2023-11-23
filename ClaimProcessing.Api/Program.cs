@@ -10,6 +10,7 @@ using Duende.IdentityServer.Test;
 using IdentityModel;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
@@ -61,7 +62,7 @@ try
                         ClientId = "client",
                         AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                         ClientSecrets = { new Secret("secret".Sha256()) },
-                        AllowedScopes = { "openid", "profile", "api1" }
+                        AllowedScopes = { "openid", "profile", "ClaimProcessing.ApiAPI", "api1" }
                     });
                 })
                 .AddTestUsers(new List<TestUser>
@@ -81,27 +82,7 @@ try
                             }
                         }
                 });
-        //services.AddAuthentication("Bearer").AddIdentityServerJwt();
-
-        services.AddAuthentication("Bearer").AddJwtBearer("Bearer", options =>
-        {
-            //options.Audience = "http://localhost";
-            options.RequireHttpsMetadata = false;
-            options.IncludeErrorDetails = true;
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateAudience = false,
-                ValidateTokenReplay = false,
-                ValidateIssuer = false,
-                ValidateSignatureLast = false,
-                ValidateIssuerSigningKey = false,
-
-            };
-            options.BackchannelHttpHandler = new HttpClientHandler()
-            {
-                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-            };
-        });
+        services.AddAuthentication("Bearer").AddIdentityServerJwt();
 
     }
     else

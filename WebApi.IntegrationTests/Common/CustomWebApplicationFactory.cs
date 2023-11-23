@@ -22,8 +22,8 @@ namespace WebApi.IntegrationTests.Common
                     using var scope = sp.CreateScope();
                     var scopedServices = scope.ServiceProvider;
 
-                    var user = scopedServices.GetService<ICurrentUserService>();
-                    var dateTime = scopedServices.GetService<IDateTime>();
+                    //var user = scopedServices.GetService<ICurrentUserService>();
+                    //var dateTime = scopedServices.GetService<IDateTime>();
                     var context = scopedServices.GetRequiredService<ClaimProcessingDbContext>();
                     var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TProgram>>>();
 
@@ -69,7 +69,7 @@ namespace WebApi.IntegrationTests.Common
                 Address = disco.TokenEndpoint,
                 ClientId = "client",
                 ClientSecret = "secret",
-                Scope = "api1",
+                Scope = "openid profile ClaimProcessing.ApiAPI api1",
                 UserName = userName,
                 Password = password
             });

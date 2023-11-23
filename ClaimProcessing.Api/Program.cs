@@ -61,7 +61,7 @@ try
                         ClientId = "client",
                         AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                         ClientSecrets = { new Secret("secret".Sha256()) },
-                        AllowedScopes = { "openid", "profile", "ClaimProcessing.ApiAPI", "api1" }
+                        AllowedScopes = { "openid", "profile", "api1" }
                     });
                 })
                 .AddTestUsers(new List<TestUser>
@@ -73,8 +73,11 @@ try
                             Password = "Pass123$",
                             Claims = new List<Claim>
                             {
+                                new Claim(JwtClaimTypes.Name, "Alice Smith"),
+                                new Claim(JwtClaimTypes.GivenName, "Alice"),
+                                new Claim(JwtClaimTypes.FamilyName, "Smith"),
+                                new Claim(JwtClaimTypes.Role, "Staff1"),
                                 new Claim(JwtClaimTypes.Email, "alice@user.com"),
-                                new Claim(ClaimTypes.Name, "alice")
                             }
                         }
                 });
@@ -93,6 +96,10 @@ try
                 ValidateSignatureLast = false,
                 ValidateIssuerSigningKey = false,
 
+            };
+            options.BackchannelHttpHandler = new HttpClientHandler()
+            {
+                ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
             };
         });
 

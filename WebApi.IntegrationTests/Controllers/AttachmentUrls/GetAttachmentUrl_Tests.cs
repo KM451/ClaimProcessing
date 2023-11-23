@@ -19,14 +19,14 @@ namespace WebApi.IntegrationTests.Controllers.AttachmentUrls
             var client = await _factory.GetAuthenticatedClientAsync();
 
             string id = "1";
-            //var response = await client.GetAsync($"/api/v1/attachment-urls/{id}");
-            //var vm = await Utilities.GetResponseContent<AttachmentUrlVm>(response);
-            //response.EnsureSuccessStatusCode();
-            //vm.ShouldNotBeNull();
-            var response = await client.GetAsync($"/api/hc");
+            var response = await client.GetAsync($"/api/v1/attachment-urls/{id}");
+            var vm = await Utilities.GetResponseContent<AttachmentUrlVm>(response);
             response.EnsureSuccessStatusCode();
-            var a = await response.Content.ReadAsStringAsync();
-            a.ShouldBe("Healthy");
+            vm.ShouldNotBeNull();
+            //var response = await client.GetAsync($"/api/hc");
+            //response.EnsureSuccessStatusCode();
+            //var a = await response.Content.ReadAsStringAsync();
+            //a.ShouldBe("Healthy");
         }
     }
 }

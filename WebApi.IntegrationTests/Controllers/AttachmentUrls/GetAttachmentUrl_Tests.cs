@@ -23,10 +23,6 @@ namespace WebApi.IntegrationTests.Controllers.AttachmentUrls
             var vm = await Utilities.GetResponseContent<AttachmentUrlVm>(response);
             response.EnsureSuccessStatusCode();
             vm.ShouldNotBeNull();
-            //var response = await client.GetAsync($"/api/hc");
-            //response.EnsureSuccessStatusCode();
-            //var a = await response.Content.ReadAsStringAsync();
-            //a.ShouldBe("Healthy");
         }
     }
 }

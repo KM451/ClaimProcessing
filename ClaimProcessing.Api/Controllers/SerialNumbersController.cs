@@ -16,7 +16,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">Id of SerialNumber</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<SerialNumberVm>> GetSerialNumber(int id)
         {
             var vm = await Mediator.Send(new GetSerialNumberQuery() { SerialNumberId = id });
@@ -29,7 +29,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="command">Data of the new SerialNumber object</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin,Staff1")]
+        [Authorize(Policy = "ApiUser1")]
         public async Task<IActionResult> CreateSerialNumber(CreateSerialNumberCommand command)
         {
             var result = await Mediator.Send(command);
@@ -42,7 +42,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">Id number of SerialNumber</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin,Staff1")]
+        [Authorize(Policy = "ApiUser1")]
         public async Task<IActionResult> DeleteSerialNumber(int id)
         {
             var command = new DeleteSerialNumberCommand { SerialNumberId = id };

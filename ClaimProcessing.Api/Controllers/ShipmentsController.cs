@@ -19,7 +19,7 @@ namespace ClaimProcessing.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<ShipmentsVm>> GetShipments()
         {
             var vm = await Mediator.Send(new GetShipmentsQuery());
@@ -32,7 +32,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">The Shipment Id number</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<ShipmentDetailVm>> GetShipmentDetail(int id)
         {
             var vm = await Mediator.Send(new GetShipmentDetailQuery() { ShipmentId = id });
@@ -45,7 +45,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">Id number of the Shipment</param>
         /// <returns></returns>
         [HttpGet("{id}/Claims")]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<ShipmentClaimsVm>> GetShipmentClaims(int id)
         {
             var vm = await Mediator.Send(new GetShipmentClaimsQuery() { ShipmentId = id });
@@ -58,7 +58,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">Id number of the Shipment</param>
         /// <returns></returns>
         [HttpGet("{id}/Packagings")]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<ShipmentPackagingsVm>> GetShipmentPackagings(int id)
         {
             var vm = await Mediator.Send(new GetShipmentPackagingsQuery() { ShipmentId = id });
@@ -71,7 +71,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="command">The new Shipment data</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin,Staff2")]
+        [Authorize(Policy = "ApiUser2")]
         public async Task<IActionResult> CreateShipment(CreateShipmentCommand command)
         {
             var result = await Mediator.Send(command);
@@ -85,7 +85,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">The Shipment Id number</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin,Staff2")]
+        [Authorize(Policy = "ApiUser2")]
         public async Task<IActionResult> UpdateShipment(UpdateShipmentCommand command, int id)
         {
             command.SetId(id);
@@ -99,7 +99,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">Id number of the Shipment</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin,Staff2")]
+        [Authorize(Policy = "ApiUser2")]
         public async Task<IActionResult> DeleteShipment(int id)
         {
             var command = new DeleteShipmentCommand { ShipmentId = id };

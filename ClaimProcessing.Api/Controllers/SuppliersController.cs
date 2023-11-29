@@ -19,7 +19,7 @@ namespace ClaimProcessing.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<SuppliersVm>> GetSuppliers()
         {
             var vm = await Mediator.Send(new GetSuppliersQuery());
@@ -32,7 +32,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">Id number of Supplier</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<SupplierDetailVm>> GetDetails(int id)
         {
             var vm = await Mediator.Send(new GetSupplierDetailQuery() { SupplierId = id });
@@ -50,7 +50,7 @@ namespace ClaimProcessing.Api.Controllers
         /// If you leave it blank you get all Claims to Supplier specified by the Id.</param>
         /// <returns></returns>
         [HttpGet("{id}/Claims")]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<SupplierClaimsVm>> GetSupplierClaims(int id, string? filter)
         {
             var vm = await Mediator.Send(new GetSupplierClaimsQuery() { SupplierId = id, Filter = filter });
@@ -68,7 +68,7 @@ namespace ClaimProcessing.Api.Controllers
         /// If you leave it blank you get all Shipments to Supplier specified by the Id.</param>
         /// <returns></returns>
         [HttpGet("{id}/Shipments")]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<SupplierShipmentsVm>> GetSupplierShipments(int id, string? filter)
         {
             var vm = await Mediator.Send(new GetSupplierShipmentsQuery() { SupplierId = id, Filter = filter });
@@ -81,7 +81,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="command">The new Supplier data</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin,Staff2")]
+        [Authorize(Policy = "ApiUser2")]
         public async Task<IActionResult> CreateSupplier(CreateSupplierCommand command)
         {
             var result = await Mediator.Send(command);
@@ -95,7 +95,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">The Supplier Id number</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin,Staff2")]
+        [Authorize(Policy = "ApiUser2")]
         public async Task<IActionResult> UpdateSupplier(UpdateSupplierCommand command, int id)
         {
             command.SetId(id);
@@ -109,7 +109,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">The Supplier Id number</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin,Staff2")]
+        [Authorize(Policy = "ApiUser2")]
         public async Task<IActionResult> DeleteSupplier(int id)
         {
             var command = new DeleteSupplierCommand { SupplierId = id };

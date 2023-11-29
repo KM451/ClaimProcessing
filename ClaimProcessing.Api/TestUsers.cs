@@ -20,10 +20,9 @@ namespace ClaimProcessing.Api
                         Password = "Pass123$",
                         Claims = new List<Claim>
                         {
+                            new Claim("Email", "AliceSmith@email.com"),
+                            new Claim("Confirmation", "True"),
                             new Claim(JwtClaimTypes.Name, "Alice Smith"),
-                            new Claim(JwtClaimTypes.GivenName, "Alice"),
-                            new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                            new Claim(JwtClaimTypes.WebSite, "http://alice.com"),
                             new Claim(JwtClaimTypes.Role, "Staff1"),
                         }
                     }

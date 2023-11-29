@@ -42,7 +42,6 @@ try
     var configuration = builder.Configuration;
     var environment = builder.Environment;
 
-    
 
     if (environment.IsEnvironment("Test"))
     {
@@ -54,7 +53,6 @@ try
         services.AddDefaultIdentity<ApplicationUser>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
             
-        
         services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
                 {
@@ -65,13 +63,12 @@ try
                         ClientId = "client",
                         AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                         ClientSecrets = { new Secret("secret".Sha256()) },
-                        AllowedScopes = { "openid", "profile", "ClaimProcessing.ApiAPI", "api1"},
+                        AllowedScopes = {"ClaimProcessing.ApiAPI", "api1"},
                     });
                 })
                 .AddTestUsers(TestUsers.Users)
                 .AddProfileService<TestProfileService>();
                 
-
         services.AddAuthentication("Bearer").AddIdentityServerJwt();
 
     }
@@ -86,16 +83,24 @@ try
                 ValidateAudience = false
             };
         });
-
-        services.AddAuthorization(options =>
-        {
-            options.AddPolicy("ApiScope", policy =>
-            {
-                policy.RequireAuthenticatedUser();
-                policy.RequireClaim("scope", "api1");
-            });
-        });
     }
+
+    services.AddAuthorization(options =>
+    {
+        options.AddPolicy("ApiScope", policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireClaim("scope", "api1");
+        });
+        options.AddPolicy("ApiUser1", policy =>
+            policy.RequireClaim(ClaimTypes.Role, "Admin", "Staff1"));
+        options.AddPolicy("ApiUser2", policy =>
+            policy.RequireClaim(ClaimTypes.Role, "Admin", "Staff2"));
+        options.AddPolicy("ApiUser12", policy =>
+            policy.RequireClaim(ClaimTypes.Role, "Admin", "Staff1", "Staff2"));
+        options.AddPolicy("ApiUser12G", policy =>
+            policy.RequireClaim(ClaimTypes.Role, "Admin", "Staff1", "Staff2", "Guest"));
+    });
 
     services.AddApplication();
     services.AddInfrastructure(configuration);

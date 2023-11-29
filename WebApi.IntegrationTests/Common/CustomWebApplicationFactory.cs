@@ -69,7 +69,7 @@ namespace WebApi.IntegrationTests.Common
                 Address = disco.TokenEndpoint,
                 ClientId = "client",
                 ClientSecret = "secret",
-                Scope = "openid profile ClaimProcessing.ApiAPI api1",
+                Scope = "ClaimProcessing.ApiAPI api1",
                 UserName = userName,
                 Password = password
             });

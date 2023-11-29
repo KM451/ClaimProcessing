@@ -31,7 +31,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="sort">The parameter allows you to sort data by Claim Id field. Allowed sort phrases 'asc' for ascending and 'desc' for descending sort.</param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<AllClaimsShortVm>> GetClaims(string? filter, string sort = "asc")
         {
             var vm = await Mediator.Send(new GetAllClaimsShortQuery() { Filter = filter, Sort = sort});
@@ -47,7 +47,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="sort">The parameter allows you to sort data by Claim creation date field. Allowed sort phrases 'asc' for ascending and 'desc' for descending sort.</param>
         /// <returns></returns>
         [HttpGet("user")]
-        [Authorize(Roles = "Admin,Staff1,Staff2,Guest")]
+        [Authorize(Policy = "ApiUser12G")]
         public async Task<ActionResult<ClaimsUserVm>> GetUserClaims(string? filter, string sort = "asc")
         {
             var vm = await Mediator.Send(new GetClaimsUserQuery() { Filter = filter, Sort = sort });
@@ -60,7 +60,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">The Claim Id number</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<ClaimDetailVm>> GetDetails(int id)
         {
             var vm = await Mediator.Send(new GetClaimDetailQuery() { ClaimId = id });
@@ -73,7 +73,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">The Claim Id number</param>
         /// <returns></returns>
         [HttpGet("{id}/AttachmentUrls")]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<ClaimAttachmentUrlsVm>> GetAttachmentUrls(int id)
         {
             var vm = await Mediator.Send(new GetClaimAttachmentUrlsQuery() { ClaimId = id });
@@ -86,7 +86,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">The Claim Id number</param>
         /// <returns></returns>
         [HttpGet("{id}/FotoUrls")]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<ClaimFotoUrlsVm>> GetFotoUrls(int id)
         {
             var vm = await Mediator.Send(new GetClaimFotoUrlsQuery() { ClaimId = id });
@@ -99,7 +99,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">The Claim Id number</param>
         /// <returns></returns>
         [HttpGet("{id}/SerialNumbers")]
-        [Authorize(Roles = "Admin,Staff1,Staff2")]
+        [Authorize(Policy = "ApiUser12")]
         public async Task<ActionResult<ClaimSerialNumbersVm>> GetSerialNumbers(int id)
         {
             var vm = await Mediator.Send(new GetClaimSerialNumbersQuery() { ClaimId = id });
@@ -112,7 +112,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="command">The new Claim data</param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize(Roles = "Admin,Staff1")]
+        [Authorize(Policy = "ApiUser1")]
         public async Task<IActionResult> CreateClaim(CreateClaimCommand command)
         {
             var result = await Mediator.Send(command);
@@ -126,7 +126,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">The Claim Id number</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin,Staff1")]
+        [Authorize(Policy = "ApiUser1")]
         public async Task<IActionResult> UpdateClaim(UpdateClaimCommand command, int id)
         {
             command.SetId(id);
@@ -141,7 +141,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="claimStatus">The ClaimStatus value</param>
         /// <returns></returns>
         [HttpPatch("{id}/ClaimStatus")]
-        [Authorize(Roles = "Admin,Staff1")]
+        [Authorize(Policy = "ApiUser1")]
         public async Task<IActionResult> UpdateClaimStatus(int id, int claimStatus)
         {
             var command = new UpdateClaimStatusCommand { ClaimId=id, ClaimStatus=claimStatus};
@@ -156,7 +156,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="rmaAvailability">The RmaAvailable state</param>
         /// <returns></returns>
         [HttpPatch("{id}/RmaAvailable")]
-        [Authorize(Roles = "Admin,Staff1")]
+        [Authorize(Policy = "ApiUser1")]
         public async Task<IActionResult> UpdateRmaAvailability(int id, bool rmaAvailability)
         {
             var command = new UpdateRmaAvailabilityCommand { ClaimId = id, RmaAvailable = rmaAvailability };     
@@ -171,7 +171,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="shipmentId">The Shipment Id number</param>
         /// <returns></returns>
         [HttpPatch("{id}/ShipmentId")]
-        [Authorize(Roles = "Admin,Staff1")]
+        [Authorize(Policy = "ApiUser1")]
         public async Task<IActionResult> UpdateShipmentId(int id, int shipmentId)
         {
             var command = new UpdateShipmentIdCommand { ClaimId = id, ShipmentId = shipmentId };
@@ -185,7 +185,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="id">The Claim Id number</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin,Staff1")]
+        [Authorize(Policy = "ApiUser1")]
         public async Task<IActionResult> DeleteClaim(int id)
         {
             var command = new DeleteClaimCommand { ClaimId = id };

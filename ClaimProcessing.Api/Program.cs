@@ -6,19 +6,17 @@ using ClaimProcessing.Infrastructure;
 using ClaimProcessing.Infrastructure.Identity;
 using ClaimProcessing.Persistance;
 using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Test;
 using IdentityModel;
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
-using System.Reflection;
 using System.Security.Claims;
-using System.Text;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -48,10 +46,15 @@ try
 
     if (environment.IsEnvironment("Test"))
     {
+        services.AddTransient<IProfileService, TestProfileService>();
+
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseInMemoryDatabase("InMemoryDatabase"));
 
-        services.AddDefaultIdentity<ApplicationUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+        services.AddDefaultIdentity<ApplicationUser>()
+            .AddEntityFrameworkStores<ApplicationDbContext>();
+            
+        
         services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
                 {
@@ -62,26 +65,13 @@ try
                         ClientId = "client",
                         AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                         ClientSecrets = { new Secret("secret".Sha256()) },
-                        AllowedScopes = { "openid", "profile", "ClaimProcessing.ApiAPI", "api1" }
+                        AllowedScopes = { "openid", "profile", "ClaimProcessing.ApiAPI", "api1"},
                     });
                 })
-                .AddTestUsers(new List<TestUser>
-                {
-                        new TestUser
-                        {
-                            SubjectId = "4B434A88-212D-4A4D-A17C-F35102D73CBB",
-                            Username = "alice",
-                            Password = "Pass123$",
-                            Claims = new List<Claim>
-                            {
-                                new Claim(JwtClaimTypes.Name, "Alice Smith"),
-                                new Claim(JwtClaimTypes.GivenName, "Alice"),
-                                new Claim(JwtClaimTypes.FamilyName, "Smith"),
-                                new Claim(JwtClaimTypes.Role, "Staff1"),
-                                new Claim(JwtClaimTypes.Email, "alice@user.com"),
-                            }
-                        }
-                });
+                .AddTestUsers(TestUsers.Users)
+                .AddProfileService<TestProfileService>();
+                
+
         services.AddAuthentication("Bearer").AddIdentityServerJwt();
 
     }

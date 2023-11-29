@@ -4,9 +4,9 @@ namespace WebApi.IntegrationTests.Common.DummyServices
 {
     public class DummyCurrentUserService : ICurrentUserService
     {
-        public string Email { get; set; } = "user@user.com";
-        public string Name { get; set; } = "Jan Nowak";
-        public string UserId { get; set; } = "00000000-aaaa-1111-0000-000000000000";
+        public string Email { get; set; } = "AliceSmith@email.com";
+        public string Name { get; set; } = "Alice Smith";
+        public string UserId { get; set; } = "4B434A88-212D-4A4D-A17C-F35102D73CBB";
         public bool IsAuthenticated { get; set; } = true;
     }
 }

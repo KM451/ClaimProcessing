@@ -1,23 +1,18 @@
 ﻿using Duende.IdentityServer.Extensions;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
-using IdentityModel;
 using IdentityServer.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace IdentityServer.Services
 {
     public class ProfileService : IProfileService
     {
-        private readonly IUserClaimsPrincipalFactory<ApplicationUser> _claimsFactory;
         private UserManager<ApplicationUser> _userManager;
-        public ProfileService(UserManager<ApplicationUser> userManager,
-            IUserClaimsPrincipalFactory<ApplicationUser> claimsFactory)
+        public ProfileService(UserManager<ApplicationUser> userManager)
         {
             _userManager = userManager;
-            _claimsFactory = claimsFactory;
         }
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)

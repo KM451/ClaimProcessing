@@ -17,6 +17,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <returns></returns>
         [HttpGet("{id}")]
         [Authorize(Roles = "Admin,Staff1,Staff2")]
+        
         public async Task<ActionResult<AttachmentUrlVm>> GetAttachmentUrl(int id)
         {
             var vm = await Mediator.Send(new GetAttachmentUrlQuery() { AttachmentUrlId = id });

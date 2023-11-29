@@ -6,14 +6,8 @@ using System.Security.Claims;
 
 namespace ClaimProcessing.Api.Service
 {
-    public class TestProfileService : IProfileService
+    public class TestProfileService(TestUserStore _testUsers) : IProfileService
     {
-        private TestUserStore _testUsers;
-        public TestProfileService(TestUserStore testUsers)
-        {
-            _testUsers = testUsers;
-        }
-
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             var user = _testUsers.FindBySubjectId(context.Subject.GetSubjectId());

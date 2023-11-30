@@ -31,6 +31,7 @@ namespace ClaimProcessing.Api.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize(Policy = "ApiUser1")]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> CreateAttachmentUrl(CreateAttachmentUrlCommand command)
         {
             var result = await Mediator.Send(command);

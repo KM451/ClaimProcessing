@@ -11,13 +11,11 @@ namespace ClaimProcessing.Api.Service
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             var user = _testUsers.FindBySubjectId(context.Subject.GetSubjectId());
-            var claims = new List<Claim>
-            {
-                new Claim("Email", "AliceSmith@email.com"),
-                new Claim("Confirmation", "True"),
-            };
-            
+
+            var claims = new List<Claim>();
+
             var userClaims = user.Claims;
+
             foreach (var userClaim in userClaims)
             {
                 claims.Add(new Claim(userClaim.Type, userClaim.Value));

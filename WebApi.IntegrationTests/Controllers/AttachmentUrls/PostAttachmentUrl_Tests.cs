@@ -24,7 +24,7 @@ namespace WebApi.IntegrationTests.Controllers.AttachmentUrls
             var jsonValue = JsonConvert.SerializeObject(attachment);
             var content = new StringContent(jsonValue, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync($"/api/v1/attachment-urls",content)
+            var response = await client.PostAsync($"/api/v1/attachment-urls", content);
 
             response.EnsureSuccessStatusCode();
             var id = await response.Content.ReadAsStringAsync();

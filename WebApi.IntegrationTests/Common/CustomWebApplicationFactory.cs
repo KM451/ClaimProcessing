@@ -28,7 +28,7 @@ namespace WebApi.IntegrationTests.Common
                     var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TProgram>>>();
 
                     var DbOk = context.Database.EnsureCreated();
-
+                    
                     try
                     {
                         Utilities.InitializeDbForTests(context);

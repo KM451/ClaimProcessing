@@ -1,0 +1,22 @@
+<Playlist Version="2.0">
+  <Rule Name="Includes" Match="Any">
+    <Rule Match="All">
+      <Property Name="Solution" />
+      <Rule Match="Any">
+        <Rule Match="All">
+          <Property Name="Project" Value="WebApi.IntegrationTests" />
+          <Rule Match="Any">
+            <Rule Match="All">
+              <Property Name="Namespace" Value="WebApi.IntegrationTests.Controllers.AttachmentUrls" />
+              <Rule Match="Any">
+                <Property Name="Class" Value="DeleteAttachmentUrl_Tests" />
+                <Property Name="Class" Value="GetAttachmentUrl_Tests" />
+		<Property Name="Class" Value="PostAttachmentUrl_Tests" />
+              </Rule>
+            </Rule>
+          </Rule>
+        </Rule>
+      </Rule>
+    </Rule>
+  </Rule>
+</Playlist>

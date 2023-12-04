@@ -27,7 +27,7 @@ namespace WebApi.IntegrationTests.Controllers.AttachmentUrls
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 
-            string id = "2";
+            string id = "20";
             var response = await client.GetAsync($"/api/v1/attachment-urls/{id}");
             response.StatusCode.ShouldBe(HttpStatusCode.NoContent);
         }

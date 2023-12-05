@@ -28,7 +28,7 @@ namespace WebApi.IntegrationTests.Controllers.AttachmentUrls
 
             response.EnsureSuccessStatusCode();
             var id = await response.Content.ReadAsStringAsync();
-            id.ShouldBe("2");
+            id.ShouldBe("3");
         }
     }
 }

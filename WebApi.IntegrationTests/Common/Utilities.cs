@@ -1,4 +1,5 @@
-﻿using ClaimProcessing.Domain.ValueObjects;
+﻿using ClaimProcessing.Domain.Entities;
+using ClaimProcessing.Domain.ValueObjects;
 using ClaimProcessing.Persistance;
 using Newtonsoft.Json;
 
@@ -14,9 +15,9 @@ namespace WebApi.IntegrationTests.Common
 
             return result;
         }
-        public static void InitializeDbForTests(ClaimProcessingDbContext context) 
+        public static void InitializeDbForTests(ClaimProcessingDbContext context)
         {
-            var supplier = new ClaimProcessing.Domain.Entities.Supplier()
+            var supplier = new Supplier()
             {
                 Id = 1,
                 Name = "Supplier",
@@ -25,28 +26,49 @@ namespace WebApi.IntegrationTests.Common
             };
             context.Suppliers.Add(supplier);
 
-            var claim = new ClaimProcessing.Domain.Entities.Claim()
+            var claims = new List<Claim>
             {
-                Id = 1,
-                ClaimNumber = "C10/23",
-                OwnerType = "Type o1",
-                ClaimType = "Type c1",
-                ItemCode = "12A34B",
-                Qty = 1,
-                CustomerName = "Customer",
-                CustomerId = "00000000-aaaa-1111-0000-000000000000",
-                ItemName = "item",
-                ClaimDescription = "description",
-                Remarks = "remarks",
-                ClaimStatus = 2,
-                RmaAvailable = false,
-                ShipmentId = 2,
-                SupplierId = supplier.Id
+                new()
+                {
+                    Id = 1,
+                    ClaimNumber = "C10/23",
+                    OwnerType = "o1",
+                    ClaimType = "c1",
+                    ItemCode = "12A34B",
+                    Qty = 1,
+                    CustomerName = "Customer",
+                    CustomerId = "00000000-aaaa-1111-0000-000000000000",
+                    ItemName = "item",
+                    ClaimDescription = "description",
+                    Remarks = "remarks",
+                    ClaimStatus = 2,
+                    RmaAvailable = false,
+                    ShipmentId = 2,
+                    SupplierId = supplier.Id
+                },
+                new()
+                {
+                    Id = 2,
+                    ClaimNumber = "C11/23",
+                    OwnerType = "o2",
+                    ClaimType = "c2",
+                    ItemCode = "56C78D",
+                    Qty = 2,
+                    CustomerName = "Customer2",
+                    CustomerId = "00000000-aaaa-1111-0000-000000000002",
+                    ItemName = "item",
+                    ClaimDescription = "description",
+                    Remarks = "remarks",
+                    ClaimStatus = 2,
+                    RmaAvailable = false,
+                    ShipmentId = 2,
+                    SupplierId = supplier.Id
+                }
             };
 
-            context.Claims.Add(claim);
+            context.Claims.AddRange(claims);
 
-            var fotoUrl = new ClaimProcessing.Domain.Entities.FotoUrl()
+            var fotoUrl = new FotoUrl()
             {
                 Id = 1,
                 Path = "C:\\Windows\\System",
@@ -55,16 +77,26 @@ namespace WebApi.IntegrationTests.Common
 
             context.FotoUrls.Add(fotoUrl);
 
-            var attachmentUrl = new ClaimProcessing.Domain.Entities.AttachmentUrl()
+            var attachmentUrls = new List<AttachmentUrl>
             {
-                Id = 1,
-                Path = "C:\\Windows\\System32",
-                ClaimId = 1,
+                new()
+                { 
+                    Id = 1,
+                    Path = "C:\\Windows\\System32",
+                    ClaimId = 1 
+                },
+                new()
+                {
+                    Id = 2,
+                    Path = "C:\\Windows",
+                    ClaimId = 1,
+                }
             };
 
-            context.AttachmentUrls.Add(attachmentUrl);
+            context.AttachmentUrls.AddRange(attachmentUrls);
 
-            var serialNumber = new ClaimProcessing.Domain.Entities.SerialNumber()
+
+            var serialNumber = new SerialNumber()
             {
                 Id = 1,
                 Value = "123456789",
@@ -73,7 +105,7 @@ namespace WebApi.IntegrationTests.Common
 
             context.SerialNumbers.Add(serialNumber);
 
-            var shipment = new ClaimProcessing.Domain.Entities.Shipment()
+            var shipment = new Shipment()
             {
                 Id = 1,
                 ShipmentDate = new DateTime(2023, 10, 10),
@@ -85,7 +117,7 @@ namespace WebApi.IntegrationTests.Common
 
             context.Shipments.Add(shipment);
 
-            var packaging = new ClaimProcessing.Domain.Entities.Packaging()
+            var packaging = new Packaging()
             {
                 Id = 1,
                 Type = "box",
@@ -96,22 +128,22 @@ namespace WebApi.IntegrationTests.Common
             };
             context.Packagings.Add(packaging);
 
-            var purchaseDetail = new ClaimProcessing.Domain.Entities.PurchaseDetail()
+            var purchaseDetail = new PurchaseDetail()
             {
                 Id = 1,
                 PurchaseInvoiceNo = "PI999/23",
                 PurchaseDate = new DateTime(2023, 5, 15),
                 InternalDocNo = "ID999",
-                ClaimId = claim.Id
+                ClaimId = 1
             };
             context.PurchaseDetails.Add(purchaseDetail);
 
-            var saleDetail = new ClaimProcessing.Domain.Entities.SaleDetail()
+            var saleDetail = new SaleDetail()
             {
                 Id = 1,
                 SaleInvoiceNo = "SI888/23",
                 SaleDate = new DateTime(2023, 5, 26),
-                ClaimId = claim.Id
+                ClaimId = 1
             };
 
             context.SaleDetails.Add(saleDetail);

@@ -11,13 +11,13 @@ namespace WebApi.IntegrationTests.Controllers.AttachmentUrls
         : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         [Fact]
-        public async Task PostGivenAttachmentUrl_ReturnsIdValueEq2() 
+        public async Task PostGivenAttachmentUrl_ReturnsIdValue() 
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 
-            CreateAttachmentUrlCommand attachment = new CreateAttachmentUrlCommand
+            CreateAttachmentUrlCommand attachment = new()
             {
-                ClaimId = 1,
+                ClaimId = 2,
                 Path = "test",
             };
 
@@ -28,7 +28,7 @@ namespace WebApi.IntegrationTests.Controllers.AttachmentUrls
 
             response.EnsureSuccessStatusCode();
             var id = await response.Content.ReadAsStringAsync();
-            id.ShouldBe("3");
+            id.ShouldBe("4");
         }
     }
 }

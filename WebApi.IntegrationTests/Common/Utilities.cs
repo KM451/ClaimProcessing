@@ -44,7 +44,7 @@ namespace WebApi.IntegrationTests.Common
                     ClaimStatus = 2,
                     RmaAvailable = false,
                     ShipmentId = 2,
-                    SupplierId = supplier.Id
+                    SupplierId = 1
                 },
                 new()
                 {
@@ -62,20 +62,35 @@ namespace WebApi.IntegrationTests.Common
                     ClaimStatus = 2,
                     RmaAvailable = false,
                     ShipmentId = 2,
-                    SupplierId = supplier.Id
+                    SupplierId = 1
                 }
             };
 
             context.Claims.AddRange(claims);
 
-            var fotoUrl = new FotoUrl()
+            var fotoUrls = new List<FotoUrl>
             {
-                Id = 1,
-                Path = "C:\\Windows\\System",
-                ClaimId = 1,
+                new()
+                {
+                    Id = 1,
+                    Path = "C:\\Windows\\Foto",
+                    ClaimId = 1
+                },
+                new()
+                {
+                    Id = 2,
+                    Path = "C:\\Gallery",
+                    ClaimId = 1,
+                },
+                new()
+                {
+                    Id = 3,
+                    Path = "C:\\YYY",
+                    ClaimId = 2,
+                }
             };
 
-            context.FotoUrls.Add(fotoUrl);
+            context.FotoUrls.AddRange(fotoUrls);
 
             var attachmentUrls = new List<AttachmentUrl>
             {
@@ -90,32 +105,65 @@ namespace WebApi.IntegrationTests.Common
                     Id = 2,
                     Path = "C:\\Windows",
                     ClaimId = 1,
+                },
+                new()
+                {
+                    Id = 3,
+                    Path = "C:\\XXX",
+                    ClaimId = 2,
                 }
             };
 
             context.AttachmentUrls.AddRange(attachmentUrls);
 
 
-            var serialNumber = new SerialNumber()
+            var serialNumbers = new List<SerialNumber>
             {
-                Id = 1,
-                Value = "123456789",
-                ClaimId = 1,
+                new()
+                {
+                    Id = 1,
+                    Value = "123456789",
+                    ClaimId = 1
+                },
+                new()
+                {
+                    Id = 2,
+                    Value = "000000000",
+                    ClaimId = 1
+                },
+                new()
+                {
+                    Id = 3,
+                    Value = "999999999",
+                    ClaimId = 2
+                }
             };
 
-            context.SerialNumbers.Add(serialNumber);
+            context.SerialNumbers.AddRange(serialNumbers);
 
-            var shipment = new Shipment()
+            var shipments = new List<Shipment>
             {
-                Id = 1,
-                ShipmentDate = new DateTime(2023, 10, 10),
-                Speditor = "DHL",
-                ShippingDocumentNo = "A1234XYZ",
-                TotalWeight = 20,
-                SupplierId = supplier.Id
+                new()
+                {
+                    Id = 1,
+                    ShipmentDate = new DateTime(2023, 10, 10),
+                    Speditor = "DHL",
+                    ShippingDocumentNo = "A1234XYZ",
+                    TotalWeight = 20,
+                    SupplierId = supplier.Id
+                },
+                 new()
+                {
+                    Id = 2,
+                    ShipmentDate = new DateTime(2023, 10, 10),
+                    Speditor = "DPD",
+                    ShippingDocumentNo = "B5678UVW",
+                    TotalWeight = 33,
+                    SupplierId = supplier.Id
+                },
             };
 
-            context.Shipments.Add(shipment);
+            context.Shipments.AddRange(shipments);
 
             var packaging = new Packaging()
             {
@@ -124,7 +172,7 @@ namespace WebApi.IntegrationTests.Common
                 Dimensions = new Dimensions(10, 10, 10),
                 Weight = 20,
                 Notes = "notes",
-                ShipmentId = shipment.Id,
+                ShipmentId = 1,
             };
             context.Packagings.Add(packaging);
 

@@ -17,7 +17,7 @@ namespace ClaimProcessing.Persistance.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.10")
+                .HasAnnotation("ProductVersion", "8.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -311,13 +311,12 @@ namespace ClaimProcessing.Persistance.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<DateTime>("PurchaseDate")
+                    b.Property<DateTime?>("PurchaseDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<string>("PurchaseInvoiceNo")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
@@ -367,13 +366,12 @@ namespace ClaimProcessing.Persistance.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
-                    b.Property<DateTime>("SaleDate")
+                    b.Property<DateTime?>("SaleDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
                     b.Property<string>("SaleInvoiceNo")
-                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)")
@@ -731,11 +729,9 @@ namespace ClaimProcessing.Persistance.Migrations
 
                     b.Navigation("FotoUrls");
 
-                    b.Navigation("PurchaseDetail")
-                        .IsRequired();
+                    b.Navigation("PurchaseDetail");
 
-                    b.Navigation("SaleDetail")
-                        .IsRequired();
+                    b.Navigation("SaleDetail");
 
                     b.Navigation("SerialNumbers");
                 });

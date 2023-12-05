@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ClaimProcessing.Application.Claims.Commands.CreateClaim;
 using ClaimProcessing.Application.Common.Mappings;
 using ClaimProcessing.Domain.Entities;
 using MediatR;
@@ -40,7 +41,6 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateClaim
             profile.CreateMap<UpdateClaimCommand, SaleDetail>(MemberList.None);
 
             profile.CreateMap<UpdateClaimCommand, PurchaseDetail>(MemberList.None);
-
         }
 
     }

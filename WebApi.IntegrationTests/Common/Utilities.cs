@@ -37,7 +37,7 @@ namespace WebApi.IntegrationTests.Common
                     ItemCode = "12A34B",
                     Qty = 1,
                     CustomerName = "Customer",
-                    CustomerId = "00000000-aaaa-1111-0000-000000000000",
+                    CustomerId = "4B434A88-212D-4A4D-A17C-F35102D73CBB",
                     ItemName = "item",
                     ClaimDescription = "description",
                     Remarks = "remarks",

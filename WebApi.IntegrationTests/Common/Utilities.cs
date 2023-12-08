@@ -32,7 +32,7 @@ namespace WebApi.IntegrationTests.Common
                 {
                     Id = 1,
                     ClaimNumber = "C10/23",
-                    OwnerType = "o1",
+                    OwnerType = "o11",
                     ClaimType = "c1",
                     ItemCode = "12A34B",
                     Qty = 1,
@@ -150,7 +150,7 @@ namespace WebApi.IntegrationTests.Common
                     Speditor = "DHL",
                     ShippingDocumentNo = "A1234XYZ",
                     TotalWeight = 20,
-                    SupplierId = supplier.Id
+                    SupplierId = 1
                 },
                  new()
                 {
@@ -159,7 +159,7 @@ namespace WebApi.IntegrationTests.Common
                     Speditor = "DPD",
                     ShippingDocumentNo = "B5678UVW",
                     TotalWeight = 33,
-                    SupplierId = supplier.Id
+                    SupplierId = 1
                 },
             };
 

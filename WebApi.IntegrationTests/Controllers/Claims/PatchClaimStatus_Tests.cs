@@ -1,10 +1,10 @@
-﻿using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
-using ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus;
+﻿using ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Text;
 using WebApi.IntegrationTests.Common;
 using Xunit;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebApi.IntegrationTests.Controllers.Claims
 {
@@ -12,45 +12,35 @@ namespace WebApi.IntegrationTests.Controllers.Claims
         : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         [Fact]
-        public async Task PatchGivenExistingClaim_ReturnsUpdatedClaimIdValue()
+        public async Task PatchGivenClaimStatus_ReturnsUpdatedClaimIdValue()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 
-            UpdateClaimStatusCommand claim = new()
-            {
-                ClaimId = 1,
-                ClaimStatus = 9,
-            };
-
-            var jsonValue = JsonConvert.SerializeObject(claim);
-            var content = new StringContent(jsonValue, Encoding.UTF8, "application/json");
-
-            var response = await client.PatchAsync($"/api/v1/claims/{claim.ClaimId}/ClaimStatus", content);
+            var id = "1";
+            var status = "9";
+            var content = new StringContent("");
+            
+            var response = await client.PatchAsync($"/api/v1/claims/{id}/ClaimStatus?claimStatus={status}",content);
 
             response.EnsureSuccessStatusCode();
         }
 
         [Fact]
-        public async Task PatchNotExistingClaim_GeneratesExMessage()
+        public async Task PatchClaimStatusInNotExistingClaim_GeneratesExMessage()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-
-            UpdateClaimStatusCommand claim = new()
-            {
-                ClaimId = 9,
-                ClaimStatus = 1,
-            };
-
-            var jsonValue = JsonConvert.SerializeObject(claim);
-            var content = new StringContent(jsonValue, Encoding.UTF8, "application/json");
+            var id = "9";
+            var status = "1";
+            var content = new StringContent("");
+  
             try
             {
-                var response = await client.PatchAsync($"/api/v1/claims/{claim.ClaimId}/ClaimStatus", content);
+                var response = await client.PatchAsync($"/api/v1/claims/{id}/ClaimStatus?claimStatus={status}", content);
                 response.EnsureSuccessStatusCode();
             }
             catch (Exception ex)
             {
-                ex.Message.ShouldBe($"Object with given Id number '{claim.ClaimId}' is not found.");
+                ex.Message.ShouldBe($"Object with given Id number '{id}' is not found.");
             }
         }
     }

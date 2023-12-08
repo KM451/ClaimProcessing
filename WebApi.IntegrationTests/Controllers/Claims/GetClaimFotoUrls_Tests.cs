@@ -1,5 +1,4 @@
-﻿using ClaimProcessing.Application.Claims.Queries.GetClaimAttachmentsUrls;
-using ClaimProcessing.Application.Claims.Queries.GetClaimFotosUrls;
+﻿using ClaimProcessing.Application.Claims.Queries.GetClaimFotosUrls;
 using Shouldly;
 using System.Net;
 using WebApi.IntegrationTests.Common;

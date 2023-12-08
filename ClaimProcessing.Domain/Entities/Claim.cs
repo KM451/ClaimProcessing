@@ -23,8 +23,8 @@ namespace ClaimProcessing.Domain.Entities
         public ICollection<SerialNumber> SerialNumbers { get; set; }
         public ICollection<FotoUrl> FotoUrls { get; set;}
         public ICollection<AttachmentUrl> AttachmentUrls { get; set; }
-        public SaleDetail SaleDetail { get; set; }
-        public PurchaseDetail PurchaseDetail { get; set; }  
+        public SaleDetail? SaleDetail { get; set; }
+        public PurchaseDetail? PurchaseDetail { get; set; }  
 
     }
 }

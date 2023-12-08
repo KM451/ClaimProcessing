@@ -12,7 +12,7 @@ namespace WebApi.IntegrationTests.Controllers.AttachmentUrls
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 
-            string id = "2";
+            string id = "3";
             var response = await client.DeleteAsync($"/api/v1/attachment-urls/{id}");
             response.EnsureSuccessStatusCode();
         }

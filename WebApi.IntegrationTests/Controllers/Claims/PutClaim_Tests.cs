@@ -18,8 +18,8 @@ namespace WebApi.IntegrationTests.Controllers.Claims
             UpdateClaimCommand claim = new()
             {
                 ClaimNumber = "C10/23",
-                OwnerType = "o1",
-                ClaimType = "c1",
+                OwnerType = "o2",
+                ClaimType = "c11",
                 ItemCode = "12A34B",
                 Qty = 1,
                 CustomerName = "Customer",

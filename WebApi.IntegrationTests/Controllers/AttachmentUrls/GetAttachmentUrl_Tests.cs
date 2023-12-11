@@ -11,7 +11,7 @@ namespace WebApi.IntegrationTests.Controllers.AttachmentUrls
     {
         
         [Fact]
-        public async Task GivenAttachmentUrlsId_ReturnsAttachmentUrlDetail()
+        public async Task GivenAttachmentUrlId_ReturnsAttachmentUrlDetail()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 
@@ -23,7 +23,7 @@ namespace WebApi.IntegrationTests.Controllers.AttachmentUrls
         }
 
         [Fact]
-        public async Task GivenNotValidAttachmentUrlsId_Returns204Code()
+        public async Task GivenNotValidAttachmentUrlId_Returns204Code()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 

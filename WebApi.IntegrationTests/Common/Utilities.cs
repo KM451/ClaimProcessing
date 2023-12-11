@@ -32,7 +32,7 @@ namespace WebApi.IntegrationTests.Common
                 {
                     Id = 1,
                     ClaimNumber = "C10/23",
-                    OwnerType = "o11",
+                    OwnerType = "o2",
                     ClaimType = "c1",
                     ItemCode = "12A34B",
                     Qty = 1,
@@ -50,7 +50,7 @@ namespace WebApi.IntegrationTests.Common
                 {
                     Id = 2,
                     ClaimNumber = "C11/23",
-                    OwnerType = "o2",
+                    OwnerType = "o1",
                     ClaimType = "c2",
                     ItemCode = "56C78D",
                     Qty = 2,

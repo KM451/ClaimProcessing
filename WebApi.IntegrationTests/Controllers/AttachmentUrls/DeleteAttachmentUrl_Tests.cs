@@ -8,7 +8,7 @@ namespace WebApi.IntegrationTests.Controllers.AttachmentUrls
         : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         [Fact]
-        public async Task DeleteAttachmentUrlsWithGivenId_ShouldReturnsSuccessStatusCode()
+        public async Task DeleteAttachmentUrlWithGivenId_ShouldReturnsSuccessStatusCode()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 

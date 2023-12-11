@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ClaimProcessing.Application.Claims.Commands.UpdateShipmentId
 {
-    public class UpdateShipmentIdCommand : IRequest, IMapFrom<UpdateShipmentIdCommand>
+    public class UpdateShipmentIdCommand :  IMapFrom<UpdateShipmentIdCommand>, IRequest
     {
         public int ClaimId { get; set; }
         public int ShipmentId { get; set; }

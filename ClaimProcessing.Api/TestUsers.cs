@@ -23,7 +23,7 @@ namespace ClaimProcessing.Api
                             new Claim("Email", "AliceSmith@email.com"),
                             new Claim("Confirmation", "True"),
                             new Claim(JwtClaimTypes.Name, "Alice Smith"),
-                            new Claim(JwtClaimTypes.Role, "Staff1"),
+                            new Claim(JwtClaimTypes.Role, "Admin"),
                         }
                     }
                 };

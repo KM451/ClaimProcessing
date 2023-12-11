@@ -95,10 +95,10 @@ namespace WebApi.IntegrationTests.Common
             var attachmentUrls = new List<AttachmentUrl>
             {
                 new()
-                { 
+                {
                     Id = 1,
                     Path = "C:\\Windows\\System32",
-                    ClaimId = 1 
+                    ClaimId = 1
                 },
                 new()
                 {
@@ -165,16 +165,28 @@ namespace WebApi.IntegrationTests.Common
 
             context.Shipments.AddRange(shipments);
 
-            var packaging = new Packaging()
+            var packagings = new List<Packaging>
             {
-                Id = 1,
-                Type = "box",
-                Dimensions = new Dimensions(10, 10, 10),
-                Weight = 20,
-                Notes = "notes",
-                ShipmentId = 1,
+                new()
+                {
+                    Id = 1,
+                    Type = "box",
+                    Dimensions = new Dimensions(10, 10, 10),
+                    Weight = 20,
+                    Notes = "notes",
+                    ShipmentId = 1,
+                },
+                new()
+                {
+                    Id = 2,
+                    Type = "pallet",
+                    Dimensions = new Dimensions(11, 11, 11),
+                    Weight = 21,
+                    Notes = "notes",
+                    ShipmentId = 1,
+                }
             };
-            context.Packagings.Add(packaging);
+            context.Packagings.AddRange(packagings);
 
             var purchaseDetail = new PurchaseDetail()
             {

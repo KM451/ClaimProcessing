@@ -47,9 +47,9 @@ namespace ClaimProcessing.Application.Suppliers.Queries.GetSupplierClaims
                 if (key == "in" || key == "nin")
                 {
                     var splitDate = datePart.Split("-");
-                    if (!DateTime.TryParse(splitDate[0].ToString(), out date1) || !DateTime.TryParse(splitDate[1].ToString(), out date2))
+                    if (splitDate.Count()!=2 || !DateTime.TryParse(splitDate[0].ToString(), out date1) || !DateTime.TryParse(splitDate[1].ToString(), out date2))
                     {
-                        throw new InvalidFilterDateException(datePart);
+                        throw new InvalidFilterException(request.Filter);
                     }
                 }
                 else

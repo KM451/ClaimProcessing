@@ -7,7 +7,7 @@ using Xunit;
 
 namespace WebApi.IntegrationTests.Controllers.Claims
 {
-    public class GetClaim_Tests(CustomWebApplicationFactory<Program> _factory)
+    public class GetClaimDetail_Tests(CustomWebApplicationFactory<Program> _factory)
         : IClassFixture<CustomWebApplicationFactory<Program>>
     {
 

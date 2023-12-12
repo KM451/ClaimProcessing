@@ -13,7 +13,7 @@ namespace WebApi.IntegrationTests.Controllers.Claims
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 
-            var filterAndSort = "?filter=OwnerType%20eq%20o11&sort=asc";
+            var filterAndSort = "?filter=OwnerType%20eq%20o2&sort=asc";
 
             var response = await client.GetAsync($"/api/v1/claims{filterAndSort}");
             var vm = await Utilities.GetResponseContent<AllClaimsShortVm>(response);

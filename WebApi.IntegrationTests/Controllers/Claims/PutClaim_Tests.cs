@@ -18,14 +18,14 @@ namespace WebApi.IntegrationTests.Controllers.Claims
             UpdateClaimCommand claim = new()
             {
                 ClaimNumber = "C10/23",
-                OwnerType = "o1",
-                ClaimType = "c1",
+                OwnerType = "o2",
+                ClaimType = "c11",
                 ItemCode = "12A34B",
                 Qty = 1,
                 CustomerName = "Customer",
-                ItemName = "item",
-                ClaimDescription = "description",
-                Remarks = "remarks",
+                ItemName = "item_updated",
+                ClaimDescription = "description_updated",
+                Remarks = "remarks_updated",
                 ClaimStatus = 2,
                 RmaAvailable = true,
                 SupplierId = 1,
@@ -34,7 +34,7 @@ namespace WebApi.IntegrationTests.Controllers.Claims
                 PurchaseInvoiceNo = null,
                 PurchaseDate = null,
                 InternalDocNo = null,
-                ShipmentId = 2 
+                ShipmentId = 1 
             };
 
             string id = "1";

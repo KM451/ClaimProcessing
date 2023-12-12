@@ -32,7 +32,7 @@ namespace WebApi.IntegrationTests.Common
                 {
                     Id = 1,
                     ClaimNumber = "C10/23",
-                    OwnerType = "o11",
+                    OwnerType = "o2",
                     ClaimType = "c1",
                     ItemCode = "12A34B",
                     Qty = 1,
@@ -43,14 +43,14 @@ namespace WebApi.IntegrationTests.Common
                     Remarks = "remarks",
                     ClaimStatus = 2,
                     RmaAvailable = false,
-                    ShipmentId = 2,
+                    ShipmentId = 1,
                     SupplierId = 1
                 },
                 new()
                 {
                     Id = 2,
                     ClaimNumber = "C11/23",
-                    OwnerType = "o2",
+                    OwnerType = "o1",
                     ClaimType = "c2",
                     ItemCode = "56C78D",
                     Qty = 2,
@@ -61,7 +61,7 @@ namespace WebApi.IntegrationTests.Common
                     Remarks = "remarks",
                     ClaimStatus = 2,
                     RmaAvailable = false,
-                    ShipmentId = 2,
+                    ShipmentId = 1,
                     SupplierId = 1
                 }
             };
@@ -95,10 +95,10 @@ namespace WebApi.IntegrationTests.Common
             var attachmentUrls = new List<AttachmentUrl>
             {
                 new()
-                { 
+                {
                     Id = 1,
                     Path = "C:\\Windows\\System32",
-                    ClaimId = 1 
+                    ClaimId = 1
                 },
                 new()
                 {
@@ -155,7 +155,7 @@ namespace WebApi.IntegrationTests.Common
                  new()
                 {
                     Id = 2,
-                    ShipmentDate = new DateTime(2023, 10, 10),
+                    ShipmentDate = new DateTime(2023, 11, 11),
                     Speditor = "DPD",
                     ShippingDocumentNo = "B5678UVW",
                     TotalWeight = 33,
@@ -165,16 +165,28 @@ namespace WebApi.IntegrationTests.Common
 
             context.Shipments.AddRange(shipments);
 
-            var packaging = new Packaging()
+            var packagings = new List<Packaging>
             {
-                Id = 1,
-                Type = "box",
-                Dimensions = new Dimensions(10, 10, 10),
-                Weight = 20,
-                Notes = "notes",
-                ShipmentId = 1,
+                new()
+                {
+                    Id = 1,
+                    Type = "box",
+                    Dimensions = new Dimensions(10, 10, 10),
+                    Weight = 20,
+                    Notes = "notes",
+                    ShipmentId = 1,
+                },
+                new()
+                {
+                    Id = 2,
+                    Type = "pallet",
+                    Dimensions = new Dimensions(11, 11, 11),
+                    Weight = 21,
+                    Notes = "notes",
+                    ShipmentId = 1,
+                }
             };
-            context.Packagings.Add(packaging);
+            context.Packagings.AddRange(packagings);
 
             var purchaseDetail = new PurchaseDetail()
             {

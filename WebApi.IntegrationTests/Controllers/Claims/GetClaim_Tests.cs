@@ -24,7 +24,7 @@ namespace WebApi.IntegrationTests.Controllers.Claims
         }
 
         [Fact]
-        public async Task GivenWrongClaimId_ReturnsClaimDetail()
+        public async Task GivenWrongClaimId_Returns204()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 

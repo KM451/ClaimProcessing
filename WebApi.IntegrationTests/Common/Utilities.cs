@@ -43,7 +43,7 @@ namespace WebApi.IntegrationTests.Common
                     Remarks = "remarks",
                     ClaimStatus = 2,
                     RmaAvailable = false,
-                    ShipmentId = 2,
+                    ShipmentId = 1,
                     SupplierId = 1
                 },
                 new()
@@ -61,7 +61,7 @@ namespace WebApi.IntegrationTests.Common
                     Remarks = "remarks",
                     ClaimStatus = 2,
                     RmaAvailable = false,
-                    ShipmentId = 2,
+                    ShipmentId = 1,
                     SupplierId = 1
                 }
             };
@@ -155,7 +155,7 @@ namespace WebApi.IntegrationTests.Common
                  new()
                 {
                     Id = 2,
-                    ShipmentDate = new DateTime(2023, 10, 10),
+                    ShipmentDate = new DateTime(2023, 11, 11),
                     Speditor = "DPD",
                     ShippingDocumentNo = "B5678UVW",
                     TotalWeight = 33,

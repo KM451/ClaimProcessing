@@ -17,14 +17,24 @@ namespace WebApi.IntegrationTests.Common
         }
         public static void InitializeDbForTests(ClaimProcessingDbContext context)
         {
-            var supplier = new Supplier()
+            var suppliers = new List<Supplier>
             {
-                Id = 1,
-                Name = "Supplier",
-                Address = new Address("Wiejska", "Warszawa", "Polska", "00-950"),
-                ContactPerson = new FullName("Bruce", "Lee"),
+                new()
+                {
+                    Id = 1,
+                    Name = "Supplier",
+                    Address = new Address("Wiejska", "Warszawa", "Polska", "00-950"),
+                    ContactPerson = new FullName("Bruce", "Lee")
+                },
+                new()
+                {
+                    Id = 2,
+                    Name = "Supplier2",
+                    Address = new Address("Grunwaldzka", "Gdańsk", "Polska", "01-234"),
+                    ContactPerson = new FullName("All", "Bundy")
+                }
             };
-            context.Suppliers.Add(supplier);
+            context.Suppliers.AddRange(suppliers);
 
             var claims = new List<Claim>
             {
@@ -155,7 +165,7 @@ namespace WebApi.IntegrationTests.Common
                  new()
                 {
                     Id = 2,
-                    ShipmentDate = new DateTime(2023, 11, 11),
+                    ShipmentDate = new DateTime(2023, 12, 11),
                     Speditor = "DPD",
                     ShippingDocumentNo = "B5678UVW",
                     TotalWeight = 33,

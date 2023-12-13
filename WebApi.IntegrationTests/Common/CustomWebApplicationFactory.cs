@@ -22,8 +22,6 @@ namespace WebApi.IntegrationTests.Common
                     using var scope = sp.CreateScope();
                     var scopedServices = scope.ServiceProvider;
 
-                    var user = scopedServices.GetService<ICurrentUserService>();
-                    var dateTime = scopedServices.GetService<IDateTime>();
                     var context = scopedServices.GetRequiredService<ClaimProcessingDbContext>();
                     var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<TProgram>>>();
 

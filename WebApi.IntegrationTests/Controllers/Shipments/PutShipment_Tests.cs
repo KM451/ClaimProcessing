@@ -1,5 +1,4 @@
-﻿using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
-using ClaimProcessing.Application.Shipments.Commands.UpdateShipment;
+﻿using ClaimProcessing.Application.Shipments.Commands.UpdateShipment;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Text;
@@ -44,7 +43,7 @@ namespace WebApi.IntegrationTests.Controllers.Shipments
 
             UpdateShipmentCommand shipment = new()
             {
-                ShipmentDate = new DateTime(2023, 10, 10),
+                ShipmentDate = new DateTime(2023, 10, 11),
                 Speditor = "UPS",
                 ShippingDocumentNo = "A1234XYZ",
                 TotalWeight = 22,

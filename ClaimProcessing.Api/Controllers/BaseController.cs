@@ -15,5 +15,8 @@ namespace ClaimProcessing.Api.Controllers
 
         private IIntamiClient _intami;
         protected IIntamiClient Intami => _intami ??= HttpContext.RequestServices.GetService<IIntamiClient>();
+
+        private IBonfiClient _bonfi;
+        protected IBonfiClient Bonfi => _bonfi ??= HttpContext.RequestServices.GetService<IBonfiClient>();
     }
 }

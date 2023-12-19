@@ -1,0 +1,54 @@
+﻿@using ClaimProcessing.Client.Models
+@inject IJSRuntime JSRuntime
+@implements IAsyncDisposable
+
+<h5>ClaimsTable</h5>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Number</th>
+            <th>Creation date</th>
+            <th>Supplier</th>
+            <th>Item code</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var claim in Claims)
+        {
+            <tr>
+                <td>@claim.ClaimId</td>
+                <td>@claim.ClaimNumber</td>
+                <td>@claim.ClaimCreationDate</td>
+                <td>@claim.SupplierName</td>
+                <td>@claim.ItemCode</td>
+                <td>@claim.ClaimStatus</td>
+                <td><button @onclick="() => SayHi(claim.SupplierName)">Potwierdź swoje dane</button></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public List<AllClaimsShortDto> Claims { get; set; }
+
+    private Task<IJSObjectReference> _module;
+    private Task<IJSObjectReference> Module => _module ??= JSRuntime.InvokeAsync<IJSObjectReference>("import", "./js/claim.js").AsTask();
+
+    async Task SayHi(string name)
+    {
+        var module = await Module;
+        await module.InvokeVoidAsync("sayHi", name);
+    }
+    public async ValueTask DisposeAsync()
+    {
+        if(_module != null)
+        {
+            var module = await _module;
+            await module.DisposeAsync();
+        }
+    }
+}

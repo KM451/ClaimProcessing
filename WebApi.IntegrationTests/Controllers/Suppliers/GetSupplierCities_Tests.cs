@@ -15,7 +15,7 @@ namespace WebApi.IntegrationTests.Controllers.Suppliers
             var response = await client.GetAsync($"/api/v1/suppliers/{zip}/City");
             var vm = await Utilities.GetResponseContent<List<string>>(response);
             response.EnsureSuccessStatusCode();
-            vm.Count.ShouldBeGreaterThan(0);
+            vm.First().ShouldBe("Toruń");
         }
 
         [Fact]

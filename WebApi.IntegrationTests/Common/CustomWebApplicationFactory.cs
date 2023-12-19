@@ -16,6 +16,8 @@ namespace WebApi.IntegrationTests.Common
                 {
                     services.AddScoped<ICurrentUserService, DummyCurrentUserService>();
                     services.AddScoped<IDateTime, DummyDateTimeService>();
+                    services.AddScoped<IBonfiClient, DummyBonfiClientService>();
+                    services.AddScoped<IIntamiClient, DummyIntamiClientService>();
 
                     var sp = services.BuildServiceProvider();
 
@@ -45,6 +47,7 @@ namespace WebApi.IntegrationTests.Common
                 throw;
             }   
         }
+
 
         public async Task<HttpClient> GetAuthenticatedClientAsync()
         {

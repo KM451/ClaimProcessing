@@ -1,0 +1,43 @@
+﻿@page "/claim"
+@using ClaimProcessing.Client.Models
+@inject HttpClient Http
+
+<AuthorizeView>
+    <Authorized>
+        @if (claim == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <h3>Claims detail</h3>
+            <div class="card" style="width:18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@claim.OwnerType</h5>
+                    <p class="card-text">@claim.SupplierName</p>
+                    <a href="#" class="btn btn-primary">Edit</a>
+                </div>
+            </div>
+        }
+
+    </Authorized>
+    <NotAuthorized>
+        <p>I'm sorry, I can't dispaly this view'</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private ClaimDetailVm claim;
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var claim = await Http.GetFromJsonAsync<ClaimDetailVm>("https://localhost:7063/api/v1/claims/76");
+        }
+        catch (Exception ex)
+        {
+        }
+
+
+    }
+}

@@ -1,7 +1,4 @@
-﻿using ClaimProcessing.Application.Claims.Commands.UpdateRmaAvailability;
-using Newtonsoft.Json;
-using Shouldly;
-using System.Text;
+﻿using Shouldly;
 using WebApi.IntegrationTests.Common;
 using Xunit;
 

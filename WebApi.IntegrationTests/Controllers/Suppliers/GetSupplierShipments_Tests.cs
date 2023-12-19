@@ -52,7 +52,7 @@ namespace WebApi.IntegrationTests.Controllers.Suppliers
             var client = await _factory.GetAuthenticatedClientAsync();
             var id = 1;
             var dateTime = new DateTime(2023, 11, 11);
-            var date1 = dateTime.AddDays(-40).ToShortDateString();
+            var date1 = dateTime.AddYears(-1).ToShortDateString();
             var date2 = dateTime.AddDays(40).ToShortDateString();
 
             var response = await client.GetAsync($"/api/v1/suppliers/{id}/Shipments?filter=nin%20{date1}-{date2}");

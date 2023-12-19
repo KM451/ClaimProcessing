@@ -7,7 +7,8 @@ public static class Config
     public static IEnumerable<IdentityResource> IdentityResources =>
         new List<IdentityResource>
         {
-            new IdentityResources.OpenId()
+            new IdentityResources.OpenId(),
+            new IdentityResources.Profile()
         };
 
     public static IEnumerable<ApiScope> ApiScopes =>
@@ -43,6 +44,20 @@ public static class Config
                    AllowAccessTokensViaBrowser = true,
                    RedirectUris = { "https://localhost:7063/swagger/oauth2-redirect.html" },
                    AllowedCorsOrigins = { "https://localhost:7063" }
+               },
+
+                new Client
+               {
+                   ClientId = "blazor",
+                   ClientName = "BlazorApp",
+                   AllowedGrantTypes = GrantTypes.CodeAndClientCredentials,
+                   RequirePkce = true,
+                   RequireClientSecret = false,
+                   AllowedScopes = { "openid", "profile", "api1" },
+                   AllowedCorsOrigins = { "https://localhost:7026" },
+                   RedirectUris = { "https://localhost:7026/authentication/login-callback" },
+                   PostLogoutRedirectUris = { "https://localhost:7026" },
+                   Enabled = true                 
                }
         };
 }

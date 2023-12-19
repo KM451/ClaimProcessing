@@ -50,7 +50,7 @@ namespace WebApi.IntegrationTests.Common
                     CustomerId = "4B434A88-212D-4A4D-A17C-F35102D73CBB",
                     ItemName = "item",
                     ClaimDescription = "description",
-                    Remarks = "remarks",
+                    Remarks = "00032303",
                     ClaimStatus = 2,
                     RmaAvailable = false,
                     ShipmentId = 1,

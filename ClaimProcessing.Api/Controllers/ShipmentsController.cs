@@ -7,7 +7,6 @@ using ClaimProcessing.Application.Shipments.Queries.GetShipmentPackagings;
 using ClaimProcessing.Application.Shipments.Queries.GetShipments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace ClaimProcessing.Api.Controllers
 {

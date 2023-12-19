@@ -1,10 +1,6 @@
-﻿using ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus;
-using Newtonsoft.Json;
-using Shouldly;
-using System.Text;
+﻿using Shouldly;
 using WebApi.IntegrationTests.Common;
 using Xunit;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebApi.IntegrationTests.Controllers.Claims
 {
@@ -12,7 +8,7 @@ namespace WebApi.IntegrationTests.Controllers.Claims
         : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         [Fact]
-        public async Task PatchGivenClaimStatus_ReturnsUpdatedClaimIdValue()
+        public async Task PatchGivenClaimStatus_ReturnsValueOfNewClaimStatus()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
 
@@ -23,6 +19,24 @@ namespace WebApi.IntegrationTests.Controllers.Claims
             var response = await client.PatchAsync($"/api/v1/claims/{id}/ClaimStatus?claimStatus={status}",content);
 
             response.EnsureSuccessStatusCode();
+            var stringResponse = await Utilities.GetResponseContent<string>(response);
+            stringResponse.ShouldBe(status.ToString());
+        }
+
+        [Fact]
+        public async Task PatchClaimStatusByMinusOneValue_TakesRightStatusValueFromExternalApi()
+        {
+            var client = await _factory.GetAuthenticatedClientAsync();
+
+            var id = "1";
+            var status = "-1";
+            var content = new StringContent("");
+
+            var response = await client.PatchAsync($"/api/v1/claims/{id}/ClaimStatus?claimStatus={status}", content);
+
+            response.EnsureSuccessStatusCode();
+            var stringResponse = await Utilities.GetResponseContent<string>(response);
+            stringResponse.ShouldBe("12");
         }
 
         [Fact]

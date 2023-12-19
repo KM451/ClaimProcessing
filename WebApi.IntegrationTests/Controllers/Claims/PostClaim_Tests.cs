@@ -27,7 +27,7 @@ namespace WebApi.IntegrationTests.Controllers.Claims
                 CustomerName = "Customer",
                 ItemName = "item",
                 ClaimDescription = "description",
-                Remarks = "remarks",
+                Remarks = null,
                 ClaimStatus = 2,
                 SupplierId = 1,
                 SaleInvoiceNo = "S123",

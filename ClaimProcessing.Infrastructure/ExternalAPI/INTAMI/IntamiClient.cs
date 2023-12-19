@@ -8,7 +8,7 @@ namespace ClaimProcessing.Infrastructure.ExternalAPI.INTAMI
     {
         private string _baseUrl = "http://kodpocztowy.intami.pl";
         private readonly HttpClient _httpClient;
-        private System.Lazy<JsonSerializerSettings> _settings;
+        private Lazy<JsonSerializerSettings> _settings;
 
         public IntamiClient(IHttpClientFactory factory) 
         {
@@ -22,7 +22,7 @@ namespace ClaimProcessing.Infrastructure.ExternalAPI.INTAMI
             });
         }
 
-        protected JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
+        protected JsonSerializerSettings JsonSerializerSettings => _settings.Value;
 
         partial void UpdateJsonSerializerSettings(JsonSerializerSettings settings);
 
@@ -32,7 +32,7 @@ namespace ClaimProcessing.Infrastructure.ExternalAPI.INTAMI
             set { _baseUrl = value; }
         }
 
-      
+
         public async Task<string> GetCity(string searchFilter, CancellationToken cancellationToken)
         {
             var urlBuilder = new StringBuilder();

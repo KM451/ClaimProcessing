@@ -1,6 +1,7 @@
 ﻿using ClaimProcessing.Application.Claims.Commands.CreateClaim;
 using ClaimProcessing.Application.Claims.Commands.DeleteClaim;
 using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
+using ClaimProcessing.Application.Claims.Commands.UpdateClaimRemarks;
 using ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus;
 using ClaimProcessing.Application.Claims.Commands.UpdateRmaAvailability;
 using ClaimProcessing.Application.Claims.Commands.UpdateShipmentId;
@@ -136,6 +137,7 @@ namespace ClaimProcessing.Api.Controllers
 
         /// <summary>
         /// Update the ClaimStatus field of Claim specified by Id number
+        /// Value -1 of ClaimStatus cause of obtaining this value from external Api of supplier
         /// </summary>
         /// <param name="id">The Claim Id number</param>
         /// <param name="claimStatus">The ClaimStatus value</param>
@@ -144,10 +146,26 @@ namespace ClaimProcessing.Api.Controllers
         [Authorize(Policy = "ApiUser1")]
         public async Task<IActionResult> UpdateClaimStatus(int id, int claimStatus)
         {
-            var command = new UpdateClaimStatusCommand { ClaimId=id, ClaimStatus=claimStatus};
-            await Mediator.Send(command);
-            return Ok();
+            var command = new UpdateClaimStatusCommand { ClaimId = id, ClaimStatus = claimStatus};
+            var result = await Mediator.Send(command);
+            return Ok(result);
         }
+
+        /// <summary>
+        /// Update the Remarks field of Claim specified by ClaimId number
+        /// </summary>
+        /// <param name="id">The Claim Id number</param>
+        /// <param name="remarks">The Claim Id in a supplier system</param>
+        /// <returns></returns>
+        [HttpPatch("{id}/Remarks")]
+        [Authorize(Policy = "ApiUser1")]
+        public async Task<IActionResult> UpdateClaimRemarks(int id, string remarks)
+        {
+            var command = new UpdateClaimRemarksCommand { ClaimId = id, Remarks = remarks };
+            var result = await Mediator.Send(command);
+            return Ok(result);
+        }
+
 
         /// <summary>
         /// Update the RmaAvailable field of Claim specified by Id number

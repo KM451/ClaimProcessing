@@ -1,13 +1,7 @@
 ﻿using Application.UnitTest.Common;
-using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
 using ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.UnitTest.Claim.Command.UpdateClaimStatus
 {
@@ -18,7 +12,7 @@ namespace Application.UnitTest.Claim.Command.UpdateClaimStatus
         public UpdateClaimStatusCommandHandlerTest()
             :base()
         {
-            _handler = new UpdateClaimStatusCommandHandler(_context, _mapper);
+            _handler = new UpdateClaimStatusCommandHandler(_context, _mapper, _bonfi);
         }
 
         [Fact]

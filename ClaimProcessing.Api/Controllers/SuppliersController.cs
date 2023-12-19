@@ -1,12 +1,14 @@
 ﻿using ClaimProcessing.Application.Suppliers.Commands.CreateSupplier;
 using ClaimProcessing.Application.Suppliers.Commands.DeleteSupplier;
 using ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier;
+using ClaimProcessing.Application.Suppliers.Queries.GetSupplierCity;
 using ClaimProcessing.Application.Suppliers.Queries.GetSupplierClaims;
 using ClaimProcessing.Application.Suppliers.Queries.GetSupplierDetail;
 using ClaimProcessing.Application.Suppliers.Queries.GetSuppliers;
 using ClaimProcessing.Application.Suppliers.Queries.GetSupplierShipments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace ClaimProcessing.Api.Controllers
 {
@@ -75,6 +77,37 @@ namespace ClaimProcessing.Api.Controllers
             return vm;
         }
 
+        /// <summary>
+        /// Get the list of cities assigned to given zip code
+        /// </summary>
+        /// <param name="kod">Zip Code</param>
+        /// <returns></returns>
+        [HttpGet("{kod}/City")]
+        [Authorize(Policy = "ApiUser12")]
+        public async Task<ActionResult<List<string>>> GetCityByZipCode(string kod)
+        {
+            var response = await Intami.GetCity(kod, new CancellationToken());
+            var cities = new List<string>();
+            if (response != "Someting bad happened")
+            {
+                var vm = JsonConvert.DeserializeObject<List<SupplierCityVm>>(response);
+
+                if (vm != null)
+                {
+                    foreach (var item in vm)
+                    {
+                        if (!cities.Contains(item.miejscowosc))
+                        {
+                            cities.Add(item.miejscowosc);
+                        }
+                    }
+                }
+                cities.Sort();
+            }
+            return cities;
+        }
+
+        
         /// <summary>
         /// Create the new Supplier
         /// </summary>

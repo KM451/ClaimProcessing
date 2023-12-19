@@ -4,6 +4,7 @@ using ClaimProcessing.Infrastructure.FileStore;
 using ClaimProcessing.Infrastructure.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http.Headers;
 
 namespace ClaimProcessing.Infrastructure
 {
@@ -15,7 +16,7 @@ namespace ClaimProcessing.Infrastructure
             {
                 options.BaseAddress = new Uri("http://kodpocztowy.intami.pl");
                 options.Timeout = new TimeSpan(0, 0, 10);
-                options.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             }).ConfigurePrimaryHttpMessageHandler(sp => new HttpClientHandler());
             services.AddScoped<IIntamiClient, IntamiClient>();
 

@@ -4,6 +4,6 @@ namespace WebApi.IntegrationTests.Common.DummyServices
 {
     public class DummyDateTimeService : IDateTime
     {
-        public DateTime Now { get; } = new DateTime(2022, 1, 1);
+        public DateTime Now { get; } = new DateTime(2023, 1, 1);
     }
 }

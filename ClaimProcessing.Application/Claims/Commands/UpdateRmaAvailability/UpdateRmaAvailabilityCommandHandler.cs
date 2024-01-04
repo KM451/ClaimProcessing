@@ -6,16 +6,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Claims.Commands.UpdateRmaAvailability
 {
-    public class UpdateRmaAvailabilityCommandHandler : IRequestHandler<UpdateRmaAvailabilityCommand>
+    public class UpdateRmaAvailabilityCommandHandler(IClaimProcessingDbContext _context, IMapper _mapper) : IRequestHandler<UpdateRmaAvailabilityCommand>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-
-        public UpdateRmaAvailabilityCommandHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
         public async Task Handle(UpdateRmaAvailabilityCommand request, CancellationToken cancellationToken)
         {
             var claim = await _context.Claims.Where(c => c.StatusId != 0 && c.Id == request.ClaimId).FirstOrDefaultAsync(cancellationToken);

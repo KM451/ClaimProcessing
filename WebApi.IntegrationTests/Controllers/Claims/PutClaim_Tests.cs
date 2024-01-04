@@ -25,7 +25,7 @@ namespace WebApi.IntegrationTests.Controllers.Claims
                 CustomerName = "Customer",
                 ItemName = "item_updated",
                 ClaimDescription = "description_updated",
-                Remarks = "remarks_updated",
+                Remarks = "00032303",
                 ClaimStatus = 2,
                 RmaAvailable = true,
                 SupplierId = 1,

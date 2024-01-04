@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Infrastructure.ExternalAPI.BONFI;
 using ClaimProcessing.Infrastructure.ExternalAPI.INTAMI;
 using ClaimProcessing.Infrastructure.FileStore;
 using ClaimProcessing.Infrastructure.Services;
@@ -19,6 +20,14 @@ namespace ClaimProcessing.Infrastructure
                 options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             }).ConfigurePrimaryHttpMessageHandler(sp => new HttpClientHandler());
             services.AddScoped<IIntamiClient, IntamiClient>();
+
+            services.AddHttpClient("BonfiClient", options =>
+            {
+                options.BaseAddress = new Uri("https://api.bonfiglioli.com");
+                options.Timeout = new TimeSpan(0, 0, 10);
+                options.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            }).ConfigurePrimaryHttpMessageHandler(sp => new HttpClientHandler());
+            services.AddScoped<IBonfiClient, BonfiClient>();
 
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<IFileStore, FileStore.FileStore>();

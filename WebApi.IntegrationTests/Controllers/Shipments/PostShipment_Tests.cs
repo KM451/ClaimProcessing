@@ -1,4 +1,5 @@
-﻿using ClaimProcessing.Application.Shipments.Commands.CreateShipment;
+﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Application.Shipments.Commands.CreateShipment;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Net;
@@ -15,10 +16,10 @@ namespace WebApi.IntegrationTests.Controllers.Shipments
         public async Task PostGivenShipment_ReturnsIdValue()
         {
             var client = await _factory.GetAuthenticatedClientAsync();
-
+            var dateTime = _factory.Services.GetRequiredService<IDateTime>();
             CreateShipmentCommand shipment = new()
             {
-                ShipmentDate = DateTime.Now,
+                ShipmentDate = dateTime.Now,
                 Speditor = "UPS",
                 ShippingDocumentNo = "333",
                 TotalWeight = 10,

@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi.IntegrationTests", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityServer", "IdentityServer", "{2F562AB4-EC02-4387-83B1-4C0C0325A7E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{04D4A16A-216F-43C3-837D-EE4AF2C9CE55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "IdentityServer\IdentityServer.csproj", "{04D4A16A-216F-43C3-837D-EE4AF2C9CE55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClaimProcessing.Client", "ClaimProcessing.Client\ClaimProcessing.Client.csproj", "{1C72232A-FC27-455A-BBB1-7A0BBF19D34A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,10 @@ Global
 		{04D4A16A-216F-43C3-837D-EE4AF2C9CE55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04D4A16A-216F-43C3-837D-EE4AF2C9CE55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04D4A16A-216F-43C3-837D-EE4AF2C9CE55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C72232A-FC27-455A-BBB1-7A0BBF19D34A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C72232A-FC27-455A-BBB1-7A0BBF19D34A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C72232A-FC27-455A-BBB1-7A0BBF19D34A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C72232A-FC27-455A-BBB1-7A0BBF19D34A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +93,7 @@ Global
 		{62A5D976-2641-4581-8C51-E8C634F95A57} = {A6665875-10F5-443F-862E-DE03BBEF7F7F}
 		{541AE47A-3148-4E2B-9CD1-8BC01F8A9B56} = {A6665875-10F5-443F-862E-DE03BBEF7F7F}
 		{04D4A16A-216F-43C3-837D-EE4AF2C9CE55} = {2F562AB4-EC02-4387-83B1-4C0C0325A7E6}
+		{1C72232A-FC27-455A-BBB1-7A0BBF19D34A} = {B4CB2768-08F7-449F-AF40-32CDFBF1C2A0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9A29E04C-D221-4091-8821-4EA9CA3F61B6}

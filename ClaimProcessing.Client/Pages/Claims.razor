@@ -1,0 +1,21 @@
+﻿@page "/claims"
+@using ClaimProcessing.Client.Components
+@using ClaimProcessing.Client.Models
+
+<h3>Claims list</h3>
+<a href="addClaim">Add new</a>
+<ClaimsTable Claims="@claims"></ClaimsTable>
+
+@code {
+    private List<AllClaimsShortDto> claims;
+
+        protected override async Task OnInitializedAsync()
+        {
+            claims = new List<AllClaimsShortDto>()
+            {
+                new AllClaimsShortDto() {ClaimId = 1, ClaimNumber = "T22/23", ClaimCreationDate = new DateTime(2023,1,1), SupplierName = "Microsoft", ItemCode = "XP", ClaimStatus = 2},
+                new AllClaimsShortDto() {ClaimId = 2, ClaimNumber = "T23/23", ClaimCreationDate = new DateTime(2023,1,22), SupplierName = "Adobe", ItemCode = "Acrobat", ClaimStatus = 3}
+            };
+        }
+    }
+

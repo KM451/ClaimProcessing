@@ -32,12 +32,11 @@
     {
         try
         {
-            var claim = await Http.GetFromJsonAsync<ClaimDetailVm>("https://localhost:7063/api/v1/claims/76");
+            claim = await Http.GetFromJsonAsync<ClaimDetailVm>("https://localhost:7063/api/v1/claims/76");
         }
         catch (Exception ex)
         {
+            throw;
         }
-
-
     }
 }

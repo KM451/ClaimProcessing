@@ -8,21 +8,12 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 
-builder.Services.AddHttpClient("api").AddHttpMessageHandler(sp =>
-{
-    var handler = sp.GetService<AuthorizationMessageHandler>()
-    .ConfigureHandler(
-        authorizedUrls: new[] { "https://localhost:7063/" },
-        scopes: new[] { "api1" });
-    return handler;
-});
+builder.Services.AddHttpClient("api")
+    .AddHttpMessageHandler(sp => sp.GetService<AuthorizationMessageHandler>()
+    .ConfigureHandler(new[] { "https://localhost:7063/" }, new[] { "api1" }));
 
 builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>().CreateClient("api"));
 
-
-builder.Services.AddOidcAuthentication(options =>
-{
-    builder.Configuration.Bind("oidc", options.ProviderOptions);
-});
+builder.Services.AddOidcAuthentication(options => builder.Configuration.Bind("oidc", options.ProviderOptions));
 
 await builder.Build().RunAsync();

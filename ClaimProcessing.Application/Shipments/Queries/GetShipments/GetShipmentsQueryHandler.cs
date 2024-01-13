@@ -1,20 +1,13 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Domain.Entities;
+using ClaimProcessing.Shared.Shipments.Queries.GetShipments;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Shipments.Queries.GetShipments
 {
-    public class GetShipmentsQueryHandler : IRequestHandler<GetShipmentsQuery, ShipmentsVm>
+    public class GetShipmentsQueryHandler(IClaimProcessingDbContext _context) : IRequestHandler<GetShipmentsQuery, ShipmentsVm>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-
-        public GetShipmentsQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
         public async Task<ShipmentsVm> Handle(GetShipmentsQuery request, CancellationToken cancellationToken)
         {
             var shipments = await _context.Shipments
@@ -22,12 +15,22 @@ namespace ClaimProcessing.Application.Shipments.Queries.GetShipments
                 .Include(c => c.Supplier)
                 .ToListAsync(cancellationToken);
 
+            if(shipments == null) { return null; }
+
             var shipmentsVm = new ShipmentsVm
             {
-                Shipments = shipments.Select(src => _mapper.Map<ShipmentsDto>(src)).ToList()
+                Shipments = shipments.Select(src => Map(src)).ToList()
             };
 
             return shipmentsVm;
         }
+
+        private static ShipmentsDto Map(Shipment shipment) => new ShipmentsDto
+            {
+                ShipmentId = shipment.Id,
+                ShipmentDate = shipment.ShipmentDate,
+                SupplierName = shipment.Supplier.Name
+            };
+        
     }
 }

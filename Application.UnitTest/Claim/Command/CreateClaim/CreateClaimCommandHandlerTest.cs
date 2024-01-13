@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Claims.Commands.CreateClaim;
+using ClaimProcessing.Shared.Claims.Commands.CreateClaim;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -12,7 +13,7 @@ namespace Application.UnitTest.Claim.Command.CreateClaim
         public CreateClaimCommandHandlerTest()
             : base()
         {
-            _handler = new CreateClaimCommandHandler(_context, _mapper);
+            _handler = new CreateClaimCommandHandler(_context);
         }
 
         [Fact]

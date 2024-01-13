@@ -1,0 +1,39 @@
+﻿@using ClaimProcessing.Shared.Filter
+
+
+<div class="row">
+    <div class="col-sm-3">
+        <label>Owner type</label>
+        <InputText @bind-Value="Filter.OwnerType" />
+    </div>
+    <div class="col-sm-3">
+        <label>Claim type</label>
+        <InputText @bind-Value="Filter.ClaimType" />
+    </div>
+    <div class="col-sm-3">
+        <label>Item code</label>
+        <InputText @bind-Value="Filter.ItemCode" />
+    </div>
+    <div class="col-sm-3">
+        <label>Customer name</label>
+        <InputText @bind-Value="Filter.CustomerName" />
+    </div>
+    <div class="col-sm-3">
+        <label>Claim status</label>
+        <InputText @bind-Value="Filter.ClaimStatus" />
+    </div>
+    <div class="col-sm-3">
+        <label>Supplier Id</label>
+        <InputNumber @bind-Value="Filter.SupplierId" />
+    </div>
+    <div class="col-sm-3">
+        <label>Rma</label>
+        <InputCheckbox @bind-Value="Filter.RmaAvailable" />
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public FilterVm Filter { get; set; }
+}

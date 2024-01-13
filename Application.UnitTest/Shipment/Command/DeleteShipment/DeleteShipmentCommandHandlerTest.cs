@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Shipments.Commands.DeleteShipment;
+using ClaimProcessing.Shared.Shipments.Commands.DeleteShipment;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 

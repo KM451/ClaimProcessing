@@ -1,7 +1,7 @@
 ﻿using Application.UnitTest.Common;
-using AutoMapper;
 using ClaimProcessing.Application.Suppliers.Queries.GetSuppliers;
 using ClaimProcessing.Persistance;
+using ClaimProcessing.Shared.Suppliers.Queries.GetSuppliers;
 using Shouldly;
 
 namespace Application.UnitTest.Supplier.Queries.GetSuppliers
@@ -10,18 +10,16 @@ namespace Application.UnitTest.Supplier.Queries.GetSuppliers
     public class GetSuppliersQueryHandlerTests
     {
         private readonly ClaimProcessingDbContext _context;
-        private readonly IMapper _mapper;
 
         public GetSuppliersQueryHandlerTests(QueryTestFixtures fixtures)
         {
             _context = fixtures.Context;
-            _mapper = fixtures.Mapper;
         }
 
         [Fact]
         public async Task GetAllSuppliers()
         {
-            var handler = new GetSuppliersQueryHandler(_context, _mapper);
+            var handler = new GetSuppliersQueryHandler(_context);
             var result = await handler.Handle(new GetSuppliersQuery(), CancellationToken.None);
 
             result.ShouldBeOfType<SuppliersVm>();

@@ -1,7 +1,7 @@
 ﻿using Application.UnitTest.Common;
-using AutoMapper;
 using ClaimProcessing.Application.Shipments.Queries.GetShipmentPackagings;
 using ClaimProcessing.Persistance;
+using ClaimProcessing.Shared.Shipments.Queries.GetShipmentPackagings;
 using Shouldly;
 
 namespace Application.UnitTest.Shipment.Queries.GetShipmentPackagings
@@ -10,19 +10,17 @@ namespace Application.UnitTest.Shipment.Queries.GetShipmentPackagings
     public class GetShipmentPackagingsQueryHandlerTests
     {
         private readonly ClaimProcessingDbContext _context;
-        private readonly IMapper _mapper;
 
         public GetShipmentPackagingsQueryHandlerTests(QueryTestFixtures fixtures)
         {
             _context = fixtures.Context;
-            _mapper = fixtures.Mapper;
         }
 
         [Fact]
 
         public async Task GetPackagingsByShipmentId()
         {
-            var handler = new GetShipmentPackagingsQueryHandler(_context, _mapper);
+            var handler = new GetShipmentPackagingsQueryHandler(_context);
             var result = await handler.Handle(new GetShipmentPackagingsQuery { ShipmentId = 1 }, CancellationToken.None);
 
             result.ShouldBeOfType<ShipmentPackagingsVm>();

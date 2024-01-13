@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
+using ClaimProcessing.Shared.Claims.Commands.UpdateClaim;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -12,7 +13,7 @@ namespace Application.UnitTest.Claim.Command.UpdateClaim
         public UpdateClaimCommandHandlerTest()
             : base()
         {
-            _handler = new UpdateClaimCommandHandler(_context, _mapper);
+            _handler = new UpdateClaimCommandHandler(_context);
         }
 
         [Fact]

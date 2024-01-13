@@ -6,6 +6,7 @@ using ClaimProcessing.Application.Suppliers.Queries.GetSupplierClaims;
 using ClaimProcessing.Application.Suppliers.Queries.GetSupplierDetail;
 using ClaimProcessing.Application.Suppliers.Queries.GetSuppliers;
 using ClaimProcessing.Application.Suppliers.Queries.GetSupplierShipments;
+using ClaimProcessing.Shared.Suppliers.Queries.GetSuppliers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

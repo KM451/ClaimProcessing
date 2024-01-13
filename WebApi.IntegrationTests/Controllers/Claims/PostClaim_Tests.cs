@@ -1,5 +1,4 @@
-﻿using Azure;
-using ClaimProcessing.Application.Claims.Commands.CreateClaim;
+﻿using ClaimProcessing.Shared.Claims.Commands.CreateClaim;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Net;

@@ -1,20 +1,13 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Domain.Entities;
+using ClaimProcessing.Shared.Suppliers.Queries.GetSuppliers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Suppliers.Queries.GetSuppliers
 {
-    public class GetSuppliersQueryHandler : IRequestHandler<GetSuppliersQuery, SuppliersVm>
+    public class GetSuppliersQueryHandler(IClaimProcessingDbContext _context) : IRequestHandler<GetSuppliersQuery, SuppliersVm>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-
-        public GetSuppliersQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
         public async Task<SuppliersVm> Handle(GetSuppliersQuery request, CancellationToken cancellationToken)
         {
             var suppliers = await _context.Suppliers
@@ -23,10 +16,20 @@ namespace ClaimProcessing.Application.Suppliers.Queries.GetSuppliers
 
             var suppliersVm = new SuppliersVm
             {
-                Suppliers = suppliers.Select(src => _mapper.Map<SuppliersDto>(src)).ToList()
+                Suppliers = suppliers.Select(src => Map(src)).ToList()
             };
 
             return suppliersVm;
+        }
+
+        private SuppliersDto Map(Supplier supplier)
+        {
+            return new SuppliersDto
+            {
+                SupplierId = supplier.Id,
+                Name = supplier.Name,
+                City = supplier.Address.City
+            };
         }
     }
 }

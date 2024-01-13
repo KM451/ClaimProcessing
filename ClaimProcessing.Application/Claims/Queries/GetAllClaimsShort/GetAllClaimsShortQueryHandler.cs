@@ -1,21 +1,15 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Exceptions;
+﻿using ClaimProcessing.Application.Common.Exceptions;
 using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Domain.Entities;
+using ClaimProcessing.Shared.Claims.Queries.GetAllClaimsShort;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
 {
-    public class GetAllClaimsShortQueryHandler : IRequestHandler<GetAllClaimsShortQuery, AllClaimsShortVm>
+    public class GetAllClaimsShortQueryHandler(IClaimProcessingDbContext _context) : IRequestHandler<GetAllClaimsShortQuery, AllClaimsShortVm>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-
-        public GetAllClaimsShortQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
 
         public async Task<AllClaimsShortVm> Handle(GetAllClaimsShortQuery request, CancellationToken cancellationToken)
         {
@@ -82,11 +76,24 @@ namespace ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort
 
             var claimsVm = new AllClaimsShortVm
             {
-                Claims = claims.Select(src => _mapper.Map<AllClaimsShortDto>(src)).ToList()
+                Claims = claims.Select(src => Map(src)).ToList()
             };
 
             return claimsVm;
 
+        }
+
+        private AllClaimsShortDto Map(Claim claim)
+        {
+            return new AllClaimsShortDto
+            {
+                ClaimId = claim.Id,
+                ClaimNumber = claim.ClaimNumber,
+                ClaimCreationDate = claim.Created,
+                SupplierName = claim.Supplier.Name,
+                ItemCode = claim.ItemCode,
+                ClaimStatus = claim.ClaimStatus
+            };
         }
     }
 }

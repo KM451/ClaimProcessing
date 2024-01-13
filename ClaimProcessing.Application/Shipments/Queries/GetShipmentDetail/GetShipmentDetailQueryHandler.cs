@@ -1,28 +1,37 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Domain.Entities;
+using ClaimProcessing.Shared.Shipments.Queries.GetShipmentDetail;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Shipments.Queries.GetShipmentDetail
 {
-    public class GetShipmentDetailQueryHandler : IRequestHandler<GetShipmentDetailQuery, ShipmentDetailVm>
+    public class GetShipmentDetailQueryHandler(IClaimProcessingDbContext _context) : IRequestHandler<GetShipmentDetailQuery, ShipmentDetailVm>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-        public GetShipmentDetailQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
         public async Task<ShipmentDetailVm> Handle(GetShipmentDetailQuery request, CancellationToken cancellationToken)
         {
             var shipment = await _context.Shipments
                 .Where(s => s.StatusId != 0 && s.Id == request.ShipmentId)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            var shipmentVm = _mapper.Map<ShipmentDetailVm>(shipment);
+            if (shipment == null) 
+                return null;
 
+            var shipmentVm = Map(shipment);
+            
             return shipmentVm;
+        }
+
+        private static ShipmentDetailVm Map(Shipment shipment)
+        {
+            return new ShipmentDetailVm
+            {
+                ShipmentDate = shipment.ShipmentDate,
+                SupplierID = shipment.SupplierId,
+                Speditor = shipment.Speditor,
+                ShippingDocumentNo = shipment.ShippingDocumentNo,
+                TotalWeight = shipment.TotalWeight
+            };
         }
     }
 }

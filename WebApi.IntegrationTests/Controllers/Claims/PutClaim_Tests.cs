@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
+using ClaimProcessing.Shared.Claims.Commands.UpdateClaim;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Text;
@@ -17,6 +18,7 @@ namespace WebApi.IntegrationTests.Controllers.Claims
 
             UpdateClaimCommand claim = new()
             {
+                ClaimId = 1,
                 ClaimNumber = "C10/23",
                 OwnerType = "o2",
                 ClaimType = "c11",
@@ -37,15 +39,13 @@ namespace WebApi.IntegrationTests.Controllers.Claims
                 ShipmentId = 1 
             };
 
-            string id = "1";
-
             var jsonValue = JsonConvert.SerializeObject(claim);
             var content = new StringContent(jsonValue, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/v1/claims/{id}", content);
+            var response = await client.PutAsync($"/api/v1/claims", content);
             response.EnsureSuccessStatusCode();
             var idResponse = await response.Content.ReadAsStringAsync();
-            idResponse.ShouldBe(id);
+            idResponse.ShouldBe(claim.ClaimId.ToString());
         }
 
         [Fact]
@@ -55,6 +55,7 @@ namespace WebApi.IntegrationTests.Controllers.Claims
 
             UpdateClaimCommand claim = new()
             {
+                ClaimId = 10,
                 ClaimNumber = "C10/23",
                 OwnerType = "o1",
                 ClaimType = "c1",
@@ -75,16 +76,14 @@ namespace WebApi.IntegrationTests.Controllers.Claims
                 ShipmentId = 2
             };
 
-            string id = "10";
-
             var jsonValue = JsonConvert.SerializeObject(claim);
             var content = new StringContent(jsonValue, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/v1/claims/{id}", content);
+            var response = await client.PutAsync($"/api/v1/claims", content);
             response.EnsureSuccessStatusCode();
             var idResponse = await response.Content.ReadAsStringAsync();
             int.Parse(idResponse).ShouldBeGreaterThan(2);
-            int.Parse(idResponse).ShouldBeLessThan(int.Parse(id));
+            int.Parse(idResponse).ShouldBeLessThan(int.Parse(claim.ClaimId.ToString()));
         }
     }
 }

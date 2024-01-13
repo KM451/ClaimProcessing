@@ -1,42 +1,139 @@
-﻿@page "/claim"
-@using ClaimProcessing.Client.Models
-@inject HttpClient Http
+﻿@page "/claim/detail/{id:int}"
+@using ClaimProcessing.Shared.Claims
 
-<AuthorizeView>
+<AuthorizeView Context="authorization">
     <Authorized>
-        @if (claim == null)
+
+        <PageTitle>@title</PageTitle>
+
+        <h3>@title</h3>
+
+        @if (_detailVm == null || _suppliersVm == null)
         {
-            <p><em>Loading...</em></p>
+            <div>Ładowanie danych...</div>
         }
         else
         {
-            <h3>Claims detail</h3>
-            <div class="card" style="width:18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">@claim.OwnerType</h5>
-                    <p class="card-text">@claim.SupplierName</p>
-                    <a href="#" class="btn btn-primary">Edit</a>
+            <div class="col my-4">
+                <button @onclick="GoBack" class="btn btn-info btn-sm me-2 my-1">
+                    Powrót
+                </button>
+                <button @onclick="EditMode" class="btn btn-warning btn-sm me-2 my-1" hidden="@(!isDisabled)">
+                    Edytuj
+                </button>
+                <button @onclick="()=>DeleteClaim(_detailVm.ClaimId)" type="button" class="btn btn-danger btn-sm my-1" hidden="@(!isDisabled)">
+                    Usuń
+                </button>
+            </div>
+            <div class="row my-4">
+                <div class="col-6">
+                    <EditForm Model="_detailVm" Context="form" OnValidSubmit="Save">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                        <div class="form-group mt-3">
+                            <label class="form-label">Numer</label>
+                            <InputText @bind-Value="_detailVm.ClaimNumber" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Właściciel</label>
+                            <InputText @bind-Value="_detailVm.OwnerType" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Typ</label>
+                            <InputText @bind-Value="_detailVm.ClaimType" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Kod produktu</label>
+                            <InputText @bind-Value="_detailVm.ItemCode" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Ilość</label>
+                            <InputNumber @bind-Value="_detailVm.Qty" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Nazwa dostawcy</label>
+                            <InputSelect @bind-Value="_detailVm.SupplierId" class="form-select" disabled="@isDisabled">
+                                @foreach (var item in _suppliers)
+                                {
+                                    <option value="@item.Key">@item.Value</option>
+                                }
+                            </InputSelect>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Nazwa klienta</label>
+                            <InputText @bind-Value="_detailVm.CustomerName" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Nazwa produktu</label>
+                            <InputText @bind-Value="_detailVm.ItemName" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Opis usterki</label>
+                            <InputTextArea @bind-Value="_detailVm.ClaimDescription" class="form-control" rows="4" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Identyfikator dostawcy</label>
+                            <InputText @bind-Value="_detailVm.Remarks" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Status</label>
+                            <InputSelect @bind-Value="_detailVm.ClaimStatus" class="form-select" disabled="@isDisabled">
+                                @foreach (var item in ClaimStatusExt.ToDic())
+                                {
+                                    <option value="@item.Key" >@item.Value</option>
+                                }
+                            </InputSelect>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Nr faktury sprzedaży</label>
+                            <InputText @bind-Value="_detailVm.SaleInvoiceNo" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Data sprzedaży</label>
+                            <InputDate @bind-Value="_detailVm.SaleDate" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Nr faktury zakupu</label>
+                            <InputText @bind-Value="_detailVm.PurchaseInvoiceNo" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Data zakupu</label>
+                            <InputDate @bind-Value="_detailVm.PurchaseDate" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Nr dokumentu przyjęcia</label>
+                            <InputText @bind-Value="_detailVm.InternalDocNo" class="form-control" disabled="@isDisabled" />
+                        </div>
+                        @* <div class="form-group mt-3">
+                            <label class="form-label">Data wysyłki</label>
+                            <InputDate @bind-Value=_detailVm.ShipmentDate class="form-control" disabled selectable="@false"  />
+                        </div> *@
+                        <div class="form-check mt-3">
+                            <InputCheckbox @bind-Value="_detailVm.RmaAvailable" class="form-check-input" disabled="@isDisabled" />
+                            <label class="form-check-label">RMA</label>
+                        </div>
+                        <div class="form-group mt-3">
+                            @if (_isLoading)
+                            {
+                                <button class="btn btn-primary btn-lg btn-spinner" disabled hidden="@isDisabled">
+                                    <img src="/loading.gif" />
+                                    <span>Zapisywanie...</span>
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-primary btn-lg" hidden="@isDisabled">
+                                    Zapisz
+                                </button>
+                            }
+                        </div>
+                    </EditForm>
                 </div>
             </div>
         }
-
     </Authorized>
     <NotAuthorized>
         <p>I'm sorry, I can't dispaly this view'</p>
     </NotAuthorized>
 </AuthorizeView>
 
-@code {
-    private ClaimDetailVm claim;
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            claim = await Http.GetFromJsonAsync<ClaimDetailVm>("https://localhost:7063/api/v1/claims/76");
-        }
-        catch (Exception ex)
-        {
-            throw;
-        }
-    }
-}

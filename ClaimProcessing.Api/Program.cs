@@ -116,7 +116,9 @@ try
 
     services.AddCors(options =>
     {
-        options.AddPolicy("MyAllowSpecificOrgins", policy => policy.WithOrigins("https://localhost:5001"));
+        options.AddPolicy("MyAllowSpecificOrgins", policy => policy
+        .WithOrigins("https://localhost:5001", "https://localhost:7026")
+        .AllowAnyHeader());
     });
 
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -188,6 +190,8 @@ try
 
     app.UseRouting();
 
+    app.UseCors();
+
     app.UseAuthentication();
 
     app.UseAuthorization();
@@ -202,9 +206,6 @@ try
         app.MapControllers().RequireAuthorization("ApiScope");
     }
     
-
-    app.UseCors();
-
     app.Run();
 
 }

@@ -35,7 +35,8 @@ internal static class HostingExtensions
             .AddInMemoryClients(Config.Clients)
             .AddJwtBearerClientAuthentication()
             .AddAspNetIdentity<ApplicationUser>()
-            .AddProfileService<ProfileService>();
+            .AddProfileService<ProfileService>()
+            .AddDeveloperSigningCredential();
 
         builder.Services.AddAuthentication();
 

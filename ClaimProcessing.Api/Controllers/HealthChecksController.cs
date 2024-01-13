@@ -9,8 +9,6 @@ namespace ClaimProcessing.Api.Controllers
     public class HealthChecksController : BaseController
     {
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<ActionResult<string>> GetAsync()
         {

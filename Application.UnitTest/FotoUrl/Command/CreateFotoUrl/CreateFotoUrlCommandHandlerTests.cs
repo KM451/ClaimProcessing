@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.FotoUrls.Commands.CreateFotoUrl;
+using ClaimProcessing.Shared.FotoUrls.Commands.CreateFotoUrl;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -12,7 +13,7 @@ namespace Application.UnitTest.FotoUrl.Command.CreateFotoUrl
         public CreateFotoUrlCommandHandlerTests()
             : base()
         {
-            _handler = new CreateFotoUrlCommandHandler(_context, _mapper);
+            _handler = new CreateFotoUrlCommandHandler(_context);
         }
 
         [Fact]

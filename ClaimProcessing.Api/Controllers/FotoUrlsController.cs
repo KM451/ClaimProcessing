@@ -1,10 +1,11 @@
-﻿using ClaimProcessing.Application.Claims.Commands.DeleteClaim;
-using ClaimProcessing.Application.FotoUrls.Commands.CreateFotoUrl;
+﻿using ClaimProcessing.Application.FotoUrls.Commands.CreateFotoUrl;
 using ClaimProcessing.Application.FotoUrls.Commands.DeleteFotoUrl;
 using ClaimProcessing.Application.FotoUrls.Queries.GetFotoUrl;
+using ClaimProcessing.Shared.FotoUrls.Commands.CreateFotoUrl;
+using ClaimProcessing.Shared.FotoUrls.Commands.DeleteFotoUrl;
+using ClaimProcessing.Shared.FotoUrls.Queries.GetFotoUrl;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace ClaimProcessing.Api.Controllers
 {

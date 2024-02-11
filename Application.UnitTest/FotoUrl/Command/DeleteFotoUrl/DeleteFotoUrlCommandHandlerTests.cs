@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.FotoUrls.Commands.DeleteFotoUrl;
+using ClaimProcessing.Shared.FotoUrls.Commands.DeleteFotoUrl;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 

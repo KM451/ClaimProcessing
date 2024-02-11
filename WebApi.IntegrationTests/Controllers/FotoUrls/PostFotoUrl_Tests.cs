@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.FotoUrls.Commands.CreateFotoUrl;
+using ClaimProcessing.Shared.FotoUrls.Commands.CreateFotoUrl;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Text;

@@ -1,26 +1,33 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Interfaces;
 using ClaimProcessing.Domain.Entities;
+using ClaimProcessing.Shared.Shipments.Commands.CreateShipment;
 using MediatR;
 
 namespace ClaimProcessing.Application.Shipments.Commands.CreateShipment
 {
-    public class CreateShipmentCommandHandler : IRequestHandler<CreateShipmentCommand, int>
+    public class CreateShipmentCommandHandler(IClaimProcessingDbContext _context) 
+        : IRequestHandler<CreateShipmentCommand, int>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-        public CreateShipmentCommandHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
+
         public async Task<int> Handle(CreateShipmentCommand request, CancellationToken cancellationToken)
         {
-            var shipment = _mapper.Map<Shipment>(request);
+            var shipment = Map(request);
             
             _context.Shipments.Add(shipment);
             await _context.SaveChangesAsync(cancellationToken);
             return shipment.Id;
+        }
+
+        private static Shipment Map(CreateShipmentCommand command)
+        {
+            return new Shipment
+            {
+                ShipmentDate = command.ShipmentDate,
+                Speditor = command.Speditor,
+                ShippingDocumentNo = command.ShippingDocumentNo,
+                TotalWeight = command.TotalWeight,
+                SupplierId = command.SupplierId
+            };
         }
     }
 }

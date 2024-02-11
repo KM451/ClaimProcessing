@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ClaimProcessing.Shared.Claims.Commands.CreateClaim;
+using FluentValidation;
 
 
 namespace ClaimProcessing.Application.Claims.Commands.CreateClaim

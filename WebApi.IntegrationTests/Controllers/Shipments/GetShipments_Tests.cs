@@ -1,4 +1,4 @@
-﻿using ClaimProcessing.Application.Shipments.Queries.GetShipments;
+﻿using ClaimProcessing.Shared.Shipments.Queries.GetShipments;
 using Shouldly;
 using WebApi.IntegrationTests.Common;
 using Xunit;

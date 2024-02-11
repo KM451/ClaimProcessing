@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Shared.Shipments.Commands.UpdateShipment;
 using FluentValidation;
 
 namespace ClaimProcessing.Application.Shipments.Commands.UpdateShipment

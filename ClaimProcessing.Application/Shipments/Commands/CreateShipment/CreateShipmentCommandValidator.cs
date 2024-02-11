@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Shared.Shipments.Commands.CreateShipment;
 using FluentValidation;
 
 namespace ClaimProcessing.Application.Shipments.Commands.CreateShipment

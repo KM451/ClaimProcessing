@@ -1,10 +1,16 @@
-﻿using ClaimProcessing.Application.Shipments.Commands.CreateShipment;
-using ClaimProcessing.Application.Shipments.Commands.DeleteShipment;
+﻿using ClaimProcessing.Application.Shipments.Commands.DeleteShipment;
 using ClaimProcessing.Application.Shipments.Commands.UpdateShipment;
 using ClaimProcessing.Application.Shipments.Queries.GetShipmentClaims;
 using ClaimProcessing.Application.Shipments.Queries.GetShipmentDetail;
 using ClaimProcessing.Application.Shipments.Queries.GetShipmentPackagings;
 using ClaimProcessing.Application.Shipments.Queries.GetShipments;
+using ClaimProcessing.Shared.Shipments.Commands.CreateShipment;
+using ClaimProcessing.Shared.Shipments.Commands.DeleteShipment;
+using ClaimProcessing.Shared.Shipments.Commands.UpdateShipment;
+using ClaimProcessing.Shared.Shipments.Queries.GetShipmentClaims;
+using ClaimProcessing.Shared.Shipments.Queries.GetShipmentDetail;
+using ClaimProcessing.Shared.Shipments.Queries.GetShipmentPackagings;
+using ClaimProcessing.Shared.Shipments.Queries.GetShipments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -83,11 +89,10 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="command">The Shipment data</param>
         /// <param name="id">The Shipment Id number</param>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut]
         [Authorize(Policy = "ApiUser2")]
-        public async Task<IActionResult> UpdateShipment(UpdateShipmentCommand command, int id)
+        public async Task<IActionResult> UpdateShipment(UpdateShipmentCommand command)
         {
-            command.SetId(id);
             var result = await Mediator.Send(command);
             return Ok(result);
         }

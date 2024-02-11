@@ -1,21 +1,62 @@
 ﻿@page "/claims"
-@using ClaimProcessing.Client.Components
-@using ClaimProcessing.Client.Models
+@using ClaimProcessing.Shared.Claims
+<AuthorizeView>
+    <Authorized>
+        <PageTitle>Lista zgłoszeń reklamacyjnych</PageTitle>
+        <h1>Lista zgłoszeń reklamacyjnych</h1>
 
-<h3>Claims list</h3>
-<a href="addClaim">Add new</a>
-<ClaimsTable Claims="@claims"></ClaimsTable>
+        <a href="/claim/add">Dodaj nowe zgłoszenie</a>
 
-@code {
-    private List<AllClaimsShortDto> claims;
-
-        protected override async Task OnInitializedAsync()
+        @if (_claims == null)
         {
-            claims = new List<AllClaimsShortDto>()
-            {
-                new AllClaimsShortDto() {ClaimId = 1, ClaimNumber = "T22/23", ClaimCreationDate = new DateTime(2023,1,1), SupplierName = "Microsoft", ItemCode = "XP", ClaimStatus = 2},
-                new AllClaimsShortDto() {ClaimId = 2, ClaimNumber = "T23/23", ClaimCreationDate = new DateTime(2023,1,22), SupplierName = "Adobe", ItemCode = "Acrobat", ClaimStatus = 3}
-            };
+            <div>Ładowanie danych...</div>
         }
-    }
+        else if (!_claims.Claims.Any())
+        {
+            <div>Brak zgłoszeń do wyświetlenia.</div>
+        }
+        else
+        {
+            <table class="Table table-responsive text-center align-middle my-5">
+                <thead class="table-light">
+                    <tr>
+                        <th width="20%">Numer</th>
+                        <th width="20%">Data utworzenia</th>
+                        <th width="25%">Nazwa dostawcy</th>
+                        <th width="20%">Kod artykułu</th>
+                        <th width="20%">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in _claims.Claims)
+                    {
+                        <tr>
+                            <td>
+                                <a href="/claim/detail/@item.ClaimId" class="fe-bold link-primary link">
+                                    @item.ClaimNumber
+                                </a>
+                            </td>
+                            <td>
+                                @item.ClaimCreationDate.ToString("dd-MM-yyyy")
+                            </td>
+                            <td>
+                                @item.SupplierName
+                            </td>
+                            <td>
+                                @item.ItemCode
+                            </td>
+                            <td>
+                                @((ClaimStatus)item.ClaimStatus)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>I'm sorry, I can't dispaly this view'</p>
+    </NotAuthorized>
+</AuthorizeView>
+
 

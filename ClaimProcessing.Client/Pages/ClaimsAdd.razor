@@ -1,0 +1,117 @@
+﻿@page "/claim/add"
+@using ClaimProcessing.Shared.Claims
+
+<AuthorizeView Context="authorization">
+    <Authorized>
+
+        <PageTitle>Dodaj zgłoszenie serwisowe</PageTitle>
+
+        <h1>Dodaj zgłoszenie serwisowe</h1>
+
+        <div class="row my-4">
+            <div class="col-6">
+                <EditForm Model="_command" OnValidSubmit="Save" Context="form">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+                    <div class="form-group mt-3">
+                        <label class="form-label">Numer</label>
+                        <InputText @bind-Value="_command.ClaimNumber" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Właściciel</label>
+                        <InputText @bind-Value="_command.OwnerType" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Typ</label>
+                        <InputText @bind-Value="_command.ClaimType" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Kod produktu</label>
+                        <InputText @bind-Value="_command.ItemCode" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Ilość</label>
+                        <InputNumber @bind-Value="_command.Qty" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Nazwa klienta</label>
+                        <InputText @bind-Value="_command.CustomerName" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Nazwa produktu</label>
+                        <InputText @bind-Value="_command.ItemName" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Opis usterki</label>
+                        <InputTextArea @bind-Value="_command.ClaimDescription" class="form-control" rows="4" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Identyfikator dostawcy</label>
+                        <InputText @bind-Value="_command.Remarks" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Status</label>
+                        <InputSelect @bind-Value="_command.ClaimStatus" class="form-select">
+                            @foreach (var item in ClaimStatusExt.ToDic())
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Nazwa dostawcy</label>
+                        <InputSelect @bind-Value="_command.SupplierId" class="form-select">
+                            <option value="0" disabled="disabled" selected>-- Wybierz dostawcę --</option>
+                            @foreach (var item in _suppliers)
+                            {
+                                <option value="@item.Key">@item.Value</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Nr faktury sprzedaży</label>
+                        <InputText @bind-Value="_command.SaleInvoiceNo" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Data sprzedaży</label>
+                        <InputDate @bind-Value="_command.SaleDate" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Nr faktury zakupu</label>
+                        <InputText @bind-Value="_command.PurchaseInvoiceNo" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Data zakupu</label>
+                        <InputDate @bind-Value="_command.PurchaseDate" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        <label class="form-label">Nr dokumentu przyjęcia</label>
+                        <InputText @bind-Value="_command.InternalDocNo" class="form-control" />
+                    </div>
+                    <div class="form-group mt-3">
+                        @if (_isLoading)
+                        {
+                            <button class="btn btn-primary btn-lg btn-spinner" disabled>
+                                <img src="/loading.gif" />
+                                <span>Zapisywanie...</span>
+                            </button>
+                        }
+                        else
+                        {
+                            <a href="/" class="btn btn-primary btn-lg">
+                                Anuluj
+                            </a>
+                            <button class="btn btn-primary btn-lg">
+                                Zapisz
+                            </button>
+                        }
+                    </div>
+
+                </EditForm>
+            </div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <p>I'm sorry, I can't dispaly this view'</p>
+    </NotAuthorized>
+</AuthorizeView>

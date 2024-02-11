@@ -1,16 +1,16 @@
-﻿using ClaimProcessing.Application.Claims.Commands.CreateClaim;
-using ClaimProcessing.Application.Claims.Commands.DeleteClaim;
-using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
+﻿using ClaimProcessing.Application.Claims.Commands.DeleteClaim;
 using ClaimProcessing.Application.Claims.Commands.UpdateClaimRemarks;
 using ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus;
 using ClaimProcessing.Application.Claims.Commands.UpdateRmaAvailability;
 using ClaimProcessing.Application.Claims.Commands.UpdateShipmentId;
-using ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort;
 using ClaimProcessing.Application.Claims.Queries.GetClaimAttachmentsUrls;
-using ClaimProcessing.Application.Claims.Queries.GetClaimDetail;
 using ClaimProcessing.Application.Claims.Queries.GetClaimFotosUrls;
 using ClaimProcessing.Application.Claims.Queries.GetClaimSerialNumbers;
 using ClaimProcessing.Application.Claims.Queries.GetClaimsUser;
+using ClaimProcessing.Shared.Claims.Commands.CreateClaim;
+using ClaimProcessing.Shared.Claims.Commands.UpdateClaim;
+using ClaimProcessing.Shared.Claims.Queries.GetAllClaimsShort;
+using ClaimProcessing.Shared.Claims.Queries.GetClaimDetail;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -124,13 +124,11 @@ namespace ClaimProcessing.Api.Controllers
         /// Update the Claim data specified by Id number or create the new if given Id not exists.
         /// </summary>
         /// <param name="command">The claim data</param>
-        /// <param name="id">The Claim Id number</param>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut]
         [Authorize(Policy = "ApiUser1")]
-        public async Task<IActionResult> UpdateClaim(UpdateClaimCommand command, int id)
-        {
-            command.SetId(id);
+        public async Task<IActionResult> UpdateClaim(UpdateClaimCommand command)
+        {  
             var result = await Mediator.Send(command);
             return Ok(result);
         }

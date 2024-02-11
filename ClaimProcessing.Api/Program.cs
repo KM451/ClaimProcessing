@@ -118,6 +118,7 @@ try
     {
         options.AddPolicy("MyAllowSpecificOrgins", policy => policy
         .WithOrigins("https://localhost:5001", "https://localhost:7026")
+        .AllowAnyMethod()
         .AllowAnyHeader());
     });
 

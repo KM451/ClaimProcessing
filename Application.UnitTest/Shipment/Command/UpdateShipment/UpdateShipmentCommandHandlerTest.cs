@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Shipments.Commands.UpdateShipment;
+using ClaimProcessing.Shared.Shipments.Commands.UpdateShipment;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -12,7 +13,7 @@ namespace Application.UnitTest.Shipment.Command.UpdateShipment
         public UpdateShipmentCommandHandlerTest()
             : base()
         {
-            _handler = new UpdateShipmentCommandHandler(_context, _mapper);
+            _handler = new UpdateShipmentCommandHandler(_context);
         }
 
         [Fact]
@@ -20,6 +21,7 @@ namespace Application.UnitTest.Shipment.Command.UpdateShipment
         {
             var command = new UpdateShipmentCommand()
             {
+                ShipmentId = 1,
                 ShipmentDate = new DateTime(2001, 2, 3),
                 Speditor = "test1",
                 ShippingDocumentNo = "test1",

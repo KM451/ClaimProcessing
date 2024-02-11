@@ -1,5 +1,5 @@
 ﻿using ClaimProcessing.Application.Common.Interfaces;
-using ClaimProcessing.Application.Shipments.Commands.CreateShipment;
+using ClaimProcessing.Shared.Shipments.Commands.CreateShipment;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Net;

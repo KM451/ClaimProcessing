@@ -1,4 +1,4 @@
-﻿using ClaimProcessing.Application.Shipments.Queries.GetShipmentClaims;
+﻿using ClaimProcessing.Shared.Shipments.Queries.GetShipmentClaims;
 using Shouldly;
 using System.Net;
 using WebApi.IntegrationTests.Common;

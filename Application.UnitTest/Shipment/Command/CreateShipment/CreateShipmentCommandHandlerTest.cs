@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Shipments.Commands.CreateShipment;
+using ClaimProcessing.Shared.Shipments.Commands.CreateShipment;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -12,7 +13,7 @@ namespace Application.UnitTest.Shipment.Command.CreateShipment
         public CreateShipmentCommandHandlerTest()
             : base()
         {
-            _handler = new CreateShipmentCommandHandler(_context, _mapper);
+            _handler = new CreateShipmentCommandHandler(_context/*, _mapper*/);
         }
 
         [Fact]

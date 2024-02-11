@@ -1,4 +1,4 @@
-﻿using ClaimProcessing.Application.Shipments.Commands.UpdateShipment;
+﻿using ClaimProcessing.Shared.Shipments.Commands.UpdateShipment;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Text;
@@ -17,6 +17,7 @@ namespace WebApi.IntegrationTests.Controllers.Shipments
 
             UpdateShipmentCommand shipment = new()
             {
+                ShipmentId = 1,
                 ShipmentDate = new DateTime(2023, 10, 10),
                 Speditor = "UPS",
                 ShippingDocumentNo = "A1234XYZ",
@@ -24,16 +25,13 @@ namespace WebApi.IntegrationTests.Controllers.Shipments
                 SupplierId = 1
             };
 
-            var id = 1;
-            shipment.SetId(id);
-
             var jsonValue = JsonConvert.SerializeObject(shipment);
             var content = new StringContent(jsonValue, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/v1/shipments/{id}", content);
+            var response = await client.PutAsync($"/api/v1/shipments", content);
             response.EnsureSuccessStatusCode();
             var idResponse = await response.Content.ReadAsStringAsync();
-            idResponse.ShouldBe(id.ToString());
+            idResponse.ShouldBe(shipment.ShipmentId.ToString());
         }
 
         [Fact]
@@ -43,6 +41,7 @@ namespace WebApi.IntegrationTests.Controllers.Shipments
 
             UpdateShipmentCommand shipment = new()
             {
+                ShipmentId = 10,
                 ShipmentDate = new DateTime(2023, 10, 11),
                 Speditor = "UPS",
                 ShippingDocumentNo = "A1234XYZ",
@@ -50,17 +49,14 @@ namespace WebApi.IntegrationTests.Controllers.Shipments
                 SupplierId = 1
             };
 
-            var id = 10;
-            shipment.SetId(id);
-
             var jsonValue = JsonConvert.SerializeObject(shipment);
             var content = new StringContent(jsonValue, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/v1/shipments/{id}", content);
+            var response = await client.PutAsync($"/api/v1/shipments", content);
             response.EnsureSuccessStatusCode();
             var idResponse = await response.Content.ReadAsStringAsync();
             int.Parse(idResponse).ShouldBeGreaterThan(2);
-            int.Parse(idResponse).ShouldBeLessThan(id);
+            int.Parse(idResponse).ShouldBeLessThan(shipment.ShipmentId);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Claims.Commands.DeleteClaim;
+using ClaimProcessing.Shared.Claims.Commands.DeleteClaim;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 

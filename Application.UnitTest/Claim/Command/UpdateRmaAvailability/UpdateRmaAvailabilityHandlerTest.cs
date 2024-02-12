@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Claims.Commands.UpdateRmaAvailability;
+using ClaimProcessing.Shared.Claims.Commands.UpdateRmaAvailability;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -12,7 +13,7 @@ namespace Application.UnitTest.Claim.Command.UpdateRmaAvailability
         public UpdateRmaAvailabilityHandlerTest()
             :base()
         {
-            _handler = new UpdateRmaAvailabilityCommandHandler(_context, _mapper);
+            _handler = new UpdateRmaAvailabilityCommandHandler(_context);
         }
 
 

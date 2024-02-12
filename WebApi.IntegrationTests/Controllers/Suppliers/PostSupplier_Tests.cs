@@ -1,6 +1,4 @@
-﻿using ClaimProcessing.Application.Claims.Commands.CreateClaim;
-using ClaimProcessing.Application.Suppliers.Commands.CreateSupplier;
-using ClaimProcessing.Domain.ValueObjects;
+﻿using ClaimProcessing.Shared.Suppliers.Commands.CreateSupplier;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Net;

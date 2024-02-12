@@ -1,19 +1,12 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Shared.Claims.Queries.GetClaimAttachmentUrls;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Claims.Queries.GetClaimAttachmentsUrls
 {
-    public class GetClaimAttachmentUrlsQueryHandler : IRequestHandler<GetClaimAttachmentUrlsQuery, ClaimAttachmentUrlsVm>
+    public class GetClaimAttachmentUrlsQueryHandler(IClaimProcessingDbContext _context) : IRequestHandler<GetClaimAttachmentUrlsQuery, ClaimAttachmentUrlsVm>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-        public GetClaimAttachmentUrlsQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
         public async Task<ClaimAttachmentUrlsVm> Handle(GetClaimAttachmentUrlsQuery request, CancellationToken cancellationToken)
         {
             var attachments = await _context.AttachmentUrls
@@ -22,7 +15,7 @@ namespace ClaimProcessing.Application.Claims.Queries.GetClaimAttachmentsUrls
 
             var attachmentsVm = new ClaimAttachmentUrlsVm
             {
-                AttachmentUrls = attachments.Select(src => _mapper.Map<ClaimAttachmentUrlsDto>(src)).ToList()
+                AttachmentUrls = attachments.Select(src => new ClaimAttachmentUrlsDto { Path = src.Path }).ToList()
             };
 
             return attachmentsVm;

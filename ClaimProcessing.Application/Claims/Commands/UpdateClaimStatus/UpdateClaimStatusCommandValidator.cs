@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ClaimProcessing.Shared.Claims.Commands.UpdateClaimStatus;
+using FluentValidation;
 
 namespace ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus
 {

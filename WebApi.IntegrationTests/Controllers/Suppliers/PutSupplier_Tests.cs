@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier;
+using ClaimProcessing.Shared.Suppliers.Commands.UpdateSupplier;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Text;
@@ -17,6 +18,7 @@ namespace WebApi.IntegrationTests.Controllers.Suppliers
 
             UpdateSupplierCommand supplier = new()
             {
+                SupplierId = 1,
                 Name = "Supplier",
                 Street = "street",
                 City = "city",
@@ -25,15 +27,13 @@ namespace WebApi.IntegrationTests.Controllers.Suppliers
                 ContactPerson = "zulu gula"
             };
 
-            string id = "1";
-
             var jsonValue = JsonConvert.SerializeObject(supplier);
             var content = new StringContent(jsonValue, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/v1/suppliers/{id}", content);
+            var response = await client.PutAsync($"/api/v1/suppliers", content);
             response.EnsureSuccessStatusCode();
             var idResponse = await response.Content.ReadAsStringAsync();
-            idResponse.ShouldBe(id);
+            idResponse.ShouldBe(supplier.SupplierId.ToString());
         }
 
         [Fact]
@@ -43,6 +43,7 @@ namespace WebApi.IntegrationTests.Controllers.Suppliers
 
             UpdateSupplierCommand supplier = new()
             {
+                SupplierId = 10,
                 Name = "Supplier",
                 Street = "street",
                 City = "city",
@@ -51,16 +52,14 @@ namespace WebApi.IntegrationTests.Controllers.Suppliers
                 ContactPerson = "zulu gula"
             };
 
-            string id = "10";
-
             var jsonValue = JsonConvert.SerializeObject(supplier);
             var content = new StringContent(jsonValue, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/v1/suppliers/{id}", content);
+            var response = await client.PutAsync($"/api/v1/suppliers", content);
             response.EnsureSuccessStatusCode();
             var idResponse = await response.Content.ReadAsStringAsync();
             int.Parse(idResponse).ShouldBeGreaterThan(2);
-            int.Parse(idResponse).ShouldBeLessThan(int.Parse(id));
+            int.Parse(idResponse).ShouldBeLessThan(supplier.SupplierId);
         }
     }
 }

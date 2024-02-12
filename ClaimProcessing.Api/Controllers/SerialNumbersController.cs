@@ -1,9 +1,7 @@
-﻿using ClaimProcessing.Application.SerialNumbers.Commands.CreateSerialNumber;
-using ClaimProcessing.Application.SerialNumbers.Commands.DeleteSerialNumber;
-using ClaimProcessing.Application.SerialNumbers.Queries.GetSerialNumber;
+﻿using ClaimProcessing.Shared.SerialNumbers.Commands.CreateSerialNumber;
+using ClaimProcessing.Shared.SerialNumbers.Queries.GetSerialNumber;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace ClaimProcessing.Api.Controllers
 {

@@ -1,6 +1,7 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Packagings.Commands.UpdatePackaging;
 using ClaimProcessing.Domain.ValueObjects;
+using ClaimProcessing.Shared.Packagings.Commands.UpdatePackaging;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -13,7 +14,7 @@ namespace Application.UnitTest.Packaging.Command.UpdatePackaging
         public UpdatePackagingCommandHandlerTest()
             : base()
         {
-            _handler = new UpdatePackagingCommandHandler(_context, _mapper);
+            _handler = new UpdatePackagingCommandHandler(_context);
         }
 
         [Fact]

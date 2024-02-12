@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ClaimProcessing.Shared.SerialNumbers.Commands.CreateSerialNumber;
+using FluentValidation;
 
 namespace ClaimProcessing.Application.SerialNumbers.Commands.CreateSerialNumber
 {

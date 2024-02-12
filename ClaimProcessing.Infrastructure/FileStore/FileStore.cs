@@ -2,22 +2,14 @@
 
 namespace ClaimProcessing.Infrastructure.FileStore
 {
-    public class FileStore : IFileStore
+    public class FileStore(IFileWrapper _fileWrapper, IDirectoryWrapper _directoryWrapper) : IFileStore
     {
-        private readonly IFileWrapper _fileWrapper;
-        private readonly IDirectoryWrapper _directoryWrapper;
-        public FileStore(IFileWrapper fileWrapper, IDirectoryWrapper directoryWrapper)
-        {
-            _directoryWrapper = directoryWrapper;
-            _fileWrapper = fileWrapper;
-        }
-
         public string SafeWriteFile(byte[] content, string sourceFileName, string path)
         {
             _directoryWrapper.CreateDirectory(path);
             var outputFile = Path.Combine(path, sourceFileName);
             _fileWrapper.WriteAllBytes(outputFile, content);
-            return outputFile;
+            return $"{path.Split("wwwroot\\").LastOrDefault()}\\{sourceFileName}";
         }
     }
 }

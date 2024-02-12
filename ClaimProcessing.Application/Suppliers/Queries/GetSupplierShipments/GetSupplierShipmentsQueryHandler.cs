@@ -1,22 +1,14 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Exceptions;
+﻿using ClaimProcessing.Application.Common.Exceptions;
 using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Domain.Entities;
+using ClaimProcessing.Shared.Suppliers.Queries.GetSupplierShipments;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Suppliers.Queries.GetSupplierShipments
 {
-    public class GetSupplierShipmentsQueryHandler : IRequestHandler<GetSupplierShipmentsQuery, SupplierShipmentsVm>
+    public class GetSupplierShipmentsQueryHandler(IClaimProcessingDbContext _context) : IRequestHandler<GetSupplierShipmentsQuery, SupplierShipmentsVm>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-
-        public GetSupplierShipmentsQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
-
         public async Task<SupplierShipmentsVm> Handle(GetSupplierShipmentsQuery request, CancellationToken cancellationToken)
         {
             var supplierShipments = await _context.Shipments
@@ -93,10 +85,21 @@ namespace ClaimProcessing.Application.Suppliers.Queries.GetSupplierShipments
 
             var supplierShipmentsVm = new SupplierShipmentsVm
             {
-                SupplierShipments = supplierShipments.Select(src => _mapper.Map<SupplierShipmentsDto>(src)).ToList()
+                SupplierShipments = supplierShipments.Select(src => Map(src)).ToList()
             };
 
             return supplierShipmentsVm;
+        }
+
+        private static SupplierShipmentsDto Map(Shipment shipment)
+        {
+            return new SupplierShipmentsDto
+            {
+                ShipmentDate = shipment.ShipmentDate,
+                Speditor = shipment.Speditor,
+                ShippingDocumentNo = shipment.ShippingDocumentNo,
+                TotalWeight = shipment.TotalWeight ?? throw new NullReferenceException("The value of 'shipment.TotalWeight' should not be null")
+            };
         }
     }
 }

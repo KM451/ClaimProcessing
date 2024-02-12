@@ -2,6 +2,12 @@
 @using ClaimProcessing.Shared.Claims
 @using ClaimProcessing.Client.Components
 
+<ModalImage Show=_showImage
+            FilePath=@_fileUrl
+            OnCancel="ImageCancel">
+
+</ModalImage>
+
 <ModalWindow Show=_showDialog
              OnCancel="DeleteCanceled"
              OnAccept="DeleteConfirmed">
@@ -12,6 +18,7 @@
         @_deleteDialogBody
     </Body>
 </ModalWindow>
+
 
 <AuthorizeView Context="authorization">
     <Authorized>
@@ -37,8 +44,8 @@
                     Usuń
                 </button>
             </div>
-            <div class="row my-4">
-                <div class="col-6">
+            <div class="row">
+                <div class="col-4">
                     <EditForm Model="_detailVm" Context="form" OnValidSubmit="Save">
                         <DataAnnotationsValidator />
                         <ValidationSummary />
@@ -115,11 +122,13 @@
                         <div class="form-group mt-3">
                             <label class="form-label">Nr dokumentu przyjęcia</label>
                             <InputText @bind-Value="_detailVm.InternalDocNo" class="form-control" disabled="@isDisabled" />
-                        </div>
+                        </div>                    
+
                         @* <div class="form-group mt-3">
                     <label class="form-label">Data wysyłki</label>
                     <InputDate @bind-Value=_detailVm.ShipmentDate class="form-control" disabled selectable="@false"  />
                     </div> *@
+
                         <div class="form-check mt-3">
                             <InputCheckbox @bind-Value="_detailVm.RmaAvailable" class="form-check-input" disabled="@isDisabled" />
                             <label class="form-check-label">RMA</label>
@@ -140,6 +149,9 @@
                             }
                         </div>
                     </EditForm>
+                </div>
+                <div class="col-8">
+                    <FileHandler ClaimId=_detailVm.ClaimId OnViewImage="OnViewImage"/>
                 </div>
             </div>
         }

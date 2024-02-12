@@ -1,4 +1,4 @@
-﻿using ClaimProcessing.Application.SerialNumbers.Commands.CreateSerialNumber;
+﻿using ClaimProcessing.Shared.SerialNumbers.Commands.CreateSerialNumber;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Text;

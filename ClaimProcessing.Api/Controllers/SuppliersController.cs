@@ -1,12 +1,11 @@
-﻿using ClaimProcessing.Application.Suppliers.Commands.CreateSupplier;
-using ClaimProcessing.Application.Suppliers.Commands.DeleteSupplier;
-using ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier;
-using ClaimProcessing.Application.Suppliers.Queries.GetSupplierCity;
-using ClaimProcessing.Application.Suppliers.Queries.GetSupplierClaims;
-using ClaimProcessing.Application.Suppliers.Queries.GetSupplierDetail;
-using ClaimProcessing.Application.Suppliers.Queries.GetSuppliers;
-using ClaimProcessing.Application.Suppliers.Queries.GetSupplierShipments;
+﻿using ClaimProcessing.Shared.Suppliers.Commands.CreateSupplier;
+using ClaimProcessing.Shared.Suppliers.Commands.DeleteSupplier;
+using ClaimProcessing.Shared.Suppliers.Commands.UpdateSupplier;
+using ClaimProcessing.Shared.Suppliers.Queries.GetSupplierCity;
+using ClaimProcessing.Shared.Suppliers.Queries.GetSupplierClaims;
+using ClaimProcessing.Shared.Suppliers.Queries.GetSupplierDetail;
 using ClaimProcessing.Shared.Suppliers.Queries.GetSuppliers;
+using ClaimProcessing.Shared.Suppliers.Queries.GetSupplierShipments;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -126,13 +125,11 @@ namespace ClaimProcessing.Api.Controllers
         /// Update the Supplier data specified by Id number or create the new if given Id not exists.
         /// </summary>
         /// <param name="command">The Supplier data</param>
-        /// <param name="id">The Supplier Id number</param>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut]
         [Authorize(Policy = "ApiUser2")]
-        public async Task<IActionResult> UpdateSupplier(UpdateSupplierCommand command, int id)
+        public async Task<IActionResult> UpdateSupplier(UpdateSupplierCommand command)
         {
-            command.SetId(id);
             var result = await Mediator.Send(command);
             return Ok(result);
         }

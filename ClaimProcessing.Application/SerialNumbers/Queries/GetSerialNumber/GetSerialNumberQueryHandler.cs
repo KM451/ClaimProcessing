@@ -1,25 +1,21 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Shared.SerialNumbers.Queries.GetSerialNumber;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.SerialNumbers.Queries.GetSerialNumber
 {
-    public class GetSerialNumberQueryHandler : IRequestHandler<GetSerialNumberQuery, SerialNumberVm>
+    public class GetSerialNumberQueryHandler(IClaimProcessingDbContext _context) : IRequestHandler<GetSerialNumberQuery, SerialNumberVm>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-        public GetSerialNumberQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
         public async Task<SerialNumberVm> Handle(GetSerialNumberQuery request, CancellationToken cancellationToken)
         {
             var serialNumber = await _context.SerialNumbers
                 .Where(s => s.StatusId != 0 && s.Id == request.SerialNumberId)
                 .FirstOrDefaultAsync(cancellationToken);
-            var serialNumberVm = _mapper.Map<SerialNumberVm>(serialNumber);
+
+            if (serialNumber == null) { return null; }
+
+            var serialNumberVm = new SerialNumberVm { Value = serialNumber.Value };
             return serialNumberVm;
         }
     }

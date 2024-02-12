@@ -1,5 +1,5 @@
 ﻿using ClaimProcessing.Application.Common.Interfaces;
-using ClaimProcessing.Application.Suppliers.Queries.GetSupplierClaims;
+using ClaimProcessing.Shared.Suppliers.Queries.GetSupplierClaims;
 using Shouldly;
 using WebApi.IntegrationTests.Common;
 using Xunit;

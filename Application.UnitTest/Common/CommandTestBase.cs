@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Interfaces;
-using ClaimProcessing.Application.Common.Mappings;
+﻿using ClaimProcessing.Application.Common.Interfaces;
 using ClaimProcessing.Persistance;
+using Microsoft.AspNetCore.Hosting;
 using Moq;
+using static Application.UnitTest.Common.FileStoreFactory;
 
 namespace Application.UnitTest.Common
 {
@@ -11,18 +11,20 @@ namespace Application.UnitTest.Common
         protected readonly ClaimProcessingDbContext _context;
         protected readonly IBonfiClient _bonfi;
         protected readonly Mock<ClaimProcessingDbContext> _contextMock;
-        public readonly IMapper _mapper;
+        protected readonly IFileStore _fileStore;
+        protected readonly Mock<FileStoreMock> _fileStoreMock;
+        protected readonly IHostingEnvironment _hosting;
+        protected readonly Mock<IHostingEnvironment> _hostingMock;
+
         public CommandTestBase()
         {
             _contextMock = ClaimProcessingDbContextFactory.Create();
             _context = _contextMock.Object;
-            
-            var configurationProvider = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<MappingProfile>();
-            });
+            _hostingMock = HostingEnvironmentFactory.Create();
+            _hosting = _hostingMock.Object;
+            _fileStoreMock = FileStoreFactory.Create();
+            _fileStore = _fileStoreMock.Object;
 
-            _mapper = configurationProvider.CreateMapper();
         }
         public void Dispose()
         {

@@ -1,20 +1,14 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Exceptions;
+﻿using ClaimProcessing.Application.Common.Exceptions;
 using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Domain.Entities;
+using ClaimProcessing.Shared.Suppliers.Queries.GetSupplierClaims;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Suppliers.Queries.GetSupplierClaims
 {
-    public class GetSupplierClaimsQueryHandler : IRequestHandler<GetSupplierClaimsQuery, SupplierClaimsVm>
+    public class GetSupplierClaimsQueryHandler(IClaimProcessingDbContext _context) : IRequestHandler<GetSupplierClaimsQuery, SupplierClaimsVm>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-        public GetSupplierClaimsQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
         public async Task<SupplierClaimsVm> Handle(GetSupplierClaimsQuery request, CancellationToken cancellationToken)
         {
             var supplierClaims = await _context.Claims
@@ -93,10 +87,28 @@ namespace ClaimProcessing.Application.Suppliers.Queries.GetSupplierClaims
 
             var supplierClaimsVm = new SupplierClaimsVm
             {
-                SupplierClaims = supplierClaims.Select(src => _mapper.Map<SupplierClaimsDto>(src)).ToList()
+                SupplierClaims = supplierClaims.Select(src => Map(src)).ToList()
             };
 
             return supplierClaimsVm;
+        }
+
+        private static SupplierClaimsDto Map(Claim claim)
+        {
+            return new SupplierClaimsDto
+            {
+                ClaimId = claim.Id,
+                OwnerType = claim.OwnerType,
+                ClaimType = claim.ClaimType,
+                ItemCode = claim.ItemCode,
+                Qty = claim.Qty,
+                SupplierName = claim.Supplier.Name,
+                CustomerName = claim.CustomerName,
+                ItemName = claim.ItemName,
+                ClaimStatus = claim.ClaimStatus,
+                RmaAvailable = claim.RmaAvailable,
+                ShipmentDate = claim.Shipment?.ShipmentDate 
+            };
         }
     }
 }

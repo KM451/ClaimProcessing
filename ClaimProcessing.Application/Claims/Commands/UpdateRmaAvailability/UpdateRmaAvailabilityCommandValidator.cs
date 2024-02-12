@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ClaimProcessing.Shared.Claims.Commands.UpdateRmaAvailability;
+using FluentValidation;
 
 namespace ClaimProcessing.Application.Claims.Commands.UpdateRmaAvailability
 {

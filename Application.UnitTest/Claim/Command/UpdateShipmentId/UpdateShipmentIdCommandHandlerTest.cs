@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Claims.Commands.UpdateShipmentId;
+using ClaimProcessing.Shared.Claims.Commands.UpdateShipmentId;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -12,7 +13,7 @@ namespace Application.UnitTest.Claim.Command.UpdateShipmentId
         public UpdateShipmentIdCommandHandlerTest()
             : base()
         {
-            _handler = new UpdateShipmentIdCommandHandler(_context, _mapper);
+            _handler = new UpdateShipmentIdCommandHandler(_context);
         }
 
         [Fact]

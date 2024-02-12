@@ -1,19 +1,12 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Shared.Claims.Queries.GetClaimFotosUrls;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Claims.Queries.GetClaimFotosUrls
 {
-    public class GetClaimFotoUrlsQueryHandler : IRequestHandler<GetClaimFotoUrlsQuery, ClaimFotoUrlsVm>
+    public class GetClaimFotoUrlsQueryHandler(IClaimProcessingDbContext _context) : IRequestHandler<GetClaimFotoUrlsQuery, ClaimFotoUrlsVm>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-        public GetClaimFotoUrlsQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
         public async Task<ClaimFotoUrlsVm> Handle(GetClaimFotoUrlsQuery request, CancellationToken cancellationToken)
         {
             var fotos = await _context.FotoUrls
@@ -22,7 +15,7 @@ namespace ClaimProcessing.Application.Claims.Queries.GetClaimFotosUrls
 
             var fotosVm = new ClaimFotoUrlsVm
             {
-                FotoUrls = fotos.Select(src => _mapper.Map<ClaimFotoUrlsDto>(src)).ToList()
+                FotoUrls = fotos.Select(src => new ClaimFotoUrlsDto { Path = src.Path, Id = src.Id }).ToList()
             };
 
             return fotosVm;

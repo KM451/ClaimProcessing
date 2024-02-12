@@ -1,5 +1,4 @@
-﻿using ClaimProcessing.Application.Claims.Queries.GetClaimFotosUrls;
-using ClaimProcessing.Application.Claims.Queries.GetClaimSerialNumbers;
+﻿using ClaimProcessing.Shared.Claims.Queries.GetClaimSerialNumbers;
 using Shouldly;
 using System.Net;
 using WebApi.IntegrationTests.Common;

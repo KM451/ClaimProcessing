@@ -18,6 +18,7 @@ namespace WebApi.IntegrationTests.Common
                     services.AddScoped<IDateTime, DummyDateTimeService>();
                     services.AddScoped<IBonfiClient, DummyBonfiClientService>();
                     services.AddScoped<IIntamiClient, DummyIntamiClientService>();
+                    services.AddScoped<IFileStore, DummyFileStoreService>();
 
                     var sp = services.BuildServiceProvider();
 

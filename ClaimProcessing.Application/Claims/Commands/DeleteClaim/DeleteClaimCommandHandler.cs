@@ -1,5 +1,6 @@
 ﻿using ClaimProcessing.Application.Common.Exceptions;
 using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Shared.Claims.Commands.DeleteClaim;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

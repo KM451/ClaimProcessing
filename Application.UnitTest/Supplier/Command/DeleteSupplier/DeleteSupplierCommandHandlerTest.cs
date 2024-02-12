@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Suppliers.Commands.DeleteSupplier;
+using ClaimProcessing.Shared.Suppliers.Commands.DeleteSupplier;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 

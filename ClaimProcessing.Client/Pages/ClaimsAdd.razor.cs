@@ -35,7 +35,7 @@ namespace ClaimProcessing.Client.Pages
             foreach (var item in _suppliersVm.Suppliers)
             {
                 _suppliers.Add(item.SupplierId, $"{item.Name} {item.City}");
-            } 
+            }
         }
         private async Task Save()
         {

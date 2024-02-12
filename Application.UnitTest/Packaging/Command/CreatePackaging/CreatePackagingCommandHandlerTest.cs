@@ -1,6 +1,7 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Packagings.Commands.CreatePackaging;
 using ClaimProcessing.Domain.ValueObjects;
+using ClaimProcessing.Shared.Packagings.Commands.CreatePackaging;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -13,7 +14,7 @@ namespace Application.UnitTest.Packaging.Command.CreatePackaging
         public CreatePackagingCommandHandlerTest()
             :base()
         {
-            _handler = new CreatePackagingCommandHandler(_context, _mapper);
+            _handler = new CreatePackagingCommandHandler(_context);
         }
 
         [Fact]

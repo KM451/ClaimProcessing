@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ClaimProcessing.Shared.AttachmentUrls.Commands.CreateAttachmentUrl;
+using FluentValidation;
 
 namespace ClaimProcessing.Application.AttachmentUrls.Commands.CreateAttachmentUrl
 {

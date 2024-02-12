@@ -25,6 +25,7 @@ namespace ClaimProcessing.Api.Controllers
             return vm;
         }
 
+        
         /// <summary>
         /// Add the FotoUrl path to the Claim
         /// </summary>
@@ -34,10 +35,11 @@ namespace ClaimProcessing.Api.Controllers
         [Authorize(Policy = "ApiUser1")]
         public async Task<IActionResult> CreateFotoUrl(CreateFotoUrlCommand command)
         {
-            var result = await Mediator.Send(command);
-            return Ok(result);
+            await Mediator.Send(command);
+            return Ok();
         }
 
+       
         /// <summary>
         /// Delete the FotoUrl path specified by Id number
         /// </summary>

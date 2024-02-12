@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ClaimProcessing.Shared.Packagings.Commands.UpdatePackaging;
+using FluentValidation;
 
 namespace ClaimProcessing.Application.Packagings.Commands.UpdatePackaging
 {

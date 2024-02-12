@@ -1,4 +1,4 @@
-﻿using ClaimProcessing.Application.AttachmentUrls.Commands.CreateAttachmentUrl;
+﻿using ClaimProcessing.Shared.AttachmentUrls.Commands.CreateAttachmentUrl;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Text;

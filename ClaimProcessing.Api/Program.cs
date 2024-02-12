@@ -43,7 +43,6 @@ try
     if (environment.IsEnvironment("Test"))
     {
         services.AddTransient<IProfileService, TestProfileService>();
-
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseInMemoryDatabase("InMemoryDatabase"));
 
@@ -194,6 +193,8 @@ try
     app.UseCors();
 
     app.UseAuthentication();
+
+    app.UseStaticFiles();
 
     app.UseAuthorization();
 

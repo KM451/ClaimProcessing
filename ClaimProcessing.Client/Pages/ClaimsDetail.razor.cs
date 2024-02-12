@@ -2,8 +2,11 @@
 using ClaimProcessing.Client.Services.Interfaces;
 using ClaimProcessing.Shared.Claims.Commands.UpdateClaim;
 using ClaimProcessing.Shared.Claims.Queries.GetClaimDetail;
+using ClaimProcessing.Shared.Claims.Queries.GetClaimFotosUrls;
+using ClaimProcessing.Shared.FotoUrls.Commands.CreateFotoUrl;
 using ClaimProcessing.Shared.Suppliers.Queries.GetSuppliers;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace ClaimProcessing.Client.Pages
@@ -13,12 +16,15 @@ namespace ClaimProcessing.Client.Pages
         private ClaimDetailVm _detailVm;
         private SuppliersVm _suppliersVm;
         private UpdateClaimCommand _command;
-        private bool isDisabled = true;
-        private string title = "Dane szczegółowe zgłoszenia serwisowego";
         private Dictionary<int, string> _suppliers = new();
+        private bool isDisabled = true;
         private bool _isLoading = false;
         private bool _showDialog = false;
+        private bool _showImage = false;
         private string _deleteDialogBody;
+        private string title = "Dane szczegółowe zgłoszenia serwisowego";
+        private string _apiUrl = "";
+        private string _fileUrl = "";
 
         [Parameter]
         public int Id { get; set; }
@@ -27,9 +33,12 @@ namespace ClaimProcessing.Client.Pages
         public IClaimsHttpRepository ClaimsRepo { get; set; }
         [Inject]
         public ISupplierHttpRepository SuppliersRepo { get; set; }
-
+        
         [Inject]
         public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
+        public IConfiguration Configuration { get; set; }
 
         [Inject]
         public IToastrService ToastrService { get; set; }
@@ -42,7 +51,9 @@ namespace ClaimProcessing.Client.Pages
                 _suppliers.Add(item.SupplierId,$"{item.Name} {item.City}");
             }
             _detailVm = await ClaimsRepo.GetDetails(Id);
+            _apiUrl = Configuration["ApiConfiguration:BaseAddress"];
         }
+
         private void EditMode() 
         { 
             title = "Dane szczegółowe zgłoszenia serwisowego - edycja";
@@ -84,6 +95,11 @@ namespace ClaimProcessing.Client.Pages
             await ToastrService.ShowSuccessMessage("Zgłoszenie zostało usunięte");
             NavigationManager.NavigateTo("/claims");
         }
+
+        private async Task ImageCancel(MouseEventArgs e)
+        {
+            _showImage = false;
+        }
         private void DeleteCanceled(MouseEventArgs e)
         {
             _showDialog = false;
@@ -94,6 +110,13 @@ namespace ClaimProcessing.Client.Pages
             _deleteDialogBody = $"Czy napewno chcesz usunąć zlecenie serwisowe nr {_detailVm.ClaimNumber}?";
             _showDialog = true;
         }
+
+        private void OnViewImage(string name)
+        {
+            _fileUrl = string.Concat(_apiUrl, name);
+            _showImage = true; 
+        }
+
 
         private static UpdateClaimCommand Map(ClaimDetailVm vm)
         {

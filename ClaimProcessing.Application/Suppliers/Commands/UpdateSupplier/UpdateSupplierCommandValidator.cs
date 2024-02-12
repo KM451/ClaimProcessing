@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ClaimProcessing.Shared.Suppliers.Commands.UpdateSupplier;
+using FluentValidation;
 
 namespace ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier
 {

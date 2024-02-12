@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using ClaimProcessing.Shared.Claims.Commands.UpdateShipmentId;
+using FluentValidation;
 
 namespace ClaimProcessing.Application.Claims.Commands.UpdateShipmentId
 {

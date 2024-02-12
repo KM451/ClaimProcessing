@@ -1,16 +1,16 @@
-﻿using ClaimProcessing.Application.Claims.Commands.DeleteClaim;
-using ClaimProcessing.Application.Claims.Commands.UpdateClaimRemarks;
-using ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus;
-using ClaimProcessing.Application.Claims.Commands.UpdateRmaAvailability;
-using ClaimProcessing.Application.Claims.Commands.UpdateShipmentId;
-using ClaimProcessing.Application.Claims.Queries.GetClaimAttachmentsUrls;
-using ClaimProcessing.Application.Claims.Queries.GetClaimFotosUrls;
-using ClaimProcessing.Application.Claims.Queries.GetClaimSerialNumbers;
-using ClaimProcessing.Application.Claims.Queries.GetClaimsUser;
-using ClaimProcessing.Shared.Claims.Commands.CreateClaim;
+﻿using ClaimProcessing.Shared.Claims.Commands.CreateClaim;
+using ClaimProcessing.Shared.Claims.Commands.DeleteClaim;
 using ClaimProcessing.Shared.Claims.Commands.UpdateClaim;
+using ClaimProcessing.Shared.Claims.Commands.UpdateClaimRemarks;
+using ClaimProcessing.Shared.Claims.Commands.UpdateClaimStatus;
+using ClaimProcessing.Shared.Claims.Commands.UpdateRmaAvailability;
+using ClaimProcessing.Shared.Claims.Commands.UpdateShipmentId;
 using ClaimProcessing.Shared.Claims.Queries.GetAllClaimsShort;
+using ClaimProcessing.Shared.Claims.Queries.GetClaimAttachmentUrls;
 using ClaimProcessing.Shared.Claims.Queries.GetClaimDetail;
+using ClaimProcessing.Shared.Claims.Queries.GetClaimFotosUrls;
+using ClaimProcessing.Shared.Claims.Queries.GetClaimSerialNumbers;
+using ClaimProcessing.Shared.Claims.Queries.GetClaimsUser;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -107,6 +107,7 @@ namespace ClaimProcessing.Api.Controllers
             return vm;
         }
 
+        
         /// <summary>
         /// Create the new Claim
         /// </summary>

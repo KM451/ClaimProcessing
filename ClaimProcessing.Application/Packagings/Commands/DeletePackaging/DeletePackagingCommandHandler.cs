@@ -1,18 +1,14 @@
 ﻿using ClaimProcessing.Application.Common.Exceptions;
 using ClaimProcessing.Application.Common.Interfaces;
 using ClaimProcessing.Domain.ValueObjects;
+using ClaimProcessing.Shared.Packagings.Commands.UpdatePackaging;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Packagings.Commands.DeletePackaging
 {
-    public class DeletePackagingCommandHandler : IRequestHandler<DeletePackagingCommand>
+    public class DeletePackagingCommandHandler(IClaimProcessingDbContext _context) : IRequestHandler<DeletePackagingCommand>
     {
-        private readonly IClaimProcessingDbContext _context;
-        public DeletePackagingCommandHandler(IClaimProcessingDbContext claimProcessingDbContext)
-        {
-            _context = claimProcessingDbContext;
-        }
         public async Task Handle(DeletePackagingCommand request, CancellationToken cancellationToken)
         {
             var packaging = await _context.Packagings.Where(p => p.StatusId != 0 && p.Id == request.PackagingId).FirstOrDefaultAsync(cancellationToken);

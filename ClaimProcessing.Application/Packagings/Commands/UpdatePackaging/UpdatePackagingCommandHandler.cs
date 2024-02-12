@@ -1,40 +1,53 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Interfaces;
 using ClaimProcessing.Domain.Entities;
+using ClaimProcessing.Domain.ValueObjects;
+using ClaimProcessing.Shared.Packagings.Commands.UpdatePackaging;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Packagings.Commands.UpdatePackaging
 {
-    public class UpdatePackagingCommandHandler : IRequestHandler<UpdatePackagingCommand, int>
+    public class UpdatePackagingCommandHandler(IClaimProcessingDbContext _context) : IRequestHandler<UpdatePackagingCommand, int>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-
-        public UpdatePackagingCommandHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
-
         public async Task<int> Handle(UpdatePackagingCommand request, CancellationToken cancellationToken)
         {
             var packaging = await _context.Packagings.Where(p => p.Id == request.PackagingId).FirstOrDefaultAsync(cancellationToken);
 
             if (packaging == null)
             {
-                packaging = _mapper.Map<Packaging>(request);
-                packaging.Id = 0;
+                packaging = Map(request); 
                 _context.Packagings.Add(packaging);
             }
             else
             {
-                _mapper.Map(request, packaging);
+                packaging.Type = request.Type;
+                packaging.Weight = request.Weight;
+                packaging.Notes = request.Notes;
+                packaging.ShipmentId = request.ShipmentId;
+                packaging.Dimensions.Depth = request.Depth;
+                packaging.Dimensions.Width = request.Width;
+                packaging.Dimensions.Height = request.Height;
             }
 
             await _context.SaveChangesAsync(cancellationToken);
 
             return packaging.Id;
+        }
+        private static Packaging Map(UpdatePackagingCommand command)
+        {
+            return new Packaging
+            {
+                Type = command.Type,
+                Weight = command.Weight,
+                Notes = command.Notes,
+                ShipmentId = command.ShipmentId,
+                Dimensions = new Dimensions
+                {
+                    Depth = command.Depth,
+                    Width = command.Width,
+                    Height = command.Height
+                }
+            };
         }
     }
 }

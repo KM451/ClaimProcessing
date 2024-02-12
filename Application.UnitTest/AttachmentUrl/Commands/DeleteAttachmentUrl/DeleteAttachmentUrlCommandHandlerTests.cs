@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.AttachmentUrls.Commands.DeleteAttachmentUrl;
+using ClaimProcessing.Shared.AttachmentUrls.Commands.DeleteAttachmentUrl;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 

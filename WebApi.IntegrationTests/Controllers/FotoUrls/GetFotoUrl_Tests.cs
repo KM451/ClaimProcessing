@@ -1,4 +1,4 @@
-﻿using ClaimProcessing.Application.FotoUrls.Queries.GetFotoUrl;
+﻿using ClaimProcessing.Shared.FotoUrls.Queries.GetFotoUrl;
 using Shouldly;
 using System.Net;
 using WebApi.IntegrationTests.Common;

@@ -24,4 +24,8 @@
     <ProjectReference Include="..\ClaimProcessing.Shared\ClaimProcessing.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Shipments\Queries\GetShipmentClaims\" />
+  </ItemGroup>
+
 </Project>

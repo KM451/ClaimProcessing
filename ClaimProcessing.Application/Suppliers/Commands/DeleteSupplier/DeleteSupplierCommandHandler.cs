@@ -1,6 +1,7 @@
 ﻿using ClaimProcessing.Application.Common.Exceptions;
 using ClaimProcessing.Application.Common.Interfaces;
 using ClaimProcessing.Domain.ValueObjects;
+using ClaimProcessing.Shared.Suppliers.Commands.DeleteSupplier;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

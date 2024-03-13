@@ -1,18 +1,13 @@
 ﻿using ClaimProcessing.Application.Common.Exceptions;
 using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Shared.SerialNumbers.Queries.GetSerialNumber;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.SerialNumbers.Commands.DeleteSerialNumber
 {
-    public class DeleteSerialNumberCommandHandler : IRequestHandler<DeleteSerialNumberCommand>
+    public class DeleteSerialNumberCommandHandler(IClaimProcessingDbContext _context) : IRequestHandler<DeleteSerialNumberCommand>
     {
-        private readonly IClaimProcessingDbContext _context;
-        public DeleteSerialNumberCommandHandler(IClaimProcessingDbContext claimProcessingDbContext)
-        {
-            _context = claimProcessingDbContext;
-        }
-
         public async Task Handle(DeleteSerialNumberCommand request, CancellationToken cancellationToken)
         {
             var serialNumber = await _context.SerialNumbers.Where(s => s.Id == request.SerialNumberId).FirstOrDefaultAsync(cancellationToken);

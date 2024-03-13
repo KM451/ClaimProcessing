@@ -1,4 +1,4 @@
-﻿using ClaimProcessing.Application.Claims.Queries.GetClaimFotosUrls;
+﻿using ClaimProcessing.Shared.Claims.Queries.GetClaimFotosUrls;
 using Shouldly;
 using System.Net;
 using WebApi.IntegrationTests.Common;

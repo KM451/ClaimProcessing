@@ -1,5 +1,4 @@
-﻿using ClaimProcessing.Application.Claims.Commands.UpdateClaim;
-using ClaimProcessing.Application.Packagings.Commands.UpdatePackaging;
+﻿using ClaimProcessing.Shared.Packagings.Commands.UpdatePackaging;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Text;
@@ -18,6 +17,7 @@ namespace WebApi.IntegrationTests.Controllers.Packagings
 
             UpdatePackagingCommand packaging = new()
             {
+                PackagingId = 1,
                 Depth = 2,
                 Width = 2,
                 Height = 2,
@@ -26,16 +26,13 @@ namespace WebApi.IntegrationTests.Controllers.Packagings
                 Notes = "",
                 ShipmentId = 1,
             };
-
-            var id = 1;
-            packaging.SetId(id);
             var jsonValue = JsonConvert.SerializeObject(packaging);
             var content = new StringContent(jsonValue, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/v1/packagings/{id}", content);
+            var response = await client.PutAsync($"/api/v1/packagings", content);
             response.EnsureSuccessStatusCode();
             var idResponse = await response.Content.ReadAsStringAsync();
-            idResponse.ShouldBe(id.ToString());
+            idResponse.ShouldBe(packaging.PackagingId.ToString());
         }
 
         [Fact]
@@ -45,6 +42,7 @@ namespace WebApi.IntegrationTests.Controllers.Packagings
 
             UpdatePackagingCommand packaging = new()
             {
+                PackagingId = 10,
                 Depth = 2,
                 Width = 2,
                 Height = 2,
@@ -54,16 +52,14 @@ namespace WebApi.IntegrationTests.Controllers.Packagings
                 ShipmentId = 1,
             };
 
-            var id = 10;
-            packaging.SetId(id);
             var jsonValue = JsonConvert.SerializeObject(packaging);
             var content = new StringContent(jsonValue, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync($"/api/v1/packagings/{id}", content);
+            var response = await client.PutAsync($"/api/v1/packagings", content);
             response.EnsureSuccessStatusCode();
             var idResponse = await response.Content.ReadAsStringAsync();
             int.Parse(idResponse).ShouldBeGreaterThan(2);
-            int.Parse(idResponse).ShouldBeLessThan(id);
+            int.Parse(idResponse).ShouldBeLessThan(packaging.PackagingId);
         }
     }
 }

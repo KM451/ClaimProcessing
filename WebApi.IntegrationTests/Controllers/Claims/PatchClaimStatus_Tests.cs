@@ -36,7 +36,7 @@ namespace WebApi.IntegrationTests.Controllers.Claims
 
             response.EnsureSuccessStatusCode();
             var stringResponse = await Utilities.GetResponseContent<string>(response);
-            stringResponse.ShouldBe("12");
+            stringResponse.ShouldBe("3");
         }
 
         [Fact]

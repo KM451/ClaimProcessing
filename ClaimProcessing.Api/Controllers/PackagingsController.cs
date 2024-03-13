@@ -1,10 +1,8 @@
-﻿using ClaimProcessing.Application.Packagings.Commands.CreatePackaging;
-using ClaimProcessing.Application.Packagings.Commands.DeletePackaging;
-using ClaimProcessing.Application.Packagings.Commands.UpdatePackaging;
-using ClaimProcessing.Application.Packagings.Queries.GetPackaging;
+﻿using ClaimProcessing.Shared.Packagings.Commands.CreatePackaging;
+using ClaimProcessing.Shared.Packagings.Commands.UpdatePackaging;
+using ClaimProcessing.Shared.Packagings.Queries.GetPackaging;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Data;
 
 namespace ClaimProcessing.Api.Controllers
 {
@@ -43,11 +41,10 @@ namespace ClaimProcessing.Api.Controllers
         /// <param name="command">Data of the Packaging</param>
         /// <param name="id">The Packaging id number</param>
         /// <returns></returns>
-        [HttpPut("{id}")]
+        [HttpPut]
         [Authorize(Policy = "ApiUser2")]
-        public async Task<IActionResult> UpdatePackaging(UpdatePackagingCommand command, int id)
+        public async Task<IActionResult> UpdatePackaging(UpdatePackagingCommand command)
         {
-            command.SetId(id);
             var result = await Mediator.Send(command);
             return Ok(result);
         }

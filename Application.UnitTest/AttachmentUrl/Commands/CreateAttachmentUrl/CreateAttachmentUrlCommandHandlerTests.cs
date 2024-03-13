@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.AttachmentUrls.Commands.CreateAttachmentUrl;
+using ClaimProcessing.Shared.AttachmentUrls.Commands.CreateAttachmentUrl;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -11,7 +12,7 @@ namespace Application.UnitTest.AttachmentUrl.Commands.CreateAttachmentUrl
         public CreateAttachmentUrlCommandHandlerTests()
             : base()
         {
-            _handler = new CreateAttachmentUrlCommandHandler(_context, _mapper);       
+            _handler = new CreateAttachmentUrlCommandHandler(_context);       
         }
 
         [Fact]

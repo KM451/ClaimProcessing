@@ -1,12 +1,12 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Exceptions;
+﻿using ClaimProcessing.Application.Common.Exceptions;
 using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Shared.Claims.Commands.UpdateRmaAvailability;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Claims.Commands.UpdateRmaAvailability
 {
-    public class UpdateRmaAvailabilityCommandHandler(IClaimProcessingDbContext _context, IMapper _mapper) : IRequestHandler<UpdateRmaAvailabilityCommand>
+    public class UpdateRmaAvailabilityCommandHandler(IClaimProcessingDbContext _context) : IRequestHandler<UpdateRmaAvailabilityCommand>
     {
         public async Task Handle(UpdateRmaAvailabilityCommand request, CancellationToken cancellationToken)
         {
@@ -18,7 +18,7 @@ namespace ClaimProcessing.Application.Claims.Commands.UpdateRmaAvailability
             }
             else
             {
-                claim = _mapper.Map(request, claim);
+                claim.RmaAvailable = request.RmaAvailable;
                 await _context.SaveChangesAsync(cancellationToken);
             }
         }

@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.SerialNumbers.Queries.GetSerialNumber;
+using ClaimProcessing.Shared.SerialNumbers.Queries.GetSerialNumber;
 using Shouldly;
 using System.Net;
 using WebApi.IntegrationTests.Common;

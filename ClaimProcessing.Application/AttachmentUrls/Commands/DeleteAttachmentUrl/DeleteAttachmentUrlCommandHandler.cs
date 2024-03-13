@@ -1,5 +1,6 @@
 ﻿using ClaimProcessing.Application.Common.Exceptions;
 using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Shared.AttachmentUrls.Commands.DeleteAttachmentUrl;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,5 +1,4 @@
-﻿using ClaimProcessing.Application.Claims.Queries.GetAllClaimsShort;
-using ClaimProcessing.Application.Claims.Queries.GetClaimsUser;
+﻿using ClaimProcessing.Shared.Claims.Queries.GetClaimsUser;
 using Shouldly;
 using WebApi.IntegrationTests.Common;
 using Xunit;

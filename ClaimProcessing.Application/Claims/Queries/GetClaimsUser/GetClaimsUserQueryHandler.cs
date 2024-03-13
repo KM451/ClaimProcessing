@@ -1,23 +1,14 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Exceptions;
+﻿using ClaimProcessing.Application.Common.Exceptions;
 using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Domain.Entities;
+using ClaimProcessing.Shared.Claims.Queries.GetClaimsUser;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.Claims.Queries.GetClaimsUser
 {
-    public class GetClaimsUserQueryHandler : IRequestHandler<GetClaimsUserQuery, ClaimsUserVm>
+    public class GetClaimsUserQueryHandler(IClaimProcessingDbContext _context, ICurrentUserService _userService) : IRequestHandler<GetClaimsUserQuery, ClaimsUserVm>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-        private readonly ICurrentUserService _userService;
-
-        public GetClaimsUserQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper, ICurrentUserService userService)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-            _userService = userService;
-        }
         public async Task<ClaimsUserVm> Handle(GetClaimsUserQuery request, CancellationToken cancellationToken)
         {
             var claims = await _context.Claims
@@ -72,10 +63,21 @@ namespace ClaimProcessing.Application.Claims.Queries.GetClaimsUser
 
             var claimsVm = new ClaimsUserVm
             {
-                Claims = claims.Select(src => _mapper.Map<ClaimsUserDto>(src)).ToList()
+                Claims = claims.Select(src => Map(src)).ToList()
             };
 
             return claimsVm;
+        }
+        private static ClaimsUserDto Map(Claim claim)
+        {
+            return new ClaimsUserDto
+            {
+                ClaimNumber = claim.ClaimNumber,
+                ClaimCreationDate = claim.Created,
+                ItemCode = claim.ItemCode,
+                ItemName = claim.ItemName,
+                ClaimStatus = claim.ClaimStatus
+            };
         }
     }
 }

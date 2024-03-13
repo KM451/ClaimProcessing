@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.SerialNumbers.Commands.DeleteSerialNumber;
+using ClaimProcessing.Shared.SerialNumbers.Queries.GetSerialNumber;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 

@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Suppliers.Commands.CreateSupplier;
+using ClaimProcessing.Shared.Suppliers.Commands.CreateSupplier;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -12,7 +13,7 @@ namespace Application.UnitTest.Supplier.Command.CreateSupplier
         public CreateSupplierCommandHandlerTest()
             : base()
         {
-            _handler = new CreateSupplierCommandHandler(_context, _mapper);
+            _handler = new CreateSupplierCommandHandler(_context);
         }
 
         [Fact]

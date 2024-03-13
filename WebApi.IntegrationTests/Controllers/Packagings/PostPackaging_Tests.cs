@@ -1,5 +1,6 @@
 ﻿using ClaimProcessing.Application.AttachmentUrls.Commands.CreateAttachmentUrl;
 using ClaimProcessing.Application.Packagings.Commands.CreatePackaging;
+using ClaimProcessing.Shared.Packagings.Commands.CreatePackaging;
 using Newtonsoft.Json;
 using Shouldly;
 using System.Text;

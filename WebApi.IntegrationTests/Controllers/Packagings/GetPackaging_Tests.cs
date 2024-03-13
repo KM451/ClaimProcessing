@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.Packagings.Queries.GetPackaging;
+using ClaimProcessing.Shared.Packagings.Queries.GetPackaging;
 using Shouldly;
 using System.Net;
 using WebApi.IntegrationTests.Common;

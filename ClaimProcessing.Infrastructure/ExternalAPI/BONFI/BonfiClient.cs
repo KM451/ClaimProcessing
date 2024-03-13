@@ -1,5 +1,6 @@
 ﻿using ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus;
 using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Shared.Claims.Commands.UpdateClaimStatus;
 using IdentityModel.Client;
 using Newtonsoft.Json;
 using System.Text;

@@ -1,8 +1,7 @@
 using ClaimProcessing.Client;
 using ClaimProcessing.Client.HttpRepository;
-using ClaimProcessing.Client.HttpRepository.Interfaces;
-using ClaimProcessing.Client.Services.Interfaces;
 using ClaimProcessing.Client.Services;
+using ClaimProcessing.Client.Services.Interfaces;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -24,8 +23,8 @@ builder.Services.AddHttpClient("api", client =>
 builder.Services.AddScoped(sp => sp.GetService<IHttpClientFactory>().CreateClient("api"));
 
 builder.Services.AddOidcAuthentication(options => builder.Configuration.Bind("oidc", options.ProviderOptions));
-builder.Services.AddScoped<IClaimsHttpRepository, ClaimsHttpRepository>();
-builder.Services.AddScoped<ISupplierHttpRepository, SupplierHttpRepository>();
+
 builder.Services.AddScoped<IToastrService, ToastrService>();
+builder.Services.AddHttpRepositories();
 
 await builder.Build().RunAsync();

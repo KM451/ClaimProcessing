@@ -1,5 +1,6 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.SerialNumbers.Commands.CreateSerialNumber;
+using ClaimProcessing.Shared.SerialNumbers.Commands.CreateSerialNumber;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -12,7 +13,7 @@ namespace Application.UnitTest.SerialNumber.Command.CreateSerialNumber
         public CreateSerialNumberCommandHandlerTests()
             : base()
         {
-            _handler = new CreateSerialNumberCommandHandler(_context, _mapper);
+            _handler = new CreateSerialNumberCommandHandler(_context);
         }
 
         [Fact]

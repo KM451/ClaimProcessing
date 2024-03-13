@@ -1,6 +1,9 @@
 ﻿using ClaimProcessing.Application.AttachmentUrls.Commands.CreateAttachmentUrl;
 using ClaimProcessing.Application.AttachmentUrls.Commands.DeleteAttachmentUrl;
 using ClaimProcessing.Application.AttachmentUrls.Queries.GetAttachmentUrl;
+using ClaimProcessing.Shared.AttachmentUrls.Commands.CreateAttachmentUrl;
+using ClaimProcessing.Shared.AttachmentUrls.Commands.DeleteAttachmentUrl;
+using ClaimProcessing.Shared.AttachmentUrls.Queries.GetAttachmentUrl;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

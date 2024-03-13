@@ -1,4 +1,4 @@
-﻿using ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus;
+﻿using ClaimProcessing.Shared.Claims.Commands.UpdateClaimStatus;
 
 namespace ClaimProcessing.Application.Common.Interfaces
 {

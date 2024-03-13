@@ -1,4 +1,4 @@
-﻿using ClaimProcessing.Application.Suppliers.Queries.GetSupplierDetail;
+﻿using ClaimProcessing.Shared.Suppliers.Queries.GetSupplierDetail;
 using Shouldly;
 using System.Net;
 using WebApi.IntegrationTests.Common;

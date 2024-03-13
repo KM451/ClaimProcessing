@@ -1,0 +1,25 @@
+﻿<div class="navbar-nav-scroll col-md-3 lista">
+    <ol class="list-group list-group-numbered">
+        @foreach (var file in _fotoUrlsVm.FotoUrls)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-start">
+                <p>@file.Path.Split('\\').LastOrDefault()</p>
+                <button @onclick="() => _viewImage(file.Path)"><img src="/eye.png" alt="Pogląd obrazu" /></button>
+                <button onclick=""><img src="/download.png" /></button>
+                <button @onclick="() => _deleteImage(file.Id)"><img src="/bin.png"  alt="Usuwanie obrazu" /></button>
+            </li>
+        }
+    </ol>
+</div>
+<div>
+    @if (_blockInput)
+    {
+        <span>Ładowanie...</span>
+    }
+    else
+    {
+        <div class="form-group mt-3">
+            <InputFile OnChange="LoadFiles" class="btn-sm" accept="image/png, image/jpg, image/jpeg" />
+        </div>
+    }
+</div>

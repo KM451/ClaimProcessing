@@ -1,28 +1,24 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Shared.AttachmentUrls.Queries.GetAttachmentUrl;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClaimProcessing.Application.AttachmentUrls.Queries.GetAttachmentUrl
 {
-    public class GetAttachmentUrlQueryHandler : IRequestHandler<GetAttachmentUrlQuery, AttachmentUrlVm>
+    public class GetAttachmentUrlQueryHandler(IClaimProcessingDbContext _context) : IRequestHandler<GetAttachmentUrlQuery, AttachmentUrlVm>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-        public GetAttachmentUrlQueryHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
         public async Task<AttachmentUrlVm> Handle(GetAttachmentUrlQuery request, CancellationToken cancellationToken)
         {
             var attachment = await _context.AttachmentUrls
                 .Where(a => a.StatusId != 0 && a.Id == request.AttachmentUrlId)
                 .FirstOrDefaultAsync(cancellationToken);
 
-            var attachmentVm = _mapper.Map<AttachmentUrlVm>(attachment);
+            if (attachment == null) { return null; }
+
+            var attachmentVm = new AttachmentUrlVm {Path = attachment.Path};
 
             return attachmentVm;
         }
+        
     }
 }

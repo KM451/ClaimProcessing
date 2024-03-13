@@ -8,7 +8,7 @@ namespace ClaimProcessing.Application.FotoUrls.Commands.CreateFotoUrl
         public CreateFotoUrlCommandValidator()
         {
             RuleFor(a => a.ClaimId).NotNull().GreaterThan(0);
-            RuleFor(a => a.Path).NotEmpty().MaximumLength(200);
+            RuleFor(a => a.FileName).NotEmpty().MaximumLength(200);
         }
     }
 }

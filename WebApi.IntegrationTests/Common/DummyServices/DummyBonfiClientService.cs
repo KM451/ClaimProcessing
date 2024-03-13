@@ -1,5 +1,5 @@
-﻿using ClaimProcessing.Application.Claims.Commands.UpdateClaimStatus;
-using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Interfaces;
+using ClaimProcessing.Shared.Claims.Commands.UpdateClaimStatus;
 
 namespace WebApi.IntegrationTests.Common.DummyServices
 {

@@ -1,4 +1,5 @@
 ﻿using ClaimProcessing.Application.AttachmentUrls.Queries.GetAttachmentUrl;
+using ClaimProcessing.Shared.AttachmentUrls.Queries.GetAttachmentUrl;
 using Shouldly;
 using System.Net;
 using WebApi.IntegrationTests.Common;

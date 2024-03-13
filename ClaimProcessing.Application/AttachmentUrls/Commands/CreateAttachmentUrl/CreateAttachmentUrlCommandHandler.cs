@@ -1,22 +1,19 @@
-﻿using AutoMapper;
-using ClaimProcessing.Application.Common.Interfaces;
+﻿using ClaimProcessing.Application.Common.Interfaces;
 using ClaimProcessing.Domain.Entities;
+using ClaimProcessing.Shared.AttachmentUrls.Commands.CreateAttachmentUrl;
 using MediatR;
 
 namespace ClaimProcessing.Application.AttachmentUrls.Commands.CreateAttachmentUrl
 {
-    public class CreateAttachmentUrlCommandHandler : IRequestHandler<CreateAttachmentUrlCommand, int>
+    public class CreateAttachmentUrlCommandHandler(IClaimProcessingDbContext _context) : IRequestHandler<CreateAttachmentUrlCommand, int>
     {
-        private readonly IClaimProcessingDbContext _context;
-        private IMapper _mapper;
-        public CreateAttachmentUrlCommandHandler(IClaimProcessingDbContext claimProcessingDbContext, IMapper mapper)
-        {
-            _context = claimProcessingDbContext;
-            _mapper = mapper;
-        }
         public async Task<int> Handle(CreateAttachmentUrlCommand request, CancellationToken cancellationToken)
         {
-            var attachmentUrl = _mapper.Map<AttachmentUrl>(request);
+            var attachmentUrl = new AttachmentUrl
+            {
+                Path = request.Path,
+                ClaimId = request.ClaimId
+            };
             
             _context.AttachmentUrls.Add(attachmentUrl);
             await _context.SaveChangesAsync(cancellationToken);

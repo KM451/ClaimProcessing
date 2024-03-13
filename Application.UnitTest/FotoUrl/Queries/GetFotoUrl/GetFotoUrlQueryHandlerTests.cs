@@ -1,5 +1,4 @@
 ﻿using Application.UnitTest.Common;
-using AutoMapper;
 using ClaimProcessing.Application.FotoUrls.Queries.GetFotoUrl;
 using ClaimProcessing.Persistance;
 using ClaimProcessing.Shared.FotoUrls.Queries.GetFotoUrl;

@@ -1,6 +1,7 @@
 ﻿using Application.UnitTest.Common;
 using ClaimProcessing.Application.Suppliers.Commands.UpdateSupplier;
 using ClaimProcessing.Domain.ValueObjects;
+using ClaimProcessing.Shared.Suppliers.Commands.UpdateSupplier;
 using Microsoft.EntityFrameworkCore;
 using Shouldly;
 
@@ -13,7 +14,7 @@ namespace Application.UnitTest.Supplier.Command.UpdateSupplier
         public UpdateSupplierCommandHandlerTest()
             : base()
         {
-            _handler = new UpdateSupplierCommandHandler(_context, _mapper);
+            _handler = new UpdateSupplierCommandHandler(_context);
         }
 
         [Fact]
